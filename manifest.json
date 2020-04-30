@@ -1,0 +1,31 @@
+ {
+    "name": "Craveats Test",
+    "version": "1.0",
+    "description": "Dev for our top secret super sweet Chrome extension",
+
+    "chrome_url_overrides": {
+    	"newtab": "newpage.html"
+    },
+
+    "browser_action": {
+    	"default_icon": "flowers.jpg"
+    },
+
+    // "page_action": {
+    // 	"default_popup": "fragment.html",
+    // 	"default_icon": "flowers.jpg"
+    // },
+
+    "permissions": [
+    	"geolocation",
+    	"tabs"
+    ],
+
+    "background": {
+    	"scripts": ["background.js"], 
+    	"persistent": false
+    }, // extension now aware that includes non persistent background script and 
+    	// will scan registered file for important events it needs to listen for
+
+    "manifest_version": 2
+  }
