@@ -18,7 +18,8 @@
 
     "permissions": [
     	"geolocation",
-    	"tabs"
+    	"tabs",
+        "storage"
     ],
 
     "background": {
