@@ -13,39 +13,7 @@ chrome.runtime.onInstalled.addListener(function() {
 
 });
 
-function init() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      var pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
 
-      console.log(pos);
-      getNearbyPlaces(pos);
-    });
-  } // add else case
-}
-
-
-function getNearbyPlaces(position) {
-  let request = {
-    location: position,
-    rankBy: google.maps.places.RankBy.DISTANCE,
-    keyword: 'sushi'
-    // type: 'restaurant'
-  };
-
-  service = new google.maps.places.PlacesService(map);
-  service.nearbySearch(request, nearbyCallback);
-}
-
-function nearbyCallback(results, status) {
-  if (status == google.maps.places.PlacesServiceStatus.OK) {
-    console.log("okay!");
-    console.log(results);
-  }
-}
 
 
 // ---> declarativeContent APi takes actions depending on content of page
