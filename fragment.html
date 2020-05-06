@@ -1,15 +1,71 @@
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <style>
-        button {
-          height: 30px;
-          width: 30px;
-          outline: none;
-        }
-      </style>
-    </head>
-    <body>
-      <button id="changeColor"></button>
-    </body>
-  </html>
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- TODO: create css -->
+  <style>
+
+    button {
+      height: 30px;
+      width: 30px;
+      outline: none;
+    }
+
+    body {
+    	background-image: url('teal.jpg');
+    	background-size: 100% 100%;
+    }
+
+    .mainFragment {
+    	display: flex;
+    	width: 400px;
+    	justify-content: center;
+    	align-items: center;
+    }
+
+    #topBarView {
+    	margin: auto;	
+    	/*text-align: center;*/
+    	height: 50px;
+    	width: 400px;
+    	border: 3px solid white;
+    	background: white;
+    	/*padding: 10px;*/
+    }
+
+    #resultsRecyclerView {
+    	margin: auto;
+    	height: 50px;
+    	width: 400px;
+    	border: 3px solid white;
+    }
+
+    #otherOptionsView {
+    	margin: auto;
+    	height: 50px;
+    	width: 400px;
+    	border: 3px solid white;
+    }
+
+  </style>
+</head>
+<body>
+	<div class="mainFragment">
+
+		<div id="topBarView">
+			Feeling hungry? Check out these local eats.
+			<!-- <button id="changeColor">hihi</button> -->
+		</div>
+
+		<div id="resultsRecyclerView">
+			Recycler
+		</div>
+
+		<div id="otherOptionsView">
+			Craving something else?
+		</div>
+
+	</div>
+  	<!-- <button id="changeColor"></button> -->
+  	<script async defer type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuW4NSq2HJ9WpB7gmYimPBXSBRuNGkPI&libraries=places"></script>
+</body>
+</html>
