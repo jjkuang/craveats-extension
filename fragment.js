@@ -27,6 +27,17 @@
 
 // work added May 7
 
+function loadScript(scriptSrc, loadedCallback) {
+  var oHead = document.getElementsByTagName("HEAD")[0];
+  var oScript = document.createElement('script');
+  oScript.type = 'text/javascript';
+  oScript.src = scriptSrc;
+  oHead.appendChild(oScript);
+  oScript.onload = loadedCallback;
+}
+
+// let's load the Google API js and run function GoggleApiLoaded once it is done.
+loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuW4NSq2HJ9WpB7gmYimPBXSBRuNGkPI&libraries=places", main);
 
 function main() {
   if (navigator.geolocation) {
@@ -70,9 +81,9 @@ function nearbyCallback(results, status) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-  main();
-});
+// document.addEventListener('DOMContentLoaded', function () {
+//   main();
+// });
 var btnRefresh = document.getElementById('refresh').addEventListener("click", main);
 
 
