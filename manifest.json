@@ -3,13 +3,15 @@
     "version": "1.0",
     "description": "Dev for our top secret super sweet Chrome extension",
 
+    "options_page": "options.html",
+
     "chrome_url_overrides": {
-    	"newtab": "newpage.html"
+    	"newtab": "fragment.html"
     },
 
-    "browser_action": {
-    	"default_icon": "flowers.jpg"
-    },
+    // "browser_action": {
+    // 	"default_icon": "flowers.jpg"
+    // },
 
     // "page_action": {
     // 	"default_popup": "fragment.html",
@@ -17,9 +19,11 @@
     // },
 
     "permissions": [
-    	"geolocation",
+    	"activeTab",
+        "geolocation",
     	"tabs",
-        "storage"
+        "storage",
+        "declarativeContent"
     ],
 
     "background": {
@@ -27,6 +31,7 @@
     	"persistent": false
     }, // extension now aware that includes non persistent background script and 
     	// will scan registered file for important events it needs to listen for
+    "content_security_policy": "script-src 'self' https://maps.googleapis.com https://maps.gstatic.com; object-src 'self'",
 
     "manifest_version": 2
   }

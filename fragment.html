@@ -1,15 +1,48 @@
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <style>
-        button {
-          height: 30px;
-          width: 30px;
-          outline: none;
-        }
-      </style>
-    </head>
-    <body>
-      <button id="changeColor"></button>
-    </body>
-  </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <!-- TODO: create css -->
+  <link rel="stylesheet" href="style.css">
+
+  <title>New Tab</title>
+</head>
+<body>
+
+  <div class="dropdown">
+    <button class="dropbtn">Rank By</button>
+    <div class="dropdown-content">
+      <a href="#">Distance</a>
+      <a href="#">Rating</a>
+      </div>
+  </div>
+
+    <span>
+  <div class="mainFragment">
+
+    <div id="topBarView">
+      Feeling hungry? Check out these local eats.
+      <!-- <button id="changeColor">hihi</button> -->
+    </div>
+
+    <div id="resultsRecyclerView">
+      Recycler
+    </div>
+
+    <div id="otherOptionsView">
+      Craving something else?
+    </div>
+
+    <div id="map"></div>
+
+  </div>
+
+
+   <button id="refresh">Refresh</button>
+    <!-- <button id="changeColor"></button> -->
+    <script async defer type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuW4NSq2HJ9WpB7gmYimPBXSBRuNGkPI&libraries=places"></script>
+    <script src='fragment.js'></script>
+</body>
+</html>
