@@ -1,6 +1,4 @@
 // This will fire a popup on every new tab opened
-// This will also access the location and query for the nearby 
-// restaurants under the user preferences
 
 // background is non-persistent and will scan for important events to listen for
 // needs information from a persistent variable as soon as it is installed
@@ -12,8 +10,6 @@ chrome.runtime.onInstalled.addListener(function() {
     });
 
 });
-
-
 
 
 // ---> declarativeContent APi takes actions depending on content of page
