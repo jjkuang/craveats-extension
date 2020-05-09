@@ -21,10 +21,10 @@
 
     "permissions": [
     	"activeTab",
-    	"declarativeContent",
-    	"storage",
-    	"geolocation",
-    	"tabs"
+        "geolocation",
+    	"tabs",
+        "storage",
+        "declarativeContent"
     ],
 
     "background": {
@@ -32,7 +32,6 @@
     	"persistent": false
     }, // extension now aware that includes non persistent background script and 
     	// will scan registered file for important events it needs to listen for
-
     "content_security_policy": "script-src 'self' https://maps.googleapis.com https://maps.gstatic.com; object-src 'self'",
     
     "manifest_version": 2
