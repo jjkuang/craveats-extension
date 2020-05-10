@@ -114,3 +114,12 @@
       width: 400px;
       border: 3px solid white;
     }
+
+    #places {
+      padding: 12px 28px;
+      font-family: helvetica;
+      font-size: 18px;
+      text-align: center;
+      color: blue;
+      background-color: white;
+    }

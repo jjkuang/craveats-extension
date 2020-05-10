@@ -51,30 +51,61 @@ function getNearbyPlaces(position) {
   let request = {
     location: position,
     rankBy: google.maps.places.RankBy.DISTANCE,
-    keyword: 'sushi'
+    keyword: 'sushi',
+    type:'restaurant'
   };
 
-  map = new google.maps.Map(document.getElementById('map'), {
-            center: position,
-            zoom: 15
-          });
+  // const places = new google.maps.Map(document.getElementById('map'), {
+  //           center: position,
+  //           zoom: 15
+  //         });
 
-  service = new google.maps.places.PlacesService(map);
-  service.nearbySearch(request, nearbyCallback);
+  // service = new google.maps.places.PlacesService(places);
+  // service.nearbySearch(request, nearbyCallback);
+  const places = document.getElementById('places');
+  service = new google.maps.places.PlacesService(places);
+  //service.nearbySearch(request, nearbyCallback);
+  service.nearbySearch(request, callback);
 }
 
-function nearbyCallback(results, status) {
-  if (status == google.maps.places.PlacesServiceStatus.OK) {
-    console.log("okay!");
-    console.log(results);
-  }
+const results = [];
+
+// function nearbyCallback(results, status) {
+//   if (status == google.maps.places.PlacesServiceStatus.OK) {
+//     console.log("okay!");
+//     console.log(results);
+//   }
+// }
+
+const callback = (response, status, pagination) => {
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+        results.push(...response);
+        console.log("okay");
+        console.log(results)
+    }
+
+    if (pagination.hasNextPage) {
+        setTimeout(() => pagination.nextPage(), 2000);
+    } else {
+        displayResults();
+    }
+}
+
+const displayResults = () => {
+    results.filter(result => result.rating)
+            .sort((a, b) => a.rating > b.rating ? -1 : 1)
+     results.slice(0,3)
+            .forEach(result => {
+                places.innerHTML += `<li>${result.name} - ${result.rating}</li>`;
+            });
 }
 
 document.addEventListener('DOMContentLoaded', function () {
   main();
 });
 var btnRefresh = document.getElementById('refresh').addEventListener("click", main);
-
+// displayResults();
+// console.log(results);
 
 
 
