@@ -1,14 +1,17 @@
+// a substitute for the inline script that loads Google Maps API
 function loadScript(scriptSrc, loadedCallback) {
   var oHead = document.getElementsByTagName("HEAD")[0];
   var oScript = document.createElement('script');
   oScript.type = 'text/javascript';
   oScript.src = scriptSrc;
   oHead.appendChild(oScript);
-  oScript.onload = loadedCallback;
+  oScript.onload = loadedCallback; 
 }
 
-// let's load the Google API js and run function GoggleApiLoaded once it is done.
-loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuW4NSq2HJ9WpB7gmYimPBXSBRuNGkPI&libraries=places", main);
+// let's load the Google API js and run function main once it is done.
+loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuW4NSq2HJ9WpB7gmYimPBXSBRuNGkPI&libraries=places", 
+          main);
+
 
 let pos;
 function main() {
@@ -19,21 +22,19 @@ function main() {
         lng: position.coords.longitude
       };
 
-      console.log(pos);
       getNearbyPlaces(pos);
     });
-  }
-  else{
+  } else {
 
   } // add else case, if browser supports geolocation and user has denied permission or not
   //see https://codelabs.developers.google.com/codelabs/google-maps-nearby-search-js/#2
 }
 
+let service;
 function getNearbyPlaces(position) {
   let request = {
     location: position,
-    rankby: google.maps.places.RankBy.DISTANCE,
-    radius: 7500,
+    rankBy: google.maps.places.RankBy.DISTANCE,
     openNow: true,
     type: 'restaurant'
   };
@@ -43,9 +44,14 @@ function getNearbyPlaces(position) {
   service.nearbySearch(request, nearbyCallback);
 }
 
+
 function nearbyCallback(results, status) {
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     console.log(results);
+    pickRandomRestaurants(results);
+
+    // get coords to calculate distance from location
+    // TODO: refactor into separate fxn
     var coordinates = [];
     for (var i = 0; i < results.length; i++) {
       coords = {
@@ -59,13 +65,57 @@ function nearbyCallback(results, status) {
 }
 
 
+// pick 4 random restaurants from the results list
+const NUM_RESTAURANTS_DISPLAYED = 4;
+var rand_restaurants = [];
+function pickRandomRestaurants(results) { 
+  for (var i = 0; i < NUM_RESTAURANTS_DISPLAYED; i++) {
+    get_rand(results);
+  }
+  console.log(rand_restaurants);
+
+  // make the place details request for each restaurant to be displayed
+  rand_restaurants.forEach(place => {
+    let request = {
+      placeId: place.place_id,
+      fields: ['name', 'formatted_address', 'formatted_phone_number',
+      'website', 'opening_hours', 'rating', 'price_level']
+    };
+
+    service.getDetails(request, (placeResult, status) => {
+      console.log(placeResult);
+      // TODO: displayRestaurant(placeResult);
+    })
+  })
+}
+
+
+// checks if the chosen restaurant is already in the array
+// TODO: eventually with the refresh fxn we need to reset the rand_restaurants
+function in_array(array, el) {
+   for(var i = 0 ; i < array.length; i++) 
+       if(array[i] == el) return true;
+   return false;
+}
+
+
+// pick a random restaurant from results w/o duplicating
+function get_rand(array) {  
+    var rand = array[Math.floor(Math.random()*array.length)];
+    if(!in_array(rand_restaurants, rand)) {
+       rand_restaurants.push(rand); 
+       return rand;
+    }
+    return get_rand(array);
+}
+
 function calculate_distances(coordinates) {
   var distances = [];
   for (i = 0; i < coordinates.length; i++) {
     distances.push(haversine_distance(pos.lat,pos.lng,
       coordinates[i].lat,coordinates[i].lng));
   }
-  console.log(distances);
+  // console.log(distances);
 }
 
   
@@ -79,9 +129,7 @@ function haversine_distance(lat1, lng1, lat2, lng2) {
   return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
 }
 
-// document.addEventListener('DOMContentLoaded', function () {
-//   main();
-// });
+
 var btnRefresh = document.getElementById('refresh').addEventListener("click", main);
 
 
