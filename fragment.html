@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <!-- TODO: create css -->
   <link rel="stylesheet" href="style.css">
 
   <title>New Tab</title>
@@ -12,23 +10,22 @@
 <body>
 
   <div class="dropdown">
-    <button class="dropbtn">Rank By</button>
+    <button>Rank By</button>
     <div class="dropdown-content">
       <a href="#">Distance</a>
       <a href="#">Rating</a>
-      </div>
+    </div>
   </div>
 
-    <span>
+    <!-- random span? <span> -->
   <div class="mainFragment">
 
-    <div id="topBarView">
+    <div id="topCardView">
       Feeling hungry? Check out these local eats.
-      <!-- <button id="changeColor">hihi</button> -->
     </div>
 
     <div id="resultsRecyclerView">
-      Recycler
+      
     </div>
 
     <div id="otherOptionsView">
@@ -40,10 +37,8 @@
   </div>
 
 
-   <button id="refresh">Refresh</button>
-    <!-- <button id="changeColor"></button> -->
-    <ol id="places"></ol>
-    <script async defer type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuW4NSq2HJ9WpB7gmYimPBXSBRuNGkPI&libraries=places"></script>
-    <script src='fragment.js'></script>
+  <button class="clickbutton" id="refresh">Refresh</button>
+  <!-- <script async defer type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuW4NSq2HJ9WpB7gmYimPBXSBRuNGkPI&libraries=places"></script> -->
+  <script src='fragment.js'></script>
 </body>
 </html>

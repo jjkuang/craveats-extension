@@ -1,19 +1,13 @@
     button {
-      padding: 12px 28px;
-      margin: 5px;
-      background-color: black: 
+      padding: 16px;
+      font-size: 16px;
       color: white;
-      border: 2px solid #e7e7e7; /* Gray */
+      background-color: blue;
+      border: 2px solid lightblue;
       border-radius: 5px;
       cursor: pointer;
       outline: none;
-      font-size: 16px;
       text-align: center;
-    }
-/*fix this so we have a click button and a drop down button*/
-     button:active {
-      background-color: #e7e7e7;
-      transform: translateY(3px);
     }
 
     body {
@@ -34,7 +28,6 @@
       border-style: none none none solid;
       border-color: blue;
       /*background: rgba(0, 128, 0, 0.3) green background with 30% opacity*/
-
     }
 
     h2 {
@@ -43,21 +36,12 @@
       font-size: 16px;
     }
    
-
     .mainFragment {
       display: flex;
-      width: 400px;
-      /*justify-content: center;
-      align-items: center;*/
-    }
-
-    .dropbtn {
-      background-color: blue;
-      color: white;
-      padding: 16px;
-      font-size: 16px;
-      border: none;
-      cursor: pointer;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 1000px;
     }
 
     .dropdown {
@@ -88,14 +72,19 @@
     }
 
     .dropdown:hover .dropbtn {
-      background-color: #3e8e41;
+      background-color: lightblue;
     }
 
-    #topBarView {
+    .clickbutton:active {
+      background-color: lightblue;
+      transform: translateY(3px);
+    }
+
+    #topCardView {
       margin: auto; 
       /*text-align: center;*/
       height: 50px;
-      width: 400px;
+      width: 1000px;
       border: 3px solid white;
       background: white;
       /*padding: 10px;*/
@@ -103,23 +92,14 @@
 
     #resultsRecyclerView {
       margin: auto;
-      height: 50px;
-      width: 400px;
+      /*height: 50px;*/
+      width: 1000px;
       border: 3px solid white;
     }
 
     #otherOptionsView {
       margin: auto;
       height: 50px;
-      width: 400px;
+      width: 1000px;
       border: 3px solid white;
-    }
-
-    #places {
-      padding: 12px 28px;
-      font-family: helvetica;
-      font-size: 18px;
-      text-align: center;
-      color: blue;
-      background-color: white;
     }

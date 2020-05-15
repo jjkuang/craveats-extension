@@ -13,6 +13,7 @@
     // 	"default_icon": "flowers.jpg"
     // },
 
+    // up to extension to tell the browser when user can interact w popup
     // "page_action": {
     // 	"default_popup": "fragment.html",
     // 	"default_icon": "flowers.jpg"
@@ -32,6 +33,6 @@
     }, // extension now aware that includes non persistent background script and 
     	// will scan registered file for important events it needs to listen for
     "content_security_policy": "script-src 'self' https://maps.googleapis.com https://maps.gstatic.com; object-src 'self'",
-
+    
     "manifest_version": 2
   }
