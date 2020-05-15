@@ -49,18 +49,6 @@ function nearbyCallback(results, status) {
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     console.log(results);
     getRandomRestaurants(results);
-
-    // get coords to calculate distance from location
-    // TODO: refactor into separate fxn
-    var coordinates = [];
-    for (var i = 0; i < results.length; i++) {
-      coords = {
-        lat: results[i].geometry.location.lat(), 
-        lng: results[i].geometry.location.lng()
-      };
-      coordinates.push(coords);
-    }
-    calculate_distances(coordinates);
   }
 }
 
@@ -78,7 +66,7 @@ function getRandomRestaurants(results) {
   rand_restaurants.forEach(place => {
     let request = {
       placeId: place.place_id,
-      fields: ['name', 'formatted_address', 'formatted_phone_number',
+      fields: ['name', 'geometry', 'formatted_address', 'formatted_phone_number',
       'website', 'url', 'opening_hours', 'rating', 'price_level']
     };
     
@@ -89,13 +77,15 @@ function getRandomRestaurants(results) {
 
 let recyclerView;
 function displayRestaurant(placeResult, status) {
+  console.log(placeResult);
   recyclerView = document.getElementById('resultsRecyclerView');
   recyclerItem = document.createElement('div');
   recyclerItem.classList.add('restaurant-item');
 
+
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     // i have no idea what html elements to actually use
-    // TODO: DISTANCE (OUR OWN FUNCTION), OPENING HOURS, PRICE LEVEL(?)
+    // TODO: OPENING HOURS, PRICE LEVEL(?)
     // TODO: probably change the class list a bit depending on how we want to style each element
 
     // CREATE NAME ELEMENT
@@ -112,6 +102,17 @@ function displayRestaurant(placeResult, status) {
       recyclerItem.appendChild(rating);
     }
 
+    // CREATE DISTANCE ELEMENT
+    let coords = {
+      lat: placeResult.geometry.location.lat(), 
+      lng: placeResult.geometry.location.lng()
+    };
+    haversine_d = haversine_distance(pos.lat,pos.lng,coords.lat,coords.lng);
+    let distance = document.createElement('p');
+    distance.classList.add('details');
+    distance.textContent = `${haversine_d} km`;
+    recyclerItem.appendChild(distance);
+
     // CREATE ADDRESS ELEMENT
     // TODO: link address to the google URL
     let address = document.createElement('p');
@@ -122,7 +123,7 @@ function displayRestaurant(placeResult, status) {
     // CREATE PHONE NUM ELEMENT
     let phoneNum = document.createElement('p');
     phoneNum.classList.add('details');
-    address.textContent = placeResult.formatted_phone_number;
+    phoneNum.textContent = placeResult.formatted_phone_number;
     recyclerItem.appendChild(phoneNum);
 
     // CREATE WEBSITE ELEMENT
@@ -138,9 +139,8 @@ function displayRestaurant(placeResult, status) {
       websitePara.textContent = 'No website available';
     }
     recyclerItem.appendChild(websitePara);
-
-    recyclerView.appendChild(recyclerItem);
   }
+  recyclerView.appendChild(recyclerItem);
 }
 
 
@@ -164,18 +164,9 @@ function get_rand(array) {
 }
 
 
-// TODO: wondering if we could add the distances field to the results object
-function calculate_distances(coordinates) {
-  var distances = [];
-  for (i = 0; i < coordinates.length; i++) {
-    distances.push(haversine_distance(pos.lat,pos.lng,
-      coordinates[i].lat,coordinates[i].lng));
-  }
-}
-
-
-// straight line distance between two points on a spheroid 
+// straight line distance in km between two points on a spheroid 
 // approximating earth as a sphere  
+// TODO: round to hundredths
 function haversine_distance(lat1, lng1, lat2, lng2) {
   var p = 0.017453292519943295;    // Math.PI / 180
   var c = Math.cos;
