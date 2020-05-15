@@ -42,12 +42,14 @@
       font-size: 16px;
     }
    
-    .mainFragment {
+    .main-fragment {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 1000px;
+      /*position: relative;*/
+      max-width: 1000px;
+      /*min-width: 1000px;*/
     }
 
     .dropbtn {
@@ -94,7 +96,7 @@
       margin: auto; 
       /*text-align: center;*/
       height: 50px;
-      width: 1000px;
+      width: 100%;
       border: 3px solid white;
       background: white;
       /*padding: 10px;*/
@@ -102,14 +104,13 @@
 
     #resultsRecyclerView {
       margin: auto;
-      /*height: 50px;*/
-      width: 1000px;
+      width: 100%;
       border: 3px solid white;
     }
 
     #otherOptionsView {
       margin: auto;
       height: 50px;
-      width: 1000px;
+      width: 100%;
       border: 3px solid white;
     }
