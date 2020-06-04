@@ -79,7 +79,7 @@ function getRandomRestaurants(results) {
     let request = {
       placeId: place.place_id,
       fields: ['name', 'formatted_address', 'formatted_phone_number',
-      'website', 'opening_hours', 'rating', 'price_level']
+      'website', 'url', 'opening_hours', 'rating', 'price_level']
     };
     
     service.getDetails(request, displayRestaurant);
@@ -90,31 +90,40 @@ function getRandomRestaurants(results) {
 let recyclerView;
 function displayRestaurant(placeResult, status) {
   recyclerView = document.getElementById('resultsRecyclerView');
+  recyclerItem = document.createElement('div');
+  recyclerItem.classList.add('restaurant-item');
 
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     // i have no idea what html elements to actually use
-    // let results = document.createElement('p');
-    // TODO: PHONE NUMBER, DISTANCE (OUR OWN FUNCTION), OPENING HOURS, PRICE LEVEL(?)
+    // TODO: DISTANCE (OUR OWN FUNCTION), OPENING HOURS, PRICE LEVEL(?)
+    // TODO: probably change the class list a bit depending on how we want to style each element
 
     // CREATE NAME ELEMENT
     let name = document.createElement('h1');
     name.classList.add('place');
     name.textContent = placeResult.name;
-    recyclerView.appendChild(name);
+    recyclerItem.appendChild(name);
 
     // CREATE RATING ELEMENT
     if (placeResult.rating) {
       let rating = document.createElement('p');
       rating.classList.add('details');
       rating.textContent = `Rating: ${placeResult.rating}`;
-      recyclerView.appendChild(rating);
+      recyclerItem.appendChild(rating);
     }
 
     // CREATE ADDRESS ELEMENT
+    // TODO: link address to the google URL
     let address = document.createElement('p');
     address.classList.add('details');
     address.textContent = placeResult.formatted_address;
-    recyclerView.appendChild(address);
+    recyclerItem.appendChild(address);
+
+    // CREATE PHONE NUM ELEMENT
+    let phoneNum = document.createElement('p');
+    phoneNum.classList.add('details');
+    address.textContent = placeResult.formatted_phone_number;
+    recyclerItem.appendChild(phoneNum);
 
     // CREATE WEBSITE ELEMENT
     let websitePara = document.createElement('p');
@@ -128,8 +137,9 @@ function displayRestaurant(placeResult, status) {
     } else {
       websitePara.textContent = 'No website available';
     }
-    recyclerView.appendChild(websitePara);
+    recyclerItem.appendChild(websitePara);
 
+    recyclerView.appendChild(recyclerItem);
   }
 }
 
@@ -176,10 +186,23 @@ function haversine_distance(lat1, lng1, lat2, lng2) {
   return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
 }
 
+//call another function here where we reset some variables
+// then in that function, call main
 
-var btnRefresh = document.getElementById('refresh').addEventListener("click", main);
+function refreshfct(){
+	//clear page
+	//get random restaurant
+	rand_restaurants = []
+	rand_restaurants.forEach(place => {
+    let request = {
+      placeId: place.place_id,
+      fields: ['name', 'formatted_address', 'formatted_phone_number',
+      'website', 'url', 'opening_hours', 'rating', 'price_level']
+    };
+    
+    service.getDetails(request, displayRestaurant);
+  })
+}
 
 
-
-
-
+var btnRefresh = document.getElementById('refresh').addEventListener("click", refreshfct);
