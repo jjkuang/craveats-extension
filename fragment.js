@@ -95,7 +95,7 @@ function displayRestaurant(placeResult, status) {
     name.classList.add('details');
     name.id = 'name-detail';
     name.textContent = placeResult.name;
-    recyclerView.appendChild(name);
+    recyclerItem.appendChild(name);
 
     let rating = document.createElement('p');
     rating.classList.add('details');
@@ -159,8 +159,7 @@ function displayRestaurant(placeResult, status) {
     hoursOfDay.id = 'hours-detail';
     recyclerItem.appendChild(hoursOfDay); 
   }
-  recyclerFrag.appendChild(recyclerItem);
-  recyclerView.appendChild(recyclerFrag);
+  recyclerView.appendChild(recyclerItem);
 }
 
 
@@ -184,7 +183,7 @@ function rankByDistance(restaurant) {
   frag.childNodes[0].childNodes[1].textContent = rating;
   frag.childNodes[0].childNodes[2].textContent = distance;  
   frag.childNodes[0].childNodes[3].textContent = num;
-  frag.childNodes[0].childNodes[4].childNodes[0].childNodes[0].textContent = address;
+  frag.childNodes[0].childNodes[4].childNodes[0].childNodes[0] = address;
   frag.childNodes[0].childNodes[4].childNodes[0].href = addressUrl;
   if (frag.childNodes[0].childNodes[5].childNodes[0].hasChildNodes()) {
     frag.childNodes[0].childNodes[5].childNodes[0].childNodes[0].textContent = website;
@@ -197,7 +196,7 @@ function rankByDistance(restaurant) {
   let date = new Date();
   today = date.getDay();
   hoursIdx = (today == 0 ? 6 : today-1);
-  frag.childNodes[0].childNodes[6].textContent = hours[hoursIdx];
+  frag.childNodes[0].childNodes[6] = hours[hoursIdx];
 
   document.getElementById('resultsRecyclerView').appendChild(frag);
 }
@@ -264,6 +263,7 @@ document.getElementById('distance-sort')
             makeDetailsRequest(restaurant, rankByDistance);
           });
         });
+
 
 
 
