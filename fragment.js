@@ -12,7 +12,6 @@ function loadScript(scriptSrc, loadedCallback) {
 loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuW4NSq2HJ9WpB7gmYimPBXSBRuNGkPI&libraries=places", 
           main);
 
-
 let pos;
 function main() {
   if (navigator.geolocation) {
@@ -45,23 +44,24 @@ function getNearbyPlaces(position) {
 }
 
 
+let allRestaurants;
 function nearbyCallback(results, status) {
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     console.log(results);
     getRandomRestaurants(results);
-
-    // get coords to calculate distance from location
-    // TODO: refactor into separate fxn
-    var coordinates = [];
-    for (var i = 0; i < results.length; i++) {
-      coords = {
-        lat: results[i].geometry.location.lat(), 
-        lng: results[i].geometry.location.lng()
-      };
-      coordinates.push(coords);
-    }
-    calculate_distances(coordinates);
+    allRestaurants = results;
   }
+}
+
+
+function makeDetailsRequest(restaurant, funcName) {
+  let request = {
+    placeId: restaurant.place_id,
+    fields: ['name', 'geometry', 'formatted_address', 'formatted_phone_number',
+    'website', 'url', 'opening_hours', 'rating', 'price_level']
+  };
+  
+  service.getDetails(request, funcName);
 }
 
 
@@ -74,47 +74,60 @@ function getRandomRestaurants(results) {
   }
   console.log(rand_restaurants);
 
-  // make the place details request for each restaurant to be displayed
-  rand_restaurants.forEach(place => {
-    let request = {
-      placeId: place.place_id,
-      fields: ['name', 'formatted_address', 'formatted_phone_number',
-      'website', 'opening_hours', 'rating', 'price_level']
-    };
-    
-    service.getDetails(request, displayRestaurant);
-  })
+  rand_restaurants.forEach(place => {makeDetailsRequest(place, displayRestaurant)});
 }
 
 
-let recyclerView;
+// need something async here/promise 
+let recyclerView = document.getElementById('resultsRecyclerView');
 function displayRestaurant(placeResult, status) {
-  recyclerView = document.getElementById('resultsRecyclerView');
+  console.log(placeResult);
+  recyclerItem = document.createElement('div');
+  recyclerItem.classList.add('restaurant-item');
 
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     // i have no idea what html elements to actually use
-    // let results = document.createElement('p');
-    // TODO: PHONE NUMBER, DISTANCE (OUR OWN FUNCTION), OPENING HOURS, PRICE LEVEL(?)
+    // TODO: PRICE LEVEL(?)
+    // TODO: probably change the class list a bit depending on how we want to style each element
 
     // CREATE NAME ELEMENT
     let name = document.createElement('h1');
-    name.classList.add('place');
+    name.classList.add('details');
+    name.id = 'name-detail';
     name.textContent = placeResult.name;
     recyclerView.appendChild(name);
 
-    // CREATE RATING ELEMENT
-    if (placeResult.rating) {
-      let rating = document.createElement('p');
-      rating.classList.add('details');
-      rating.textContent = `Rating: ${placeResult.rating}`;
-      recyclerView.appendChild(rating);
-    }
+    let rating = document.createElement('p');
+    rating.classList.add('details');
+    rating.id = 'rating-detail';
+    rating.textContent = (placeResult.rating ? `Rating: ${placeResult.rating}` : 'Rating: N/A');
+    recyclerItem.appendChild(rating);
+
+    // CREATE DISTANCE ELEMENT
+    let distance = document.createElement('p');
+    distance.classList.add('details');
+    distance.id = 'distance-detail';
+    distance.textContent = `${get_distance(placeResult)} km`;
+    recyclerItem.appendChild(distance);
+
+    // CREATE PHONE NUM ELEMENT
+    let phoneNum = document.createElement('p');
+    phoneNum.classList.add('details');
+    phoneNum.id = 'phone-num-detail';
+    phoneNum.textContent = placeResult.formatted_phone_number;
+    recyclerItem.appendChild(phoneNum);
 
     // CREATE ADDRESS ELEMENT
     let address = document.createElement('p');
+    let addressLink = document.createElement('a');
+    let addressURL = document.createTextNode(placeResult.formatted_address);
+    addressLink.appendChild(addressURL);
+    addressLink.href = placeResult.url;
+    addressLink.target = '_blank';
     address.classList.add('details');
-    address.textContent = placeResult.formatted_address;
-    recyclerView.appendChild(address);
+    address.id = 'address-detail';
+    address.appendChild(addressLink);
+    recyclerItem.appendChild(address);
 
     // CREATE WEBSITE ELEMENT
     let websitePara = document.createElement('p');
@@ -124,13 +137,79 @@ function displayRestaurant(placeResult, status) {
       websiteLink.appendChild(websiteUrl);
       websiteLink.title = placeResult.website;
       websiteLink.href = placeResult.website;
+      websiteLink.target = '_blank';
       websitePara.appendChild(websiteLink);        
     } else {
       websitePara.textContent = 'No website available';
     }
-    recyclerView.appendChild(websitePara);
+    websitePara.classList.add('details');
+    websitePara.id = 'website-detail';
+    recyclerItem.appendChild(websitePara);
 
+    // CREATE OPENING HOURS ELEMENT
+    // only get the hours for the current day
+    // just get weekday_text. 0-6, 0 is monday
+    // getDay() returns 0-6, 0 is sunday
+    let hoursOfDay = document.createElement('p');
+    let date = new Date();
+    today = date.getDay();
+    hoursIdx = (today == 0 ? 6 : today-1);
+    hoursOfDay.textContent = placeResult.opening_hours.weekday_text[hoursIdx];
+    hoursOfDay.classList.add('details');
+    hoursOfDay.id = 'hours-detail';
+    recyclerItem.appendChild(hoursOfDay); 
   }
+  recyclerFrag.appendChild(recyclerItem);
+  recyclerView.appendChild(recyclerFrag);
+}
+
+
+// the allRestaurants array gives us order by distance 
+function rankByDistance(restaurant) {
+  let frag = document.createDocumentFragment();
+
+  // extract the recycler item div by class into frag
+  frag.appendChild(document.getElementsByClassName('restaurant-item')[0]);
+  let name = restaurant.name;
+  let rating = (restaurant.rating ? `Rating: ${restaurant.rating}` : 'Rating: N/A');
+  let distance = `${get_distance(restaurant)} km`;
+  let num = restaurant.formatted_phone_number;
+  let address = restaurant.formatted_address;
+  let addressUrl = restaurant.url;
+  let website = restaurant.website;
+  let hours = restaurant.opening_hours.weekday_text;
+
+  // modify the details
+  frag.childNodes[0].childNodes[0].textContent = name;
+  frag.childNodes[0].childNodes[1].textContent = rating;
+  frag.childNodes[0].childNodes[2].textContent = distance;  
+  frag.childNodes[0].childNodes[3].textContent = num;
+  frag.childNodes[0].childNodes[4].childNodes[0].childNodes[0].textContent = address;
+  frag.childNodes[0].childNodes[4].childNodes[0].href = addressUrl;
+  if (frag.childNodes[0].childNodes[5].childNodes[0].hasChildNodes()) {
+    frag.childNodes[0].childNodes[5].childNodes[0].childNodes[0].textContent = website;
+    frag.childNodes[0].childNodes[5].childNodes[0].title = website;
+    frag.childNodes[0].childNodes[5].childNodes[0].href = website;
+  } else {
+    frag.childNodes[0].childNodes[5].textContent = 'No website available';
+    
+  }
+  let date = new Date();
+  today = date.getDay();
+  hoursIdx = (today == 0 ? 6 : today-1);
+  frag.childNodes[0].childNodes[6].textContent = hours[hoursIdx];
+
+  document.getElementById('resultsRecyclerView').appendChild(frag);
+}
+
+
+function rankByRating() {
+  allRestaurants.filter(restaurant => restaurant.rating)
+            .sort((a, b) => a.rating > b.rating ? -1 : 1);
+  // allRestaurants.slice(0,3)
+  //       .forEach(result => {
+  //           places.innerHTML += `<li>${result.name} - ${result.rating}</li>`;
+  //       });
 }
 
 
@@ -154,17 +233,16 @@ function get_rand(array) {
 }
 
 
-// TODO: wondering if we could add the distances field to the results object
-function calculate_distances(coordinates) {
-  var distances = [];
-  for (i = 0; i < coordinates.length; i++) {
-    distances.push(haversine_distance(pos.lat,pos.lng,
-      coordinates[i].lat,coordinates[i].lng));
-  }
+function get_distance(restaurant) {
+  let coords = {
+    lat: restaurant.geometry.location.lat(), 
+    lng: restaurant.geometry.location.lng()
+  };
+
+  return haversine_distance(pos.lat,pos.lng,coords.lat,coords.lng);
 }
 
-
-// straight line distance between two points on a spheroid 
+// straight line distance in km between two points on a spheroid 
 // approximating earth as a sphere  
 function haversine_distance(lat1, lng1, lat2, lng2) {
   var p = 0.017453292519943295;    // Math.PI / 180
@@ -173,12 +251,19 @@ function haversine_distance(lat1, lng1, lat2, lng2) {
           c(lat1 * p) * c(lat2 * p) * 
           (1 - c((lng2 - lng1) * p))/2;
 
-  return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+  var haversine_distance = 12742 * Math.asin(Math.sqrt(a));
+
+  return haversine_distance.toFixed(2); // 2 * R; R = 6371 km
 }
 
 
-var btnRefresh = document.getElementById('refresh').addEventListener("click", main);
-
+document.getElementById('refresh').addEventListener("click", main);
+document.getElementById('distance-sort')
+        .addEventListener("click", () => {
+          allRestaurants.slice(0,4).forEach(restaurant => {
+            makeDetailsRequest(restaurant, rankByDistance);
+          });
+        });
 
 
 
