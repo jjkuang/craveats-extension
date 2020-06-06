@@ -1,59 +1,71 @@
+    html, body {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      /*background: linear-gradient(to right, #366775 0%, #366775 0%, #366775 33%, #F7D0CB 33%, #F7D0CB 66%, #366775 66%, #366775 100%);*/
+      background: #366775;
+      background-size: 100% 100%;
+    }
+
+    h1 {
+
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 14px;
+    }
+
     button {
+      margin: auto;
+      margin-top: 10px;
       padding: 12px 28px;
-      /*margin: 5px;*/
-      background-color: white;
+      border: 1px solid #a2b4c0; 
+      border-radius: 10px;
+      background: #D66D50;
+      color: white;
       cursor: pointer;
       outline: none;
       font-size: 16px;
       text-align: center;
     }
-/*fix this so we have a click button and a drop down button*/
+    
+    /*fix this so we have a click button and a drop down button*/
     button:active {
       background-color: #e7e7e7;
-      transform: translateY(3px);
-    }
-
-    body {
-      background-image: url('teal.jpg');
-      background-size: 100% 100%;
-    }
-
-    p {
-      text-align: center;
-      color: black;
-    }
-
-    h1 {
-      background-color: MediumSeaGreen; 
-      text-align: center;
-      color: white;
-      font-size: 18px;
-      border-style: none none none solid;
-      border-color: blue;
-      /*background: rgba(0, 128, 0, 0.3) green background with 30% opacity*/
-    }
-
-    h2 {
-      text-align: center;
-      color: white;
-      font-size: 16px;
     }
    
-    .mainFragment {
+    .main-banner {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: 1000px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 25%;
+      /*margin-right: auto;
+      margin-left: auto;*/
+      /*height: 90%;*/
+      max-width: 600px;
+      background: #f7d0cb;
     }
+    
+    /*.main-banner > div {
+      flex: 1;
+      display: inline-block;
+    }*/
 
     .dropbtn {
-      background-color: blue;
-      color: white;
+      /*color: white;
       padding: 16px;
-      font-size: 16px;
+      font-size: 16px;*/
+      background-color: #F4AC94;
       border: none;
-      cursor: pointer;
+      border-radius: 0px;
+      /*cursor: pointer;*/
     }
 
     .dropdown {
@@ -92,41 +104,96 @@
     }
 
     .dropdown:hover .dropbtn {
-      background-color: #3e8e41;
+      background-color: #f7d0cb;
     }
 
     #topCardView {
-      margin: auto; 
+      margin-top: 10px;
+      margin-bottom: 10px; 
       /*text-align: center;*/
-      height: 50px;
-      width: 1000px;
-      border: 3px solid white;
-      background: white;
-      /*padding: 10px;*/
+      /*height: 50px;*/
+      width: 600px;
+      /*border: 3px solid white;*/
+      background: #f7d0cb;
+      /*padding: 17px;*/
+      font-size: 18px;
     }
 
     #resultsRecyclerView {
-      margin: auto;
-      /*height: 50px;*/
-      width: 1000px;
-      border: 3px solid white;
+      /*margin: auto;*/
+      height: 100%;
+      width: 600px;
+      /*border: 3px solid white;*/
+      background: #f7d0cb;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .restaurant-item {
+      background: #F4AC94;
+      /*padding: 1px;*/
+      margin-bottom: 10px;
+      margin-top: 10px;
+      flex: 1;
+      /*height: 200px;*/
+    }
+
+    .restaurant-item div {
+      display: inline-flex;
+      flex-direction: column;
+    }
+
+    #left-details-container {
+      width: 30%;
+    }
+
+    #right-details-container {
+      width: 70%;
+    }
+
+    .details { 
+      font-size: 14px;
+      margin-inline-start: 15px;
+      margin-inline-end: 15px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .title-hr {
+      margin-inline-start: 15px;
+      margin-inline-end: 15px;
+      border: 0.3px solid #D66D50;
+    }
+
+    #name-detail {
+      margin-inline-start: 15px;
+      font-size: 18px;
+      color: #366775;
     }
 
     #otherOptionsView {
-      margin: auto;
       height: 50px;
-      width: 1000px;
-      border: 3px solid white;
+      width: 300px;
+      background: #f7d0cb;
+      border-radius: 5px;
+      /*border: 3px solid white;*/
     }
 
     #refresh {
+      margin: auto;
+      margin-top: 10px;
       padding: 12px 28px;
-      margin: 5px;
-      background-color: white;
-      border: 2px solid #e7e7e7; 
-      border-radius: 5px;
+      border: 1px solid #a2b4c0; 
+      border-radius: 10px;
+      background: #D66D50;
+      color: white;
       cursor: pointer;
       outline: none;
       font-size: 16px;
       text-align: center;
+    }
+
+    #map {
+      display: none;
     }
