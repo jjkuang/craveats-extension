@@ -197,23 +197,23 @@ function rankByDistance(restaurant) {
 
   // modify the details
   frag.childNodes[0].childNodes[0].textContent = name;
-  frag.childNodes[0].childNodes[2].textContent = rating;
-  frag.childNodes[0].childNodes[3].textContent = distance;  
-  frag.childNodes[0].childNodes[4].textContent = num;
-  frag.childNodes[0].childNodes[5].childNodes[0].childNodes[0] = address;
-  frag.childNodes[0].childNodes[5].childNodes[0].href = addressUrl;
-  if (frag.childNodes[0].childNodes[6].childNodes[0].hasChildNodes()) {
-    frag.childNodes[0].childNodes[6].childNodes[0].childNodes[0].textContent = website;
-    frag.childNodes[0].childNodes[6].childNodes[0].title = website;
-    frag.childNodes[0].childNodes[6].childNodes[0].href = website;
+  frag.childNodes[0].childNodes[2].childNodes[0].textContent = rating;
+  frag.childNodes[0].childNodes[2].childNodes[1].textContent = distance;  
+  frag.childNodes[0].childNodes[2].childNodes[2].textContent = num;
+  frag.childNodes[0].childNodes[3].childNodes[0].childNodes[0].childNodes[0] = address;
+  frag.childNodes[0].childNodes[3].childNodes[0].childNodes[0].href = addressUrl;
+  if (frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].hasChildNodes()) {
+    frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].childNodes[0].textContent = website;
+    frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].title = website;
+    frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].href = website;
   } else {
-    frag.childNodes[0].childNodes[6].textContent = 'No website available';
+    frag.childNodes[0].childNodes[3].childNodes[1].textContent = 'No website available';
     
   }
   let date = new Date();
   today = date.getDay();
   hoursIdx = (today == 0 ? 6 : today-1);
-  frag.childNodes[0].childNodes[7] = hours[hoursIdx];
+  frag.childNodes[0].childNodes[3].childNodes[2] = hours[hoursIdx];
 
   document.getElementById('resultsRecyclerView').appendChild(frag);
 }
