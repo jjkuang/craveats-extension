@@ -90,6 +90,14 @@ function displayRestaurant(placeResult, status) {
     // TODO: PRICE LEVEL(?)
     // TODO: probably change the class list a bit depending on how we want to style each element
 
+    // CREATE LEFT SIDE CONTAINER
+    let leftDiv = document.createElement('div');
+    leftDiv.id = 'left-details-container';
+
+    // CREATE RIGHT SIDE CONTAINER
+    let rightDiv = document.createElement('div');
+    rightDiv.id = 'right-details-container';
+
     // CREATE NAME ELEMENT
     let name = document.createElement('h1');
     name.classList.add('details');
@@ -97,25 +105,31 @@ function displayRestaurant(placeResult, status) {
     name.textContent = placeResult.name;
     recyclerItem.appendChild(name);
 
+    // HR
+    let hr = document.createElement('hr');
+    hr.classList.add('title-hr');
+    recyclerItem.appendChild(hr);
+
+    // CREATE RATING ELEMENT
     let rating = document.createElement('p');
     rating.classList.add('details');
     rating.id = 'rating-detail';
     rating.textContent = (placeResult.rating ? `Rating: ${placeResult.rating}` : 'Rating: N/A');
-    recyclerItem.appendChild(rating);
+    leftDiv.appendChild(rating);
 
     // CREATE DISTANCE ELEMENT
     let distance = document.createElement('p');
     distance.classList.add('details');
     distance.id = 'distance-detail';
     distance.textContent = `${get_distance(placeResult)} km`;
-    recyclerItem.appendChild(distance);
+    leftDiv.appendChild(distance);
 
     // CREATE PHONE NUM ELEMENT
     let phoneNum = document.createElement('p');
+    phoneNum.textContent = (placeResult.formatted_phone_number ? placeResult.formatted_phone_number: 'No phone number available');
     phoneNum.classList.add('details');
     phoneNum.id = 'phone-num-detail';
-    phoneNum.textContent = placeResult.formatted_phone_number;
-    recyclerItem.appendChild(phoneNum);
+    leftDiv.appendChild(phoneNum);  
 
     // CREATE DISTANCE ELEMENT
     let coords = {
@@ -139,7 +153,7 @@ function displayRestaurant(placeResult, status) {
     address.classList.add('details');
     address.id = 'address-detail';
     address.appendChild(addressLink);
-    recyclerItem.appendChild(address);
+    rightDiv.appendChild(address);
 
     // CREATE WEBSITE ELEMENT
     let websitePara = document.createElement('p');
@@ -156,7 +170,7 @@ function displayRestaurant(placeResult, status) {
     }
     websitePara.classList.add('details');
     websitePara.id = 'website-detail';
-    recyclerItem.appendChild(websitePara);
+    rightDiv.appendChild(websitePara);
 
     // CREATE OPENING HOURS ELEMENT
     // only get the hours for the current day
@@ -169,7 +183,10 @@ function displayRestaurant(placeResult, status) {
     hoursOfDay.textContent = placeResult.opening_hours.weekday_text[hoursIdx];
     hoursOfDay.classList.add('details');
     hoursOfDay.id = 'hours-detail';
-    recyclerItem.appendChild(hoursOfDay); 
+    rightDiv.appendChild(hoursOfDay);
+
+    recyclerItem.appendChild(leftDiv);
+    recyclerItem.appendChild(rightDiv);
   }
   recyclerView.appendChild(recyclerItem);
 }
@@ -184,7 +201,7 @@ function rankByDistance(restaurant) {
   let name = restaurant.name;
   let rating = (restaurant.rating ? `Rating: ${restaurant.rating}` : 'Rating: N/A');
   let distance = `${get_distance(restaurant)} km`;
-  let num = restaurant.formatted_phone_number;
+  let num = (restaurant.formatted_phone_number ? restaurant.formatted_phone_number: 'No phone number available');
   let address = restaurant.formatted_address;
   let addressUrl = restaurant.url;
   let website = restaurant.website;
@@ -192,35 +209,35 @@ function rankByDistance(restaurant) {
 
   // modify the details
   frag.childNodes[0].childNodes[0].textContent = name;
-  frag.childNodes[0].childNodes[1].textContent = rating;
-  frag.childNodes[0].childNodes[2].textContent = distance;  
-  frag.childNodes[0].childNodes[3].textContent = num;
-  frag.childNodes[0].childNodes[4].childNodes[0].childNodes[0] = address;
-  frag.childNodes[0].childNodes[4].childNodes[0].href = addressUrl;
-  if (frag.childNodes[0].childNodes[5].childNodes[0].hasChildNodes()) {
-    frag.childNodes[0].childNodes[5].childNodes[0].childNodes[0].textContent = website;
-    frag.childNodes[0].childNodes[5].childNodes[0].title = website;
-    frag.childNodes[0].childNodes[5].childNodes[0].href = website;
+  frag.childNodes[0].childNodes[2].childNodes[0].textContent = rating;
+  frag.childNodes[0].childNodes[2].childNodes[1].textContent = distance;  
+  frag.childNodes[0].childNodes[2].childNodes[2].textContent = num;
+  frag.childNodes[0].childNodes[3].childNodes[0].childNodes[0].childNodes[0] = address;
+  frag.childNodes[0].childNodes[3].childNodes[0].childNodes[0].href = addressUrl;
+  if (frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].hasChildNodes()) {
+    frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].childNodes[0].textContent = website;
+    frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].title = website;
+    frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].href = website;
   } else {
-    frag.childNodes[0].childNodes[5].textContent = 'No website available';
+    frag.childNodes[0].childNodes[3].childNodes[1].textContent = 'No website available';
     
   }
   let date = new Date();
   today = date.getDay();
   hoursIdx = (today == 0 ? 6 : today-1);
-  frag.childNodes[0].childNodes[6] = hours[hoursIdx];
+  frag.childNodes[0].childNodes[3].childNodes[2] = hours[hoursIdx];
 
   document.getElementById('resultsRecyclerView').appendChild(frag);
 }
 
 
 function rankByRating() {
-  allRestaurants.filter(restaurant => restaurant.rating)
-            .sort((a, b) => a.rating > b.rating ? -1 : 1);
-  // allRestaurants.slice(0,3)
-  //       .forEach(result => {
-  //           places.innerHTML += `<li>${result.name} - ${result.rating}</li>`;
-  //       });
+  ratedRestaurants = allRestaurants.filter(restaurant => restaurant.rating)
+                                   .sort((a, b) => a.rating > b.rating ? -1 : 1);
+  ratedRestaurants.slice(0,4)
+        .forEach(restaurant => {
+          makeDetailsRequest(restaurant, rankByDistance);
+        });
 }
 
 
@@ -276,6 +293,8 @@ document.getElementById('distance-sort')
             makeDetailsRequest(restaurant, rankByDistance);
           });
         });
+document.getElementById('rating-sort')
+        .addEventListener("click", rankByRating);
 
 
 
