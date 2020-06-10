@@ -117,7 +117,19 @@ function displayRestaurant(placeResult, status) {
     phoneNum.textContent = placeResult.formatted_phone_number;
     recyclerItem.appendChild(phoneNum);
 
+    // CREATE DISTANCE ELEMENT
+    let coords = {
+      lat: placeResult.geometry.location.lat(), 
+      lng: placeResult.geometry.location.lng()
+    };
+    haversine_d = haversine_distance(pos.lat,pos.lng,coords.lat,coords.lng);
+    let distance = document.createElement('p');
+    distance.classList.add('details');
+    distance.textContent = `${haversine_d} km`;
+    recyclerItem.appendChild(distance);
+
     // CREATE ADDRESS ELEMENT
+    // TODO: link address to the google URL
     let address = document.createElement('p');
     let addressLink = document.createElement('a');
     let addressURL = document.createTextNode(placeResult.formatted_address);
@@ -243,6 +255,7 @@ function get_distance(restaurant) {
 
 // straight line distance in km between two points on a spheroid 
 // approximating earth as a sphere  
+// TODO: round to hundredths
 function haversine_distance(lat1, lng1, lat2, lng2) {
   var p = 0.017453292519943295;    // Math.PI / 180
   var c = Math.cos;
