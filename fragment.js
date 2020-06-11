@@ -72,13 +72,12 @@ function getRandomRestaurants(results) {
   for (var i = 0; i < NUM_RESTAURANTS_DISPLAYED; i++) {
     get_rand(results);
   }
-  console.log(rand_restaurants);
 
   rand_restaurants.forEach(place => {makeDetailsRequest(place, displayRestaurant)});
 }
 
 
-// need something async here/promise 
+// TODO: need something async here/promise?
 let recyclerView = document.getElementById('resultsRecyclerView');
 function displayRestaurant(placeResult, status) {
   console.log(placeResult);
@@ -180,8 +179,18 @@ function displayRestaurant(placeResult, status) {
 }
 
 
+function refresh() {
+  rand_restaurants = [];
+  for (var i = 0; i < NUM_RESTAURANTS_DISPLAYED; i++) {
+    get_rand(allRestaurants);
+  }
+  console.log(rand_restaurants);
+  rand_restaurants.forEach(restaurant => {makeDetailsRequest(restaurant, modifyDetails)});
+}
+
+
 // the allRestaurants array gives us order by distance 
-function rankByDistance(restaurant) {
+function modifyDetails(restaurant) {
   let frag = document.createDocumentFragment();
 
   // extract the recycler item div by class into frag
@@ -224,7 +233,7 @@ function rankByRating() {
                                    .sort((a, b) => a.rating > b.rating ? -1 : 1);
   ratedRestaurants.slice(0,4)
         .forEach(restaurant => {
-          makeDetailsRequest(restaurant, rankByDistance);
+          makeDetailsRequest(restaurant, modifyDetails);
         });
 }
 
@@ -273,11 +282,11 @@ function haversine_distance(lat1, lng1, lat2, lng2) {
 }
 
 
-document.getElementById('refresh').addEventListener("click", main);
+document.getElementById('refresh').addEventListener("click", refresh);
 document.getElementById('distance-sort')
         .addEventListener("click", () => {
           allRestaurants.slice(0,4).forEach(restaurant => {
-            makeDetailsRequest(restaurant, rankByDistance);
+            makeDetailsRequest(restaurant, modifyDetails);
           });
         });
 document.getElementById('rating-sort')
