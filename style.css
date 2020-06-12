@@ -141,6 +141,11 @@
       flex-direction: column;
     }
 
+    #top-details-container {
+      display: flex;
+      flex-direction: row;
+    }
+
     #left-details-container {
       width: 30%;
     }
@@ -153,6 +158,8 @@
       font-size: 14px;
       margin-inline-start: 15px;
       margin-inline-end: 15px;
+      margin-top: 10px;
+      margin-bottom: 10px;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
@@ -161,13 +168,66 @@
     .title-hr {
       margin-inline-start: 15px;
       margin-inline-end: 15px;
+      margin-top: 0;
       border: 0.3px solid #D66D50;
+    }
+
+    .bookmark-icon {
+      background-image: url('icons/bookmark-icon.png');
+      background-repeat: no-repeat;
+      background-size: contain;
+      height: 28px;
+      width: 28px;
+      margin-inline-end: 15px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    #bookmark-icon:hover {
+      background-image: url('icons/bookmark-icon-hover.png');
+      cursor: pointer;
     }
 
     #name-detail {
       margin-inline-start: 15px;
+      width: 100%;
       font-size: 18px;
       color: #366775;
+    }
+
+    .link-details {
+      color: #366775;
+    }
+
+    .icon {
+      background-repeat: no-repeat;
+      background-position: left;
+      background-size: contain;
+      text-indent: 25px;
+    }
+
+    .distance-icon {
+      background-image: url('icons/distance-icon.png');
+    }
+
+    .rating-icon {
+      background-image: url('icons/rating-icon.png');
+    }
+
+    .phone-icon {
+      background-image: url('icons/phone-icon.png');
+    }
+
+    .address-icon {
+      background-image: url('icons/address-icon.png');
+    }
+
+    .website-icon {
+      background-image: url('icons/website-icon.png');
+    }
+
+    .hours-icon {
+      background-image: url('icons/hours-icon.png');
     }
 
     #otherOptionsView {

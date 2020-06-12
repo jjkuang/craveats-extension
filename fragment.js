@@ -89,6 +89,10 @@ function displayRestaurant(placeResult, status) {
     // TODO: PRICE LEVEL(?)
     // TODO: probably change the class list a bit depending on how we want to style each element
 
+    // CREATE TOP CONTAINER
+    let topDiv = document.createElement('div');
+    topDiv.id = 'top-details-container';
+
     // CREATE LEFT SIDE CONTAINER
     let leftDiv = document.createElement('div');
     leftDiv.id = 'left-details-container';
@@ -102,7 +106,15 @@ function displayRestaurant(placeResult, status) {
     name.classList.add('details');
     name.id = 'name-detail';
     name.textContent = placeResult.name;
-    recyclerItem.appendChild(name);
+    topDiv.appendChild(name);
+
+    // CREATE BOOKMARK ELEMENT
+    let bookmark = document.createElement('span');
+    bookmark.classList.add('bookmark-icon');
+    bookmark.id = 'bookmark-icon';
+    topDiv.appendChild(bookmark);
+
+    recyclerItem.appendChild(topDiv);
 
     // HR
     let hr = document.createElement('hr');
@@ -110,40 +122,49 @@ function displayRestaurant(placeResult, status) {
     recyclerItem.appendChild(hr);
 
     // CREATE RATING ELEMENT
-    let rating = document.createElement('p');
+    let rating = document.createElement('span');
     rating.classList.add('details');
+    rating.classList.add('rating-icon');
+    rating.classList.add('icon');
     rating.id = 'rating-detail';
     rating.textContent = (placeResult.rating ? `Rating: ${placeResult.rating}` : 'Rating: N/A');
     leftDiv.appendChild(rating);
 
     // CREATE DISTANCE ELEMENT
-    let distance = document.createElement('p');
+    let distance = document.createElement('span');
     distance.classList.add('details');
+    distance.classList.add('distance-icon');
+    distance.classList.add('icon');
     distance.id = 'distance-detail';
     distance.textContent = `${get_distance(placeResult)} km`;
     leftDiv.appendChild(distance);
 
     // CREATE PHONE NUM ELEMENT
-    let phoneNum = document.createElement('p');
+    let phoneNum = document.createElement('span');
     phoneNum.textContent = (placeResult.formatted_phone_number ? placeResult.formatted_phone_number: 'No phone number available');
     phoneNum.classList.add('details');
+    phoneNum.classList.add('phone-icon');
+    phoneNum.classList.add('icon');
     phoneNum.id = 'phone-num-detail';
     leftDiv.appendChild(phoneNum);  
 
     // CREATE ADDRESS ELEMENT
-    let address = document.createElement('p');
+    let address = document.createElement('span');
     let addressLink = document.createElement('a');
     let addressURL = document.createTextNode(placeResult.formatted_address);
     addressLink.appendChild(addressURL);
     addressLink.href = placeResult.url;
     addressLink.target = '_blank';
+    addressLink.classList.add('link-details');
     address.classList.add('details');
+    address.classList.add('address-icon');
+    address.classList.add('icon');
     address.id = 'address-detail';
     address.appendChild(addressLink);
     rightDiv.appendChild(address);
 
     // CREATE WEBSITE ELEMENT
-    let websitePara = document.createElement('p');
+    let website = document.createElement('span');
     if (placeResult.website) {
       let websiteLink = document.createElement('a');
       let websiteUrl = document.createTextNode(placeResult.website);
@@ -151,24 +172,29 @@ function displayRestaurant(placeResult, status) {
       websiteLink.title = placeResult.website;
       websiteLink.href = placeResult.website;
       websiteLink.target = '_blank';
-      websitePara.appendChild(websiteLink);        
+      websiteLink.classList.add('link-details');
+      website.appendChild(websiteLink);        
     } else {
-      websitePara.textContent = 'No website available';
+      website.textContent = 'No website available';
     }
-    websitePara.classList.add('details');
-    websitePara.id = 'website-detail';
-    rightDiv.appendChild(websitePara);
+    website.classList.add('details');
+    website.classList.add('website-icon');
+    website.classList.add('icon');
+    website.id = 'website-detail';
+    rightDiv.appendChild(website);
 
     // CREATE OPENING HOURS ELEMENT
     // only get the hours for the current day
     // just get weekday_text. 0-6, 0 is monday
     // getDay() returns 0-6, 0 is sunday
-    let hoursOfDay = document.createElement('p');
+    let hoursOfDay = document.createElement('span');
     let date = new Date();
     today = date.getDay();
     hoursIdx = (today == 0 ? 6 : today-1);
     hoursOfDay.textContent = placeResult.opening_hours.weekday_text[hoursIdx];
     hoursOfDay.classList.add('details');
+    hoursOfDay.classList.add('hours-icon');
+    hoursOfDay.classList.add('icon');
     hoursOfDay.id = 'hours-detail';
     rightDiv.appendChild(hoursOfDay);
 
@@ -205,7 +231,7 @@ function modifyDetails(restaurant) {
   let hours = restaurant.opening_hours.weekday_text;
 
   // modify the details
-  frag.childNodes[0].childNodes[0].textContent = name;
+  frag.childNodes[0].childNodes[0].childNodes[0].textContent = name;
   frag.childNodes[0].childNodes[2].childNodes[0].textContent = rating;
   frag.childNodes[0].childNodes[2].childNodes[1].textContent = distance;  
   frag.childNodes[0].childNodes[2].childNodes[2].textContent = num;
