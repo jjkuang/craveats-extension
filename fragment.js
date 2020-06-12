@@ -65,8 +65,8 @@ function makeDetailsRequest(restaurant, funcName) {
 }
 
 
-// pick 4 random restaurants from the results list
-const NUM_RESTAURANTS_DISPLAYED = 4;
+// pick 3 random restaurants from the results list
+const NUM_RESTAURANTS_DISPLAYED = 3;
 var rand_restaurants = [];
 function getRandomRestaurants(results) { 
   for (var i = 0; i < NUM_RESTAURANTS_DISPLAYED; i++) {
@@ -102,7 +102,7 @@ function displayRestaurant(placeResult, status) {
     rightDiv.id = 'right-details-container';
 
     // CREATE NAME ELEMENT
-    let name = document.createElement('h1');
+    let name = document.createElement('h3');
     name.classList.add('details');
     name.id = 'name-detail';
     name.textContent = placeResult.name;
