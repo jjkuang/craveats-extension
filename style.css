@@ -10,33 +10,15 @@
     src: url(fonts/Antonio-Regular.ttf);
     }
 
-    .logo {
+    img.logo {
       margin-top: 20px;
       position: relative;
       margin-left: auto;
       margin-right: auto;
       width: 50%;
-    }
-
-    img.a {
-      width: 40px;
       object-fit: cover;
-      vertical-align: sub;
-      position: relative;
-      z-index: 2;
-    }
-
-    img.b {
-      width: 235px;
-     /* object-fit: scale-down;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      width: 50%;*/
-      position: relative
+      /*width: 235px;*/
       z-index: 1;
-      top: -12px;
-      left: 12px;
     }
 
     body {
