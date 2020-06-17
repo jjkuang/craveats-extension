@@ -388,4 +388,13 @@ document.getElementById('rating-sort')
         .addEventListener("click", rankByRating);
 
 
+var option_btns = document.getElementsByClassName('optionbtn');
+
+for (var i = 0; i < option_btns.length; i++) {
+  option_btns[i].addEventListener('click', event => {
+    // console.log(this.getElementsByTagName('span')[0].innerText);
+    console.log("clicked on " + event.target.innerText);
+  });
+}
+
 

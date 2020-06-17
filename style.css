@@ -54,6 +54,13 @@
       color: #366775;
     }
 
+    h4 {
+      text-align: center;
+      font-size: 14px;
+      font-family: 'Satisfy', cursive;
+      color: #366775;
+    }
+
     button {
       margin: auto;
       margin-top: 10px;
@@ -66,6 +73,7 @@
       outline: none;
       font-size: 16px;
       text-align: center;
+      font-family: Manjari;
     }
     
     /*fix this so we have a click button and a drop down button*/
@@ -80,6 +88,7 @@
       top: 0;
       bottom: 0;
       left: 30%;
+      /* right: 50%; */
       /*margin-right: auto;
       margin-left: auto;*/
       /*height: 90%;*/
@@ -270,11 +279,44 @@
     }
 
     #otherOptionsView {
-      height: 50px;
-      width: 300px;
-      background: #f7d0cb;
+      height: 300px;
+      width: 330px;
+      left: 4%;
+      top: 18%;
+      position: relative;
+      background: #A2B4C0;
       border-radius: 5px;
+      text-align: center;
       /*border: 3px solid white;*/
+    }
+
+    .cravings-hr {
+      margin-inline-start: 80px;
+      margin-inline-end: 80px;
+      margin-top: 0;
+      border: 0.3px solid #366775;  
+    }
+
+    .optionbtn {
+      /* margin: auto; */
+      margin-left: 15px;
+      margin-top: 10px;
+      padding: 15px 10px;
+      border: 1px solid #D66D50; 
+      border-radius: 10px;
+      background: #F7D0CB;
+      color: #366775;
+      cursor: pointer;
+      outline: none;
+      width: 40%;
+      height: 15%;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    img.optionicon {
+      position: relative;
+      float: left;
     }
 
     #refresh {
