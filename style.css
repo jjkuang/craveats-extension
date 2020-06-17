@@ -1,23 +1,57 @@
     html, body {
-      width: 100%;
+      /*width: 100%;*/
       height: 100%;
       padding: 0;
       margin: 0;
+    }
+
+    @font-face {
+    font-family: Antonio;
+    src: url(fonts/Antonio-Regular.ttf);
+    }
+
+    img.logo {
+      margin-top: 20px;
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+      object-fit: cover;
+      /*width: 235px;*/
+      z-index: 1;
     }
 
     body {
       /*background: linear-gradient(to right, #366775 0%, #366775 0%, #366775 33%, #F7D0CB 33%, #F7D0CB 66%, #366775 66%, #366775 100%);*/
       background: #366775;
       background-size: 100% 100%;
+      padding-left: 20px;
     }
 
     h1 {
-
+      font-size: 20px;
+      font-family: Antonio;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 36px;
+      text-align: center;
+      display: inline;
+      color: #366775;
     }
 
     h2 {
       text-align: center;
-      font-size: 14px;
+      font-size: 18px;
+      font-family: 'Satisfy', cursive;
+      color: #366775;
+    }
+
+    h3 {
+      font-family: 'Manjari', sans-serif;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 30px;
+      color: #366775;
     }
 
     button {
@@ -45,11 +79,11 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      left: 25%;
+      left: 30%;
       /*margin-right: auto;
       margin-left: auto;*/
       /*height: 90%;*/
-      max-width: 600px;
+      max-width: 500px;
       background: #f7d0cb;
     }
     
@@ -112,7 +146,7 @@
       margin-bottom: 10px; 
       /*text-align: center;*/
       /*height: 50px;*/
-      width: 600px;
+      width: 500px;
       /*border: 3px solid white;*/
       background: #f7d0cb;
       /*padding: 17px;*/
@@ -122,7 +156,7 @@
     #resultsRecyclerView {
       /*margin: auto;*/
       height: 100%;
-      width: 600px;
+      width: 500px;
       /*border: 3px solid white;*/
       background: #f7d0cb;
       display: flex;
@@ -135,7 +169,10 @@
       margin-bottom: 10px;
       margin-top: 10px;
       flex: 1;
-      /*height: 200px;*/
+      max-height: 180px;
+      font-size: 15px;
+      font-family: 'Manjari', sans-serif;
+      color: #366775;
     }
 
     .restaurant-item div {
@@ -143,18 +180,25 @@
       flex-direction: column;
     }
 
+    #top-details-container {
+      display: flex;
+      flex-direction: row;
+    }
+
     #left-details-container {
-      width: 30%;
+      width: 35%;
     }
 
     #right-details-container {
-      width: 70%;
+      width: 65%;
     }
 
     .details { 
       font-size: 14px;
       margin-inline-start: 15px;
       margin-inline-end: 15px;
+      margin-top: 10px;
+      margin-bottom: 10px;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
@@ -163,13 +207,66 @@
     .title-hr {
       margin-inline-start: 15px;
       margin-inline-end: 15px;
+      margin-top: 0;
       border: 0.3px solid #D66D50;
+    }
+
+    .bookmark-icon-inactive {
+      background-image: url('icons/bookmark-icon.png');
+      background-repeat: no-repeat;
+      background-size: contain;
+      height: 28px;
+      width: 28px;
+      margin-inline-end: 15px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .bookmark-icon-inactive:hover, .bookmark-icon-inactive:focus {
+      background-image: url('icons/bookmark-icon-hover.png');
+      cursor: pointer;
     }
 
     #name-detail {
       margin-inline-start: 15px;
+      width: 100%;
       font-size: 18px;
       color: #366775;
+    }
+
+    .link-details {
+      color: #366775;
+    }
+
+    .icon {
+      background-repeat: no-repeat;
+      background-position: left;
+      background-size: contain;
+      text-indent: 25px;
+    }
+
+    .distance-icon {
+      background-image: url('icons/distance-icon.png');
+    }
+
+    .rating-icon {
+      background-image: url('icons/rating-icon.png');
+    }
+
+    .phone-icon {
+      background-image: url('icons/phone-icon.png');
+    }
+
+    .address-icon {
+      background-image: url('icons/address-icon.png');
+    }
+
+    .website-icon {
+      background-image: url('icons/website-icon.png');
+    }
+
+    .hours-icon {
+      background-image: url('icons/hours-icon.png');
     }
 
     #otherOptionsView {
