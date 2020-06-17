@@ -211,7 +211,7 @@
       border: 0.3px solid #D66D50;
     }
 
-    .bookmark-icon {
+    .bookmark-icon-inactive {
       background-image: url('icons/bookmark-icon.png');
       background-repeat: no-repeat;
       background-size: contain;
@@ -222,7 +222,7 @@
       margin-bottom: 10px;
     }
 
-    #bookmark-icon:hover {
+    .bookmark-icon-inactive:hover, .bookmark-icon-inactive:focus {
       background-image: url('icons/bookmark-icon-hover.png');
       cursor: pointer;
     }

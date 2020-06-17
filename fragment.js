@@ -58,7 +58,7 @@ function makeDetailsRequest(restaurant, funcName) {
   let request = {
     placeId: restaurant.place_id,
     fields: ['name', 'geometry', 'formatted_address', 'formatted_phone_number',
-    'website', 'url', 'opening_hours', 'rating', 'price_level']
+    'website', 'url', 'opening_hours', 'rating', 'place_id']
   };
   
   service.getDetails(request, funcName);
@@ -73,14 +73,19 @@ function getRandomRestaurants(results) {
     get_rand(results);
   }
 
-  rand_restaurants.forEach(place => {makeDetailsRequest(place, displayRestaurant)});
+  for (var i = 0; i < NUM_RESTAURANTS_DISPLAYED; i++) {
+    makeDetailsRequest(rand_restaurants[i], displayRestaurant);
+  }
 }
 
 
 // TODO: need something async here/promise?
 let recyclerView = document.getElementById('resultsRecyclerView');
+let displayedRestaurants = [];
 function displayRestaurant(placeResult, status) {
   console.log(placeResult);
+  displayedRestaurants.push(placeResult);
+
   recyclerItem = document.createElement('div');
   recyclerItem.classList.add('restaurant-item');
 
@@ -110,7 +115,7 @@ function displayRestaurant(placeResult, status) {
 
     // CREATE BOOKMARK ELEMENT
     let bookmark = document.createElement('span');
-    bookmark.classList.add('bookmark-icon');
+    bookmark.classList.add('bookmark-icon-inactive');
     bookmark.id = 'bookmark-icon';
     bookmark.addEventListener('click', this.checkBookOrUnbook.bind(this), false);
     topDiv.appendChild(bookmark);
@@ -280,18 +285,19 @@ function checkBookOrUnbook(event) {
   let bmNodeItem = bmEl.parentNode.parentNode;
   let bmIdx = Array.prototype.indexOf.call(list.children, bmNodeItem);
   
-  var bookmarked = bookmarkedRestaurants.includes(rand_restaurants[bmIdx]);
+  console.log(bmIdx);
+  var bookmarked = bookmarkedRestaurants.includes(displayedRestaurants[bmIdx]);
   console.log(bookmarked);
   if (!bookmarked) {
-    bookmark(rand_restaurants[bmIdx]);
+    bookmark(displayedRestaurants[bmIdx], bmEl);
   } else {
-    unbookmark();
+    unbookmark(displayedRestaurants[bmIdx], bmEl);
   }
 
 }
 
 
-function bookmark(restaurant) {
+function bookmark(restaurant, el) {
   // need element that it was clicked on
   // need element's PARENT's inner HTML stuff/upper level containers
   // need to change bookmark icon to 'clicked' state (light pink)
@@ -305,13 +311,15 @@ function bookmark(restaurant) {
 // there are at least two ways to reach this function:
 // 1. click the bookmark again
 // 2. click the 'x' on the bookmarked item in the list
-function unbookmark(restaurant) {
+function unbookmark(restaurant, el) {
   // remove from list
   // if the item is still in recycler view then change the bookmark icon state back to 'unclicked'
   console.log('unbookmark');
   let idxToBeRemoved = bookmarkedRestaurants.indexOf(restaurant);
   if (idxToBeRemoved > -1) {
     bookmarkedRestaurants.splice(idxToBeRemoved, 1);
+  } else {
+    // error
   }
   console.log(bookmarkedRestaurants);
 }
@@ -327,12 +335,14 @@ function createBookmarkNode() {
 // TODO: eventually with the refresh fxn we need to reset the rand_restaurants
 function in_array(array, el) {
    for(var i = 0 ; i < array.length; i++) 
-       if(array[i] == el) return true;
+       if(array[i].place_id == el.place_id) return true;
    return false;
 }
 
 
 // pick a random restaurant from results w/o duplicating
+// TODO: different types of restaurant objects in these arrays!!!
+// && !in_array(bookmarkedRestaurants, rand)
 function get_rand(array) {  
     var rand = array[Math.floor(Math.random()*array.length)];
     if(!in_array(rand_restaurants, rand) && !in_array(bookmarkedRestaurants, rand)) {
