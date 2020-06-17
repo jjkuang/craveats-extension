@@ -112,6 +112,7 @@ function displayRestaurant(placeResult, status) {
     let bookmark = document.createElement('span');
     bookmark.classList.add('bookmark-icon');
     bookmark.id = 'bookmark-icon';
+    bookmark.addEventListener('click', this.checkBookOrUnbook.bind(this), false);
     topDiv.appendChild(bookmark);
 
     recyclerItem.appendChild(topDiv);
@@ -215,12 +216,12 @@ function refresh() {
 }
 
 
-// the allRestaurants array gives us order by distance 
 function modifyDetails(restaurant) {
   let frag = document.createDocumentFragment();
 
   // extract the recycler item div by class into frag
   frag.appendChild(document.getElementsByClassName('restaurant-item')[0]);
+  console.log(document.getElementsByClassName('restaurant-item')[0]);
   let name = restaurant.name;
   let rating = (restaurant.rating ? `Rating: ${restaurant.rating}` : 'Rating: N/A');
   let distance = `${get_distance(restaurant)} km`;
@@ -264,6 +265,64 @@ function rankByRating() {
 }
 
 
+// checking if any of the objects in the bookmarkedRestaurants are in the rand_restaurants
+// before displaying
+// need to create individual IDs for each bookmark so that i know the index
+let bookmarkedRestaurants = [];
+function checkBookOrUnbook(event) {
+  // check if the bookmark has been clicked already
+  // i.e. is the indexed restaurant from the displayed restaurants already in bookmarks?
+  // get index of the bookmark's parent's parent (i.e. restaurant-item) in terms of 
+  // resultsRecyclerView array
+
+  let bmEl = event.target;
+  let list = bmEl.parentNode.parentNode.parentNode;
+  let bmNodeItem = bmEl.parentNode.parentNode;
+  let bmIdx = Array.prototype.indexOf.call(list.children, bmNodeItem);
+  
+  var bookmarked = bookmarkedRestaurants.includes(rand_restaurants[bmIdx]);
+  console.log(bookmarked);
+  if (!bookmarked) {
+    bookmark(rand_restaurants[bmIdx]);
+  } else {
+    unbookmark();
+  }
+
+}
+
+
+function bookmark(restaurant) {
+  // need element that it was clicked on
+  // need element's PARENT's inner HTML stuff/upper level containers
+  // need to change bookmark icon to 'clicked' state (light pink)
+  console.log('bookmark');
+  bookmarkedRestaurants.push(restaurant);
+  console.log(bookmarkedRestaurants);
+  createBookmarkNode();
+}
+
+
+// there are at least two ways to reach this function:
+// 1. click the bookmark again
+// 2. click the 'x' on the bookmarked item in the list
+function unbookmark(restaurant) {
+  // remove from list
+  // if the item is still in recycler view then change the bookmark icon state back to 'unclicked'
+  console.log('unbookmark');
+  let idxToBeRemoved = bookmarkedRestaurants.indexOf(restaurant);
+  if (idxToBeRemoved > -1) {
+    bookmarkedRestaurants.splice(idxToBeRemoved, 1);
+  }
+  console.log(bookmarkedRestaurants);
+}
+
+
+// creating the nodes for the bookmark items
+function createBookmarkNode() {
+
+}
+
+
 // checks if the chosen restaurant is already in the array
 // TODO: eventually with the refresh fxn we need to reset the rand_restaurants
 function in_array(array, el) {
@@ -276,7 +335,7 @@ function in_array(array, el) {
 // pick a random restaurant from results w/o duplicating
 function get_rand(array) {  
     var rand = array[Math.floor(Math.random()*array.length)];
-    if(!in_array(rand_restaurants, rand)) {
+    if(!in_array(rand_restaurants, rand) && !in_array(bookmarkedRestaurants, rand)) {
        rand_restaurants.push(rand); 
        return rand;
     }
@@ -317,8 +376,6 @@ document.getElementById('distance-sort')
         });
 document.getElementById('rating-sort')
         .addEventListener("click", rankByRating);
-
-
 
 
 
