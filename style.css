@@ -322,6 +322,17 @@
       text-align: center;
     }
 
+    #favourites-div {
+      display: inline-block;
+      position: absolute;
+      right: 0;
+
+    }
+
+    #favourites {
+      color: #F7D0CB;
+    }
+
     #map {
       display: none;
     }
