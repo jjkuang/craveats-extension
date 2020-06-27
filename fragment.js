@@ -30,26 +30,38 @@ function main() {
 }
 
 let service;
-function getNearbyPlaces(position) {
+
+let options_keyword;
+function getNearbyPlaces(position,keyword="") {
   let request = {
     location: position,
     rankBy: google.maps.places.RankBy.DISTANCE,
     openNow: true,
-    type: 'restaurant'
+    type: 'restaurant',
+    keyword: keyword
   };
-
+  // has_keyword = keyword==""?false:true;
+  options_keyword = keyword;
   map = new google.maps.Map(document.getElementById('map'));
   service = new google.maps.places.PlacesService(map);
+  // service.nearbySearch(request, nearbyCallback);
   service.nearbySearch(request, nearbyCallback);
 }
 
-
 let allRestaurants;
+let optionRestaurants;
 function nearbyCallback(results, status) {
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     console.log(results);
-    getRandomRestaurants(results);
-    allRestaurants = results;
+    has_keyword = options_keyword==""?false:true;
+    if (options_keyword != "") {
+      optionRestaurants = results;
+    }
+    else {
+      allRestaurants = results;
+    }
+    getRandomRestaurants(results,has_keyword);
+    
   }
 }
 
@@ -68,13 +80,28 @@ function makeDetailsRequest(restaurant, funcName) {
 // pick 3 random restaurants from the results list
 const NUM_RESTAURANTS_DISPLAYED = 3;
 var rand_restaurants = [];
-function getRandomRestaurants(results) { 
+function getRandomRestaurants(results,has_keyword) { 
+  rand_restaurants = [];
   for (var i = 0; i < NUM_RESTAURANTS_DISPLAYED; i++) {
     get_rand(results);
+    // if (has_keyword) {
+    //   get_rand(results);
+    // }
+    // else {
+    //   get_rand(results,allRestaurants);
+    // }
   }
 
-  for (var i = 0; i < NUM_RESTAURANTS_DISPLAYED; i++) {
-    makeDetailsRequest(rand_restaurants[i], displayRestaurant);
+  // for (var i = rand_restaurants.length-1; i >  rand_restaurants.length-4; i-- ) {
+  for (var i = 0; i< NUM_RESTAURANTS_DISPLAYED; i++) {
+    if (i<0) break;
+    if (has_keyword) {
+      makeDetailsRequest(rand_restaurants[i], modifyDetails);
+    }
+    else {
+      makeDetailsRequest(rand_restaurants[i], displayRestaurant);
+    }
+    // makeDetailsRequest(rand_restaurants[i], displayRestaurant);
   }
 }
 
@@ -213,8 +240,9 @@ function displayRestaurant(placeResult, status) {
 
 function refresh() {
   rand_restaurants = [];
+  displayedRestaurants = [];
   for (var i = 0; i < NUM_RESTAURANTS_DISPLAYED; i++) {
-    get_rand(allRestaurants);
+    options_keyword == "" ? get_rand(allRestaurants) : get_rand(optionRestaurants);
   }
   console.log(rand_restaurants);
   rand_restaurants.forEach(restaurant => {makeDetailsRequest(restaurant, modifyDetails)});
@@ -222,6 +250,7 @@ function refresh() {
 
 
 function modifyDetails(restaurant) {
+  displayedRestaurants.push(restaurant);
   let frag = document.createDocumentFragment();
 
   // extract the recycler item div by class into frag
@@ -343,7 +372,7 @@ function in_array(array, el) {
 // pick a random restaurant from results w/o duplicating
 // TODO: different types of restaurant objects in these arrays!!!
 // && !in_array(bookmarkedRestaurants, rand)
-function get_rand(array) {  
+function get_rand(array) {
     var rand = array[Math.floor(Math.random()*array.length)];
     if(!in_array(rand_restaurants, rand) && !in_array(bookmarkedRestaurants, rand)) {
        rand_restaurants.push(rand); 
@@ -393,7 +422,10 @@ var option_btns = document.getElementsByClassName('optionbtn');
 for (var i = 0; i < option_btns.length; i++) {
   option_btns[i].addEventListener('click', event => {
     // console.log(this.getElementsByTagName('span')[0].innerText);
-    console.log("clicked on " + event.target.innerText);
+    // console.log("clicked on " + event.target.innerText);
+    console.log(event.target.closest("button").innerText);
+    keyword = event.target.closest("button").innerText;
+    getNearbyPlaces(pos,keyword)
   });
 }
 
