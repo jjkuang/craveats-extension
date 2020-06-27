@@ -274,7 +274,7 @@ function modifyDetails(restaurant) {
   frag.childNodes[0].childNodes[2].childNodes[0].textContent = rating;
   frag.childNodes[0].childNodes[2].childNodes[1].textContent = distance;  
   frag.childNodes[0].childNodes[2].childNodes[2].textContent = num;
-  frag.childNodes[0].childNodes[3].childNodes[0].childNodes[0].childNodes[0] = address;
+  frag.childNodes[0].childNodes[3].childNodes[0].childNodes[0].childNodes[0].textContent = address;
   frag.childNodes[0].childNodes[3].childNodes[0].childNodes[0].href = addressUrl;
   if (frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].hasChildNodes()) {
     frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].childNodes[0].textContent = website;

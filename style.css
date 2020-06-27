@@ -327,32 +327,29 @@
     }
 
     #otherOptionsView {
-      height: 300px;
-      width: 330px;
-      /* left: 4%;
-      top: 18%; */
-      /* margin-left: auto;
-      margin-right: auto; */
-      /* position: relative; */
+      /* height: 50%; */
+      width: 80%;
+      /* left: 4%; */
+      top: 20%;
+      /* margin-bottom: auto; */
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
       background: #A2B4C0;
       border-radius: 5px;
       text-align: center;
-      /* margin-left: auto;
-      margin-right: auto; */
       /*border: 3px solid white;*/
     }
 
     .cravings-hr {
-      margin-inline-start: 80px;
-      margin-inline-end: 80px;
-      margin-top: 0;
+      margin-inline-start: 70px;
+      margin-inline-end: 70px;
       border: 0.3px solid #366775;  
     }
 
     .optionbtn {
-      /* margin: auto; */
       margin-left: 15px;
-      margin-top: 10px;
+      margin-bottom: 10px;
       padding: 15px 10px;
       border: 1px solid #D66D50; 
       border-radius: 10px;
@@ -360,8 +357,8 @@
       color: #366775;
       cursor: pointer;
       outline: none;
-      width: 40%;
-      height: 15%;
+      /* width: 40%; */
+      /* height: 7%; */
       font-size: 14px;
       text-align: center;
     }
