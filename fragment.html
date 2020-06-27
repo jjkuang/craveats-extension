@@ -9,60 +9,61 @@
   <title>New Tab</title>
 </head>
 <body>
-
-  <div class="dropdown">
-    <button class="dropbtn">Sort By</button>
-    <div class="dropdown-content">
-      <span class="dropdown-item" id="distance-sort">Distance</span>
-      <span class="dropdown-item" id="rating-sort">Rating</span>
+  <div class="container left-container">
+    <div class="dropdown">
+      <button class="dropbtn">Sort By</button>
+      <div class="dropdown-content">
+        <span class="dropdown-item" id="distance-sort">Distance</span>
+        <span class="dropdown-item" id="rating-sort">Rating</span>
+      </div>
     </div>
+
+    <button id="refresh">Refresh</button>
+
+	<div id="otherOptionsView">
+		<h2> Craving something else? </h2>
+		<hr class="cravings-hr"></hr>
+		<button class="optionbtn">
+			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
+			<span>Sushi</span>
+		</button>
+		<button class="optionbtn">
+			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
+			<span>Fast Food</span>
+		</button>
+		<button class="optionbtn">
+			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
+			<span>Breakfast</span>
+		</button>
+		<button class="optionbtn">
+			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
+			<span>Pizza</span>
+		</button>
+		<button class="optionbtn">
+			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
+			<span>Chinese</span>
+		</button>
+		<button class="optionbtn">
+			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
+			<span>Italian</span>
+		</button>
+		<button class="optionbtn">
+			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
+			<span>Indian</span>
+		</button>
+		<button class="optionbtn">
+			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
+			<span>Mexican</span>
+		</button>
+	</div>
+
   </div>
 
-  <button id="refresh">Refresh</button>
-
-  <div id="otherOptionsView">
-	<h2> Craving something else? </h2>
-	<hr class="cravings-hr"></hr>
-	<button class="optionbtn">
-		<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
-		<span>Sushi</span>
-	</button>
-	<button class="optionbtn">
-		<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
-		<span>Fast Food</span>
-	</button>
-	<button class="optionbtn">
-		<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
-		<span>Breakfast</span>
-	</button>
-	<button class="optionbtn">
-		<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
-		<span>Pizza</span>
-	</button>
-	<button class="optionbtn">
-		<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
-		<span>Chinese</span>
-	</button>
-	<button class="optionbtn">
-		<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
-		<span>Italian</span>
-	</button>
-	<button class="optionbtn">
-		<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
-		<span>Indian</span>
-	</button>
-	<button class="optionbtn">
-		<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
-		<span>Mexican</span>
-	</button>
-
-  </div>
-
-  <div class="main-banner">
+  <div class="container main-container" id="main-container">
     <img class="logo" src = "logo.png">
 
     <div id="topCardView">
-	  <h2 > Feeling hungry? Check out these local eats. </h2>
+      <h2> Feeling hungry? Check out these local eats. </h2>
     </div>
 
     <div id="resultsRecyclerView">
@@ -73,6 +74,12 @@
 
   </div>
 
+  <div class="container right-container">
+    <h2 id="favourites"> Favourites </h2>
+    <div id="favourites-div">
+      
+    </div>
+  </div>
   <!-- <script async defer type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuW4NSq2HJ9WpB7gmYimPBXSBRuNGkPI&libraries=places"></script> -->
   <script src='fragment.js'></script>
 </body>

@@ -142,8 +142,9 @@ function displayRestaurant(placeResult, status) {
 
     // CREATE BOOKMARK ELEMENT
     let bookmark = document.createElement('span');
+    bookmark.classList.add('bookmark');
     bookmark.classList.add('bookmark-icon-inactive');
-    bookmark.id = 'bookmark-icon';
+    bookmark.id = 'bookmark-icon-inactive';
     bookmark.addEventListener('click', this.checkBookOrUnbook.bind(this), false);
     topDiv.appendChild(bookmark);
 
@@ -237,7 +238,6 @@ function displayRestaurant(placeResult, status) {
   recyclerView.appendChild(recyclerItem);
 }
 
-
 function refresh() {
   rand_restaurants = [];
   displayedRestaurants = [];
@@ -267,6 +267,10 @@ function modifyDetails(restaurant) {
 
   // modify the details
   frag.childNodes[0].childNodes[0].childNodes[0].textContent = name;
+  if (frag.childNodes[0].childNodes[0].childNodes[1].classList.contains('bookmark-icon-active')) {
+    frag.childNodes[0].childNodes[0].childNodes[1].classList.remove('bookmark-icon-active');
+    frag.childNodes[0].childNodes[0].childNodes[1].classList.add('bookmark-icon-inactive');
+  }
   frag.childNodes[0].childNodes[2].childNodes[0].textContent = rating;
   frag.childNodes[0].childNodes[2].childNodes[1].textContent = distance;  
   frag.childNodes[0].childNodes[2].childNodes[2].textContent = num;
@@ -310,53 +314,65 @@ function checkBookOrUnbook(event) {
   // resultsRecyclerView array
 
   let bmEl = event.target;
-  let list = bmEl.parentNode.parentNode.parentNode;
+  let list = bmEl.parentNode.parentNode.parentNode; //bookmark element 
   let bmNodeItem = bmEl.parentNode.parentNode;
   let bmIdx = Array.prototype.indexOf.call(list.children, bmNodeItem);
   
-  console.log(bmIdx);
   var bookmarked = bookmarkedRestaurants.includes(displayedRestaurants[bmIdx]);
-  console.log(bookmarked);
   if (!bookmarked) {
-    bookmark(displayedRestaurants[bmIdx], bmEl);
+    bookmark(displayedRestaurants[bmIdx], bmIdx);
   } else {
-    unbookmark(displayedRestaurants[bmIdx], bmEl);
+    unbookmark(displayedRestaurants[bmIdx], bmIdx);
   }
 
 }
 
 
-function bookmark(restaurant, el) {
+function bookmark(restaurant, idx) {
   // need element that it was clicked on
   // need element's PARENT's inner HTML stuff/upper level containers
   // need to change bookmark icon to 'clicked' state (light pink)
-  console.log('bookmark');
+  // change background image url and leave it to the hover one
+
+  let bel = document.getElementsByClassName('bookmark')[idx];
+  bel.classList.remove('bookmark-icon-inactive');
+  bel.classList.add('bookmark-icon-active');
+  bel.id = 'bookmark-icon-active';
   bookmarkedRestaurants.push(restaurant);
-  console.log(bookmarkedRestaurants);
-  createBookmarkNode();
+  createBookmarkNode(restaurant);
 }
 
 
 // there are at least two ways to reach this function:
 // 1. click the bookmark again
 // 2. click the 'x' on the bookmarked item in the list
-function unbookmark(restaurant, el) {
+function unbookmark(restaurant, idx) {
   // remove from list
   // if the item is still in recycler view then change the bookmark icon state back to 'unclicked'
-  console.log('unbookmark');
-  let idxToBeRemoved = bookmarkedRestaurants.indexOf(restaurant);
+  let idxToBeRemoved = bookmarkedRestaurants.indexOf(displayedRestaurants[idx]);
   if (idxToBeRemoved > -1) {
+    let uel = document.getElementsByClassName('bookmark')[idx];
+    uel.classList.remove('bookmark-icon-active');
+    uel.classList.add('bookmark-icon-inactive');
+    uel.id = 'bookmark-icon-inactive';
+
     bookmarkedRestaurants.splice(idxToBeRemoved, 1);
   } else {
     // error
   }
-  console.log(bookmarkedRestaurants);
+
 }
 
 
 // creating the nodes for the bookmark items
-function createBookmarkNode() {
+function createBookmarkNode(restaurant) {
+  let bmItem = document.createElement('div');
+  let topDiv = document.createElement('div');
+  topDiv.classList.add('faves-top-level-container');
+  let bottomDiv = document.createElement('div');
+  bottomDiv.classList.add('faves-bottom-level-container');
 
+  
 }
 
 
