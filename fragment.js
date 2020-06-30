@@ -96,6 +96,7 @@ function displayRestaurant(placeResult, status) {
 
     // CREATE TOP CONTAINER
     let topDiv = document.createElement('div');
+    topDiv.classList.add('flex-row-container');
     topDiv.id = 'top-details-container';
 
     // CREATE LEFT SIDE CONTAINER
@@ -213,6 +214,7 @@ function displayRestaurant(placeResult, status) {
 
 function refresh() {
   rand_restaurants = [];
+  displayedRestaurants = [];
   for (var i = 0; i < NUM_RESTAURANTS_DISPLAYED; i++) {
     get_rand(allRestaurants);
   }
@@ -222,6 +224,7 @@ function refresh() {
 
 
 function modifyDetails(restaurant) {
+  displayedRestaurants.push(restaurant);
   let frag = document.createDocumentFragment();
 
   // extract the recycler item div by class into frag
@@ -245,7 +248,7 @@ function modifyDetails(restaurant) {
   frag.childNodes[0].childNodes[2].childNodes[0].textContent = rating;
   frag.childNodes[0].childNodes[2].childNodes[1].textContent = distance;  
   frag.childNodes[0].childNodes[2].childNodes[2].textContent = num;
-  frag.childNodes[0].childNodes[3].childNodes[0].childNodes[0].childNodes[0] = address;
+  frag.childNodes[0].childNodes[3].childNodes[0].childNodes[0].childNodes[0].textContent = address;
   frag.childNodes[0].childNodes[3].childNodes[0].childNodes[0].href = addressUrl;
   if (frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].hasChildNodes()) {
     frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].childNodes[0].textContent = website;
@@ -274,26 +277,53 @@ function rankByRating() {
 }
 
 
-// checking if any of the objects in the bookmarkedRestaurants are in the rand_restaurants
-// before displaying
-// need to create individual IDs for each bookmark so that i know the index
 let bookmarkedRestaurants = [];
 function checkBookOrUnbook(event) {
-  // check if the bookmark has been clicked already
-  // i.e. is the indexed restaurant from the displayed restaurants already in bookmarks?
-  // get index of the bookmark's parent's parent (i.e. restaurant-item) in terms of 
-  // resultsRecyclerView array
+  // 1. check target - class is 'bookmark' or 'delete'
+  //    a. if 'delete', see 2.a.i
+  // 2. check whether we need to add to bookmarks or remove from
+  //    a. if we are removing, we need to check whether restaurant is being displayed
+  //      i. if not displayed, then we use the index from the 'delete'
+  //      ii. if displayed, remove from bookmarks list (both visual and in code),
+  //          and add unbookmark-inactive class
+  //    b. if we are adding, we add active  class, remove inactive class, and createBookmarkNode
+  // for 2.a.ii, we need index from displayedRestaurants as well as from
 
   let bmEl = event.target;
-  let list = bmEl.parentNode.parentNode.parentNode; //bookmark element 
-  let bmNodeItem = bmEl.parentNode.parentNode;
-  let bmIdx = Array.prototype.indexOf.call(list.children, bmNodeItem);
+  let bmIdx;
+  let currentlyDisplayed = true;
+
+  if (bmEl.classList.contains('bookmark')) {
+
+    let list = bmEl.parentNode.parentNode.parentNode; // bookmark element 
+    let bmNodeItem = bmEl.parentNode.parentNode;
+    bmIdx = Array.prototype.indexOf.call(list.children, bmNodeItem);
+
+  } else { // contains 'delete'
+    let list = Array.from(document.getElementsByClassName('delete'));
+    bmIdx = list.indexOf(bmEl);
+    
+    // check if restaurant is displayed right now
+    if (!displayedRestaurants.includes(bookmarkedRestaurants[bmIdx])) {
+      
+      currentlyDisplayed = false; // not displayed
+
+      // go straight to unbookmark
+      unbookmark(bookmarkedRestaurants[bmIdx], bmIdx, currentlyDisplayed);
+      return;
+
+    } else {
+      bmIdx = displayedRestaurants.indexOf(bookmarkedRestaurants[bmIdx]);
+    }
+    
+  }
   
   var bookmarked = bookmarkedRestaurants.includes(displayedRestaurants[bmIdx]);
   if (!bookmarked) {
     bookmark(displayedRestaurants[bmIdx], bmIdx);
   } else {
-    unbookmark(displayedRestaurants[bmIdx], bmIdx);
+    console.log(bmIdx);
+    unbookmark(displayedRestaurants[bmIdx], bmIdx, currentlyDisplayed);
   }
 
 }
@@ -317,33 +347,145 @@ function bookmark(restaurant, idx) {
 // there are at least two ways to reach this function:
 // 1. click the bookmark again
 // 2. click the 'x' on the bookmarked item in the list
-function unbookmark(restaurant, idx) {
+function unbookmark(restaurant, idx, currentlyDisplayed) {
   // remove from list
   // if the item is still in recycler view then change the bookmark icon state back to 'unclicked'
-  let idxToBeRemoved = bookmarkedRestaurants.indexOf(displayedRestaurants[idx]);
-  if (idxToBeRemoved > -1) {
+
+  if (currentlyDisplayed && idx > -1) {
     let uel = document.getElementsByClassName('bookmark')[idx];
     uel.classList.remove('bookmark-icon-active');
     uel.classList.add('bookmark-icon-inactive');
-    uel.id = 'bookmark-icon-inactive';
+    uel.id = 'bookmark-icon-inactive'; 
+  } 
 
-    bookmarkedRestaurants.splice(idxToBeRemoved, 1);
-  } else {
-    // error
-  }
+  let idxToBeRemoved = bookmarkedRestaurants.indexOf(restaurant);
+  let bookmarksDOM = document.getElementById('favourites-div');
+  bookmarksDOM.removeChild(bookmarksDOM.children[idxToBeRemoved]);
 
+  bookmarkedRestaurants.splice(idxToBeRemoved, 1);
 }
 
 
 // creating the nodes for the bookmark items
 function createBookmarkNode(restaurant) {
-  let bmItem = document.createElement('div');
-  let topDiv = document.createElement('div');
-  topDiv.classList.add('faves-top-level-container');
-  let bottomDiv = document.createElement('div');
-  bottomDiv.classList.add('faves-bottom-level-container');
+  let bookmarks = document.getElementById('favourites-div');
 
-  
+  let bmItem = document.createElement('div');
+  bmItem.classList.add('bookmark-item');
+
+  // includes title, delete button
+  let titleDiv = document.createElement('div');
+  titleDiv.classList.add('flex-row-container');
+  titleDiv.classList.add('faves-title-container');
+
+  // includes the distance, rating
+  let topDiv = document.createElement('div');
+  topDiv.classList.add('flex-row-container');
+  topDiv.classList.add('faves-top-container');
+
+  // include the address (TODO: needs truncate), phone number, website, hours
+  let bottomDiv = document.createElement('div');
+  bottomDiv.classList.add('faves-bottom-container');
+
+  // CREATE NAME ELEMENT
+  let name = document.createElement('h3');
+  name.classList.add('details');
+  name.classList.add('faves-details');
+  name.id = 'faves-name-detail';
+  name.textContent = restaurant.name;
+  titleDiv.appendChild(name);
+
+  // CREATE DELETE ELEMENT
+  let unfave = document.createElement('span');
+  unfave.classList.add('delete');
+  unfave.classList.add('icon');
+  unfave.addEventListener('click', this.checkBookOrUnbook.bind(this), false);
+  titleDiv.appendChild(unfave);
+
+  bmItem.appendChild(titleDiv);
+
+  // HR
+  let hr = document.createElement('hr');
+  hr.classList.add('title-hr');
+  hr.classList.add('faves-hr');
+  bmItem.appendChild(hr);
+
+  // CREATE RATING ELEMENT
+  let rating = document.createElement('span');
+  rating.classList.add('details');
+  rating.classList.add('faves-details');
+  rating.classList.add('rating-icon');
+  rating.classList.add('icon');
+  rating.id = 'faves-rating-detail';
+  rating.textContent = (restaurant.rating ? restaurant.rating : 'N/A');
+  topDiv.appendChild(rating);
+
+  // CREATE DISTANCE ELEMENT
+  let distance = document.createElement('span');
+  distance.classList.add('details');
+  distance.classList.add('faves-details');
+  distance.classList.add('distance-icon');
+  distance.classList.add('icon');
+  distance.id = 'faves-distance-detail';
+  distance.textContent = `${get_distance(restaurant)} km`;
+  topDiv.appendChild(distance);
+
+  // CREATE WEBSITE ELEMENT
+  let website = document.createElement('p');
+  if (restaurant.website) {
+    let websiteLink = document.createElement('a');
+    let websiteUrl = document.createTextNode(restaurant.website);
+    websiteLink.appendChild(websiteUrl);
+    websiteLink.title = restaurant.website;
+    websiteLink.href = restaurant.website;
+    websiteLink.target = '_blank';
+    websiteLink.classList.add('link-details');
+    website.appendChild(websiteLink);        
+  } else {
+    website.textContent = 'No website available';
+  }
+  website.classList.add('details');
+  website.classList.add('faves-details');
+  website.id = 'faves-website-detail';
+  bottomDiv.appendChild(website);
+
+  // CREATE ADDRESS ELEMENT
+  let address = document.createElement('p');
+  let addressLink = document.createElement('a');
+  let addressURL = document.createTextNode(restaurant.formatted_address);
+  addressLink.appendChild(addressURL);
+  addressLink.href = restaurant.url;
+  addressLink.target = '_blank';
+  addressLink.classList.add('link-details');
+  address.classList.add('details');
+  address.classList.add('faves-details');
+  address.id = 'faves-address-detail';
+  address.appendChild(addressLink);
+  bottomDiv.appendChild(address);
+
+  // CREATE PHONE NUM ELEMENT
+  let phoneNum = document.createElement('p');
+  phoneNum.textContent = (restaurant.formatted_phone_number ? restaurant.formatted_phone_number: 'No phone number available');
+  phoneNum.classList.add('details');
+  phoneNum.classList.add('faves-details');
+  phoneNum.id = 'phone-num-detail';
+  bottomDiv.appendChild(phoneNum);  
+
+  // CREATE OPENING HOURS ELEMENT
+  let hoursOfDay = document.createElement('p');
+  let date = new Date();
+  today = date.getDay();
+  hoursIdx = (today == 0 ? 6 : today-1);
+  hoursOfDay.textContent = restaurant.opening_hours.weekday_text[hoursIdx];
+  hoursOfDay.classList.add('details');
+  hoursOfDay.classList.add('faves-details');
+  hoursOfDay.id = 'hours-detail';
+  bottomDiv.appendChild(hoursOfDay);
+
+  bmItem.appendChild(topDiv);
+  bmItem.appendChild(bottomDiv);
+
+  bookmarks.appendChild(bmItem);
 }
 
 

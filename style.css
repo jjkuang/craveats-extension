@@ -6,8 +6,8 @@
     }
 
     @font-face {
-    font-family: Antonio;
-    src: url(fonts/Antonio-Regular.ttf);
+      font-family: Antonio;
+      src: url(fonts/Antonio-Regular.ttf);
     }
 
     img.logo {
@@ -74,7 +74,7 @@
     }
 
     .container {
-      /*display: inline-block;*/
+      display: inline-block;
       float: left;
       width: 26%;
       height: 100%;
@@ -89,28 +89,18 @@
     }
    
     .main-container {
-
-    }
-
-    #main-container {
       display: flex;
       flex-direction: column;
-
       top: 0;
       bottom: 0;
-      left: 30%;
-      /*margin-right: auto;
-      margin-left: auto;*/
-      /*height: 90%;*/
       width: 48%;
       /*max-width: 500px;*/
       background: #f7d0cb;
     }
-    
-    /*.main-banner > div {
-      flex: 1;
-      display: inline-block;
-    }*/
+
+    #main-container {
+
+    }
 
     .dropbtn {
       /*color: white;
@@ -236,6 +226,11 @@
       overflow: hidden;
     }
 
+    .faves-details {
+      font-size: 12px;
+      margin: auto;
+    }
+
     .title-hr {
       margin-inline-start: 15px;
       margin-inline-end: 15px;
@@ -341,14 +336,57 @@
     }
 
     #favourites-div {
-      display: inline-block;
-      position: absolute;
-      right: 0;
-
+      display: flex;
+      flex-direction: column;
     }
 
     #favourites {
       color: #F7D0CB;
+    }
+
+    .delete {
+      background-image: url('icons/delete-sign-span.png');
+      height: 16px;
+      width: 16px;
+      margin-bottom: 3px;
+    }
+
+    .delete:hover {
+      cursor: pointer;
+    }
+
+    .bookmark-item {
+      text-align: center;
+      margin: 10px 10px 10px 10px;
+      padding: 10px 10px 10px 10px;
+      border-radius: 5px;
+      background: #a2b4c0;
+    }
+
+    .bookmark-item p {
+      font-family: 'Manjari', sans-serif;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 12px;
+      color: #366775;
+    }
+
+    .faves-title-container {
+      margin-bottom: 5px;
+    }
+
+    .faves-hr {
+      border-color: #366775;
+    }
+
+    .faves-bottom-container {
+      line-height: 1.5;
+    }
+
+    .flex-row-container {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 5px;
     }
 
     #map {
