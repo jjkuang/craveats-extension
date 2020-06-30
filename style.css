@@ -52,6 +52,13 @@
       color: #366775;
     }
 
+    h4 {
+      text-align: center;
+      font-size: 14px;
+      font-family: 'Satisfy', cursive;
+      color: #366775;
+    }
+
     button {
       margin: auto;
       margin-top: 10px;
@@ -93,6 +100,14 @@
       flex-direction: column;
       top: 0;
       bottom: 0;
+<<<<<<< HEAD
+=======
+      left: 30%;
+      /* right: 50%; */
+      /* margin-right: auto;
+      margin-left: auto; */
+      /*height: 90%;*/
+>>>>>>> origin/andrea
       width: 48%;
       /*max-width: 500px;*/
       background: #f7d0cb;
@@ -314,11 +329,45 @@
     }
 
     #otherOptionsView {
-      height: 50px;
-      width: 300px;
-      background: #f7d0cb;
+      /* height: 50%; */
+      width: 80%;
+      /* left: 4%; */
+      top: 20%;
+      /* margin-bottom: auto; */
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      background: #A2B4C0;
       border-radius: 5px;
+      text-align: center;
       /*border: 3px solid white;*/
+    }
+
+    .cravings-hr {
+      margin-inline-start: 70px;
+      margin-inline-end: 70px;
+      border: 0.3px solid #366775;  
+    }
+
+    .optionbtn {
+      margin-left: 15px;
+      margin-bottom: 10px;
+      padding: 15px 10px;
+      border: 1px solid #D66D50; 
+      border-radius: 10px;
+      background: #F7D0CB;
+      color: #366775;
+      cursor: pointer;
+      outline: none;
+      /* width: 40%; */
+      /* height: 7%; */
+      font-size: 14px;
+      text-align: center;
+    }
+
+    img.optionicon {
+      position: relative;
+      float: left;
     }
 
     #refresh {
