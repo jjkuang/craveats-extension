@@ -55,6 +55,7 @@ function nearbyCallback(results, status) {
     console.log(results);
     has_keyword = options_keyword==""?false:true;
     if (options_keyword != "") {
+      displayedRestaurants = [];
       optionRestaurants = results;
     }
     else {
@@ -322,8 +323,8 @@ function checkBookOrUnbook(event) {
 
   if (bmEl.classList.contains('bookmark')) {
 
-    let list = bmEl.parentNode.parentNode.parentNode; // bookmark element 
-    let bmNodeItem = bmEl.parentNode.parentNode;
+    let list = bmEl.parentNode.parentNode.parentNode; // results recycler
+    let bmNodeItem = bmEl.parentNode.parentNode; // restaurant-item
     bmIdx = Array.prototype.indexOf.call(list.children, bmNodeItem);
 
   } else { // contains 'delete'
@@ -333,9 +334,7 @@ function checkBookOrUnbook(event) {
     // check if restaurant is displayed right now
     if (!displayedRestaurants.includes(bookmarkedRestaurants[bmIdx])) {
       
-      currentlyDisplayed = false; // not displayed
-
-      // go straight to unbookmark
+      currentlyDisplayed = false; // not displayed, so go straight to unbookmark
       unbookmark(bookmarkedRestaurants[bmIdx], bmIdx, currentlyDisplayed);
       return;
 
@@ -349,7 +348,6 @@ function checkBookOrUnbook(event) {
   if (!bookmarked) {
     bookmark(displayedRestaurants[bmIdx], bmIdx);
   } else {
-    console.log(bmIdx);
     unbookmark(displayedRestaurants[bmIdx], bmIdx, currentlyDisplayed);
   }
 
