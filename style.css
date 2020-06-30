@@ -100,21 +100,8 @@
       flex-direction: column;
       top: 0;
       bottom: 0;
-<<<<<<< HEAD
-=======
-      left: 30%;
-      /* right: 50%; */
-      /* margin-right: auto;
-      margin-left: auto; */
-      /*height: 90%;*/
->>>>>>> origin/andrea
       width: 48%;
-      /*max-width: 500px;*/
       background: #f7d0cb;
-    }
-
-    #main-container {
-
     }
 
     .dropbtn {
@@ -138,7 +125,6 @@
 
     .dropdown-content {
       display: none;
-      /*border: white;*/
       position: absolute;
       background-color: #f7d0cb;
       font-family: 'Manjari', sans-serif;
@@ -146,9 +132,6 @@
       color: #366775;
       width: 120px;
       z-index: 1;
-      /*box-shadow: 2px 2px 3px grey;*/
-      /*border-radius: 1px;
-      border-color: white;*/
     }
 
     .dropdown-item {
@@ -159,8 +142,6 @@
       padding: 10px 5px;
       font-size: 16px;
       border: 1px solid white; 
-      /*background-color: white;*/
-
     }
 
     .dropdown-item:hover {
@@ -181,20 +162,12 @@
     #topCardView {
       margin-top: 10px;
       margin-bottom: 10px; 
-      /*text-align: center;*/
-      /*height: 50px;*/
-      /*width: 500px;*/
-      /*border: 3px solid white;*/
       background: #f7d0cb;
-      /*padding: 17px;*/
       font-size: 18px;
     }
 
     #resultsRecyclerView {
-      /*margin: auto;*/
       height: 100%;
-      /*width: 500px;*/
-      /*border: 3px solid white;*/
       background: #f7d0cb;
       display: flex;
       flex-direction: column;
@@ -202,7 +175,6 @@
 
     .restaurant-item {
       background: #F4AC94;
-      /*padding: 1px;*/
       margin-bottom: 10px;
       margin-top: 10px;
       flex: 1;
@@ -329,11 +301,7 @@
     }
 
     #otherOptionsView {
-      /* height: 50%; */
       width: 80%;
-      /* left: 4%; */
-      top: 20%;
-      /* margin-bottom: auto; */
       margin-left: auto;
       margin-right: auto;
       position: relative;
