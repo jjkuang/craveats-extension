@@ -53,7 +53,6 @@
     }
 
      p {
-      line-height: 0px;
       margin-top: 20px;
       position: relative;
       text-align: center;
@@ -100,38 +99,20 @@
       height: 100%;
     }
 
-    .left-container {
-
-    }
-
-    .right-container {
-
-    }
-   
     .main-container {
       display: flex;
       flex-direction: column;
       top: 0;
       bottom: 0;
-      left: 30%;
-      /* right: 50%; */
-      /* margin-right: auto;
-      margin-left: auto; */
-      /*height: 90%;*/
       width: 48%;
       background: #f7d0cb;
-      min-width: 300px;
-    }
-
-    #main-container {
-
     }
 
     .center {
-        display: flex;
+      display: flex;
   		justify-content: center;
   		align-items: center;
-        }
+    }
 
     .dropbtn {
       background-color: #F4AC94;
@@ -142,7 +123,7 @@
       border-radius: 0px;
       font-size: 18px;
       justify-content: center;
-	  align-items: center;
+	    align-items: center;
     }
 
     .dropdown {
@@ -152,7 +133,6 @@
 
     .dropdown-content {
       display: none;
-      /*border: white;*/
       position: absolute;
       background-color: #f7d0cb;
       font-family: 'Manjari', sans-serif;
@@ -168,7 +148,7 @@
       border-color: white;
       padding: 10px 5px;
       font-size: 16px;
-      border: 1px solid white;
+      border: 1px solid white; 
     }
 
     .dropdown-item:hover {
@@ -187,22 +167,14 @@
     }
 
     #topCardView {
-      /*margin-top: 10px;*/
-      /*margin-bottom: 10px; */
-      /*text-align: center;*/
-      /*height: 50px;*/
-      /*width: 500px;*/
-      /*border: 3px solid white;*/
+      margin-top: 10px;
+      margin-bottom: 10px; 
       background: #f7d0cb;
-      /*padding: 17px;*/
       font-size: 18px;
     }
 
     #resultsRecyclerView {
-      /*margin: auto;*/
       height: 100%;
-      /*width: 500px;*/
-      /*border: 3px solid white;*/
       background: #f7d0cb;
       display: flex;
       flex-direction: column;
@@ -210,7 +182,6 @@
 
     .restaurant-item {
       background: #F4AC94;
-      /*padding: 1px;*/
       margin-bottom: 10px;
       margin-top: 10px;
       flex: 1;
@@ -329,12 +300,8 @@
     }
 
     #otherOptionsView {
-      /* height: 50%; */
       margin-top: 20px;
       width: 80%;
-      /* left: 4%; */
-      top: 20%;
-      /* margin-bottom: auto; */
       margin-left: auto;
       margin-right: auto;
       position: relative;
@@ -387,30 +354,15 @@
       font-size: 16px;
       text-align: center;
       display: flex;
-	  justify-content: center;
-	  align-items: center;
+  	  justify-content: center;
+  	  align-items: center;
 	  /*object-fit: cover;*/
       /*width: 235px;*/
       /*width: 200px;*/
     }
+
     #refreshClicked {
-    	/*margin: auto;
-      margin-top: 20px;
-      padding: 12px 28px;
-      width: 120px;
-      border: 1px solid #f7d0cb; 
-      border-radius: 10px;
-      background: #D66D50;
-      color: white;
-      cursor: pointer;
-      outline: none;
-      font-size: 16px;
-      text-align: center;
-      font-family: 'Manjari', sans-serif;
-      font-weight: normal;
-      justify-content: center;
-	  align-items: center;*/
-     position: relative;
+      position: relative;
       margin-top: 30px;
       margin-bottom: 10px;
       padding: 12px 28px;
@@ -425,17 +377,13 @@
       font-size: 16px;
       text-align: center;
       display: flex;
-	  justify-content: center;
-	  align-items: center;
+  	  justify-content: center;
+  	  align-items: center;
     }
 
     #favourites-div {
       display: flex;
       flex-direction: column;
-
-      display: inline-block;
-      position: absolute;
-      right: 0;
     }
 
     #favourites {
