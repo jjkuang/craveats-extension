@@ -3,62 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@100;400;700&family=Satisfy&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@100;400;700&family=Satisfy&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 
   <title>New Tab</title>
 </head>
 <body>
   <div class="container left-container">
-  	<div class ="center">
-    <div class="dropdown">
-      <button class="dropbtn">Sort By</button>
-      <div class="dropdown-content">
-        <span class="dropdown-item" id="distance-sort">Distance</span>
-        <span class="dropdown-item" id="rating-sort">Rating</span>
+    <div class ="center">
+      <div class="dropdown">
+        <button class="dropbtn">Sort By</button>
+        <div class="dropdown-content">
+          <span class="dropdown-item" id="distance-sort">Distance</span>
+          <span class="dropdown-item" id="rating-sort">Rating</span>
+        </div>
       </div>
     </div>
-</div>
 
-<div class ="center">
-	<div id="otherOptionsView">
-		<h2> Craving something else? </h2>
-		<!-- <hr class="cravings-hr"></hr> -->
-		<button class="optionbtn">
-			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
-			<span>Sushi</span>
-		</button>
-		<button class="optionbtn">
-			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
-			<span>Fast Food</span>
-		</button>
-		<button class="optionbtn">
-			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
-			<span>Breakfast</span>
-		</button>
-		<button class="optionbtn">
-			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
-			<span>Pizza</span>
-		</button>
-		<button class="optionbtn">
-			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
-			<span>Chinese</span>
-		</button>
-		<button class="optionbtn">
-			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
-			<span>Italian</span>
-		</button>
-		<button class="optionbtn">
-			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
-			<span>Indian</span>
-		</button>
-		<button class="optionbtn">
-			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
-			<span>Mexican</span>
-		</button>
-	</div>
-</div>
-
+    <div class ="center">
+    	<div id="otherOptionsView">
+    		<h2> Craving something else? </h2>
+    		<button class="optionbtn">
+    			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
+    			<span>Sushi</span>
+    		</button>
+    		<button class="optionbtn">
+    			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
+    			<span>Fast Food</span>
+    		</button>
+    		<button class="optionbtn">
+    			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
+    			<span>Breakfast</span>
+    		</button>
+    		<button class="optionbtn">
+    			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
+    			<span>Pizza</span>
+    		</button>
+    		<button class="optionbtn">
+    			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
+    			<span>Chinese</span>
+    		</button>
+    		<button class="optionbtn">
+    			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
+    			<span>Italian</span>
+    		</button>
+    		<button class="optionbtn">
+    			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
+    			<span>Indian</span>
+    		</button>
+    		<button class="optionbtn">
+    			<img class="optionicon" src = "flowers.jpg" width="20" height="20"/>
+    			<span>Mexican</span>
+    		</button>
+    	</div>
+    </div>
   </div>
 
   <div class="container main-container" id="main-container">
@@ -69,9 +67,7 @@
        <button id="refresh">Refresh</button>
     </div>
 
-    <div id="resultsRecyclerView">
-          
-    </div>
+    <div id="resultsRecyclerView"></div>
 
     <div id="map"></div>
 
@@ -79,11 +75,8 @@
 
   <div class="container right-container">
     <h2 id="favourites"> Favourites </h2>
-    <div id="favourites-div">
-      
-    </div>
+    <div id="favourites-div"></div>
   </div>
-  <!-- <script async defer type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuW4NSq2HJ9WpB7gmYimPBXSBRuNGkPI&libraries=places"></script> -->
   <script src='fragment.js'></script>
 </body>
 </html>

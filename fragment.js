@@ -40,11 +40,10 @@ function getNearbyPlaces(position,keyword="") {
     type: 'restaurant',
     keyword: keyword
   };
-  // has_keyword = keyword==""?false:true;
+  
   options_keyword = keyword;
   map = new google.maps.Map(document.getElementById('map'));
   service = new google.maps.places.PlacesService(map);
-  // service.nearbySearch(request, nearbyCallback);
   service.nearbySearch(request, nearbyCallback);
 }
 
@@ -85,24 +84,15 @@ function getRandomRestaurants(results,has_keyword) {
   rand_restaurants = [];
   for (var i = 0; i < NUM_RESTAURANTS_DISPLAYED; i++) {
     get_rand(results);
-    // if (has_keyword) {
-    //   get_rand(results);
-    // }
-    // else {
-    //   get_rand(results,allRestaurants);
-    // }
   }
 
-  // for (var i = rand_restaurants.length-1; i >  rand_restaurants.length-4; i-- ) {
   for (var i = 0; i< NUM_RESTAURANTS_DISPLAYED; i++) {
-    if (i<0) break;
+    if (i < 0) break;
     if (has_keyword) {
       makeDetailsRequest(rand_restaurants[i], modifyDetails);
-    }
-    else {
+    } else {
       makeDetailsRequest(rand_restaurants[i], displayRestaurant);
     }
-    // makeDetailsRequest(rand_restaurants[i], displayRestaurant);
   }
 }
 
@@ -118,8 +108,6 @@ function displayRestaurant(placeResult, status) {
   recyclerItem.classList.add('restaurant-item');
 
   if (status == google.maps.places.PlacesServiceStatus.OK) {
-    // i have no idea what html elements to actually use
-    // TODO: PRICE LEVEL(?)
     // TODO: probably change the class list a bit depending on how we want to style each element
 
     // CREATE TOP CONTAINER
@@ -515,7 +503,6 @@ function createBookmarkNode(restaurant) {
 
 
 // checks if the chosen restaurant is already in the array
-// TODO: eventually with the refresh fxn we need to reset the rand_restaurants
 function in_array(array, el) {
    for(var i = 0 ; i < array.length; i++) 
        if(array[i].place_id == el.place_id) return true;
@@ -525,7 +512,6 @@ function in_array(array, el) {
 
 // pick a random restaurant from results w/o duplicating
 // TODO: different types of restaurant objects in these arrays!!!
-// && !in_array(bookmarkedRestaurants, rand)
 function get_rand(array) {
     var rand = array[Math.floor(Math.random()*array.length)];
     if(!in_array(rand_restaurants, rand) && !in_array(bookmarkedRestaurants, rand)) {
@@ -560,7 +546,6 @@ function haversine_distance(lat1, lng1, lat2, lng2) {
 }
 
 
-// document.getElementById('refresh').addEventListener("click", refresh());
 document.getElementById('refresh').addEventListener("click", () => {
 	// as soon as you click it, it's greyed out
 	// document.getElementById('refresh').ClassList.add('button');

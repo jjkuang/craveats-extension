@@ -1,5 +1,4 @@
     html, body {
-      /*width: 100%;*/
       height: 100%;
       padding: 0;
       margin: 0;
@@ -17,7 +16,6 @@
       margin-right: auto;
       width: 50%;
       object-fit: cover;
-      /*width: 235px;*/
       z-index: 1;
     }
 
@@ -59,8 +57,6 @@
       font-size: 18px;
       font-family: 'Satisfy', cursive;
       color: #366775;
-      /*object-fit: cover;
-      z-index: 1;*/
     }
 
     button {
@@ -81,8 +77,6 @@
       justify-content: center;
 	  align-items: center;
     }
-
-    
     
     /*fix this so we have a click button and a drop down button*/
     button:active {
@@ -145,14 +139,13 @@
     .dropdown-item {
       text-align: center;
       border-radius: 1px;
-      border-color: white;
       padding: 10px 5px;
       font-size: 16px;
       border: 1px solid white; 
     }
 
     .dropdown-item:hover {
-      border: none;
+      border: 1px solid white; 
       background-color: #f1f1f1;
       cursor: pointer;
     }
@@ -308,13 +301,6 @@
       background: #A2B4C0;
       border-radius: 5px;
       text-align: center;
-      /*border: 3px solid white;*/
-    }
-
-    .cravings-hr {
-      margin-inline-start: 70px;
-      margin-inline-end: 70px;
-      border: 0.3px solid #366775;  
     }
 
     .optionbtn {
@@ -356,9 +342,6 @@
       display: flex;
   	  justify-content: center;
   	  align-items: center;
-	  /*object-fit: cover;*/
-      /*width: 235px;*/
-      /*width: 200px;*/
     }
 
     #refreshClicked {
@@ -368,8 +351,6 @@
       padding: 12px 28px;
       border: 1px solid #a2b4c0; 
       border-radius: 10px;
-      /*background: #D66D50 50%;*/
-      /*background-color: #808080;*/
       background-color: rgba(214,109,80, 0.6);
       color: white 50%;
       cursor: none;
