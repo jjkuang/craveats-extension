@@ -11,7 +11,7 @@
     }
 
     img.logo {
-      margin-top: 20px;
+      margin-top: 15px;
       position: relative;
       margin-left: auto;
       margin-right: auto;
@@ -39,7 +39,7 @@
 
     h2 {
       text-align: center;
-      font-size: 18px;
+      font-size: 28px;
       font-family: 'Satisfy', cursive;
       color: #366775;
     }
@@ -47,21 +47,26 @@
     h3 {
       font-family: 'Manjari', sans-serif;
       font-style: normal;
-      font-weight: normal;
+      font-weight: thin;
       font-size: 30px;
       color: #366775;
     }
 
-    h4 {
+     p {
+      line-height: 0px;
+      margin-top: 20px;
+      position: relative;
       text-align: center;
-      font-size: 14px;
+      font-size: 18px;
       font-family: 'Satisfy', cursive;
       color: #366775;
+      /*object-fit: cover;
+      z-index: 1;*/
     }
 
     button {
       margin: auto;
-      margin-top: 10px;
+      margin-top: 20px;
       padding: 12px 28px;
       width: 120px;
       border: 1px solid #f7d0cb; 
@@ -73,11 +78,19 @@
       font-size: 16px;
       text-align: center;
       font-family: 'Manjari', sans-serif;
+      font-weight: normal;
+      justify-content: center;
+	  align-items: center;
     }
+
+    
     
     /*fix this so we have a click button and a drop down button*/
     button:active {
       background-color: #e7e7e7;
+    }
+    button.noDisp {
+    	display: none;
     }
 
     .container {
@@ -100,35 +113,36 @@
       flex-direction: column;
       top: 0;
       bottom: 0;
-<<<<<<< HEAD
-=======
       left: 30%;
       /* right: 50%; */
       /* margin-right: auto;
       margin-left: auto; */
       /*height: 90%;*/
->>>>>>> origin/andrea
       width: 48%;
-      /*max-width: 500px;*/
       background: #f7d0cb;
+      min-width: 300px;
     }
 
     #main-container {
 
     }
 
+    .center {
+        display: flex;
+  		justify-content: center;
+  		align-items: center;
+        }
+
     .dropbtn {
-      /*color: white;
-      padding: 16px;
-      font-size: 16px;*/
       background-color: #F4AC94;
       font-family: 'Manjari', sans-serif;
-      font-weight: bold;
+      font-weight: normal;
       color: #366775;
       width: 120px;
       border-radius: 0px;
       font-size: 18px;
-      /*cursor: pointer;*/
+      justify-content: center;
+	  align-items: center;
     }
 
     .dropdown {
@@ -142,25 +156,19 @@
       position: absolute;
       background-color: #f7d0cb;
       font-family: 'Manjari', sans-serif;
-      font-weight: normal;
+      font-weight: thin;
       color: #366775;
       width: 120px;
       z-index: 1;
-      /*box-shadow: 2px 2px 3px grey;*/
-      /*border-radius: 1px;
-      border-color: white;*/
     }
 
     .dropdown-item {
-      text-decoration: none;
       text-align: center;
       border-radius: 1px;
       border-color: white;
       padding: 10px 5px;
       font-size: 16px;
-      border: 1px solid white; 
-      /*background-color: white;*/
-
+      border: 1px solid white;
     }
 
     .dropdown-item:hover {
@@ -179,8 +187,8 @@
     }
 
     #topCardView {
-      margin-top: 10px;
-      margin-bottom: 10px; 
+      /*margin-top: 10px;*/
+      /*margin-bottom: 10px; */
       /*text-align: center;*/
       /*height: 50px;*/
       /*width: 500px;*/
@@ -262,10 +270,6 @@
       margin-inline-end: 15px;
       margin-top: 10px;
       margin-bottom: 10px;
-    }
-
-    .bookmark-icon-inactive:hover {
-      background-image: url('icons/bookmark-icon-hover.png');
       cursor: pointer;
     }
 
@@ -281,15 +285,11 @@
       cursor: pointer;
     }
 
-    .bookmark-icon-active:hover {
-      background-image: url('icons/bookmark-icon.png');
-      cursor: pointer;
-    }
-
     #name-detail {
       margin-inline-start: 15px;
       width: 100%;
       font-size: 18px;
+      font-weight: 800px;
       color: #366775;
     }
 
@@ -330,6 +330,7 @@
 
     #otherOptionsView {
       /* height: 50%; */
+      margin-top: 20px;
       width: 80%;
       /* left: 4%; */
       top: 20%;
@@ -370,9 +371,12 @@
       float: left;
     }
 
-    #refresh {
-      margin: auto;
-      margin-top: 10px;
+
+
+     #refresh {
+      position: relative;
+      margin-top: 30px;
+      margin-bottom: 10px;
       padding: 12px 28px;
       border: 1px solid #a2b4c0; 
       border-radius: 10px;
@@ -382,11 +386,56 @@
       outline: none;
       font-size: 16px;
       text-align: center;
+      display: flex;
+	  justify-content: center;
+	  align-items: center;
+	  /*object-fit: cover;*/
+      /*width: 235px;*/
+      /*width: 200px;*/
+    }
+    #refreshClicked {
+    	/*margin: auto;
+      margin-top: 20px;
+      padding: 12px 28px;
+      width: 120px;
+      border: 1px solid #f7d0cb; 
+      border-radius: 10px;
+      background: #D66D50;
+      color: white;
+      cursor: pointer;
+      outline: none;
+      font-size: 16px;
+      text-align: center;
+      font-family: 'Manjari', sans-serif;
+      font-weight: normal;
+      justify-content: center;
+	  align-items: center;*/
+     position: relative;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      padding: 12px 28px;
+      border: 1px solid #a2b4c0; 
+      border-radius: 10px;
+      /*background: #D66D50 50%;*/
+      /*background-color: #808080;*/
+      background-color: rgba(214,109,80, 0.6);
+      color: white 50%;
+      cursor: none;
+      outline: none;
+      font-size: 16px;
+      text-align: center;
+      display: flex;
+	  justify-content: center;
+	  align-items: center;
     }
 
     #favourites-div {
       display: flex;
       flex-direction: column;
+
+      display: inline-block;
+      position: absolute;
+      right: 0;
     }
 
     #favourites {

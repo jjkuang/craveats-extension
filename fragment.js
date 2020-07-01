@@ -239,6 +239,7 @@ function displayRestaurant(placeResult, status) {
   recyclerView.appendChild(recyclerItem);
 }
 
+
 function refresh() {
   rand_restaurants = [];
   displayedRestaurants = [];
@@ -361,7 +362,6 @@ function bookmark(restaurant, idx) {
   // need element's PARENT's inner HTML stuff/upper level containers
   // need to change bookmark icon to 'clicked' state (light pink)
   // change background image url and leave it to the hover one
-
   let bel = document.getElementsByClassName('bookmark')[idx];
   bel.classList.remove('bookmark-icon-inactive');
   bel.classList.add('bookmark-icon-active');
@@ -562,7 +562,17 @@ function haversine_distance(lat1, lng1, lat2, lng2) {
 }
 
 
-document.getElementById('refresh').addEventListener("click", refresh);
+// document.getElementById('refresh').addEventListener("click", refresh());
+document.getElementById('refresh').addEventListener("click", () => {
+	// as soon as you click it, it's greyed out
+	// document.getElementById('refresh').ClassList.add('button');
+	document.getElementById('refresh').id = 'refreshClicked';
+
+	setTimeout(() => {
+		document.getElementById('refreshClicked').id = 'refresh';
+	}, 2000);
+	refresh();
+});
 document.getElementById('distance-sort')
         .addEventListener("click", () => {
           allRestaurants.slice(0,4).forEach(restaurant => {
@@ -575,6 +585,7 @@ document.getElementById('rating-sort')
 
 var option_btns = document.getElementsByClassName('optionbtn');
 
+
 for (var i = 0; i < option_btns.length; i++) {
   option_btns[i].addEventListener('click', event => {
     // console.log(this.getElementsByTagName('span')[0].innerText);
@@ -583,6 +594,4 @@ for (var i = 0; i < option_btns.length; i++) {
     keyword = event.target.closest("button").innerText;
     getNearbyPlaces(pos,keyword)
   });
-}
-
-
+};
