@@ -267,18 +267,38 @@ function modifyDetails(restaurant) {
   frag.childNodes[0].childNodes[2].childNodes[2].textContent = num;
   frag.childNodes[0].childNodes[3].childNodes[0].childNodes[0].childNodes[0].textContent = address;
   frag.childNodes[0].childNodes[3].childNodes[0].childNodes[0].href = addressUrl;
+  // if currently displayed frag has website content, replace textContent and links or remove links
   if (frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].hasChildNodes()) {
-    frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].childNodes[0].textContent = website;
-    frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].title = website;
-    frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].href = website;
+    if (website) {
+      frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].childNodes[0].textContent = website;
+      frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].title = website;
+      frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].href = website;
+    } else {
+      frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].childNodes[0].textContent = 'No website available';
+      frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].removeAttribute('href');
+      frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].removeAttribute('title');
+    }
   } else {
-    frag.childNodes[0].childNodes[3].childNodes[1].textContent = 'No website available';
-    
+      if (website) {
+        //create elements to display website if they don't already exist
+        let websiteLink = document.createElement('a');
+        // let websiteLink = frag.childNodes[0].childNodes[3].childNodes[1];
+        let websiteUrl = document.createTextNode(website);
+        websiteLink.appendChild(websiteUrl);
+        websiteLink.title = website;
+        websiteLink.href = website;
+        websiteLink.target = '_blank';
+        websiteLink.classList.add('link-details');
+        websiteLink.removeAttribute('textContent')
+        //remove the original textcontent that would currently be displaying 'No website available'
+        frag.childNodes[0].childNodes[3].childNodes[1].textContent = '';
+        frag.childNodes[0].childNodes[3].childNodes[1].appendChild(websiteLink);  
+      }      
   }
   let date = new Date();
   today = date.getDay();
   hoursIdx = (today == 0 ? 6 : today-1);
-  frag.childNodes[0].childNodes[3].childNodes[2] = hours[hoursIdx];
+  frag.childNodes[0].childNodes[3].childNodes[2].textContent = hours[hoursIdx];
 
   document.getElementById('resultsRecyclerView').appendChild(frag);
 }

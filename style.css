@@ -61,7 +61,7 @@
 
     button {
       margin: auto;
-      margin-top: 20px;
+      margin-top: 10px;
       padding: 12px 28px;
       width: 120px;
       border: 1px solid #f7d0cb; 
@@ -304,8 +304,7 @@
     }
 
     .optionbtn {
-      margin-left: 15px;
-      margin-bottom: 10px;
+      margin: 0px 5px 15px;
       padding: 15px 10px;
       border: 1px solid #D66D50; 
       border-radius: 10px;
