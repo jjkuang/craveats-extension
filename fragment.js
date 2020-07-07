@@ -566,16 +566,24 @@ function haversine_distance(lat1, lng1, lat2, lng2) {
 }
 
 
-document.getElementById('refresh').addEventListener("click", () => {
-	// as soon as you click it, it's greyed out
-	// document.getElementById('refresh').ClassList.add('button');
-	document.getElementById('refresh').id = 'refreshClicked';
+var refreshButton = document.getElementById('refresh');
+refreshButton.addEventListener("click", handleRefreshUI);
 
-	setTimeout(() => {
-		document.getElementById('refreshClicked').id = 'refresh';
-	}, 2000);
-	refresh();
-});
+function handleRefreshUI() {
+  refreshButton.classList.remove('refresh');
+  refreshButton.classList.add('refreshClicked');
+  refreshButton.disabled = true;
+  refresh();
+  setTimeout(enableRefresh, 2000);
+}
+
+function enableRefresh() {
+  refreshButton.classList.remove('refreshClicked');
+  refreshButton.classList.add('refresh');
+  refreshButton.disabled = false;
+}
+
+
 document.getElementById('distance-sort')
         .addEventListener("click", () => {
           allRestaurants.slice(0,4).forEach(restaurant => {

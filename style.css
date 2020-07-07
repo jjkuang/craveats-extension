@@ -323,42 +323,32 @@
       float: left;
     }
 
-
-
-     #refresh {
+    #refresh {
       position: relative;
       margin-top: 30px;
       margin-bottom: 10px;
       padding: 12px 28px;
       border: 1px solid #a2b4c0; 
       border-radius: 10px;
+      outline: none;
+      font-size: 16px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    button.refresh {     
       background: #D66D50;
       color: white;
       cursor: pointer;
-      outline: none;
-      font-size: 16px;
-      text-align: center;
-      display: flex;
-  	  justify-content: center;
-  	  align-items: center;
+
     }
 
-    #refreshClicked {
-      position: relative;
-      margin-top: 30px;
-      margin-bottom: 10px;
-      padding: 12px 28px;
-      border: 1px solid #a2b4c0; 
-      border-radius: 10px;
+    button.refreshClicked {
       background-color: rgba(214,109,80, 0.6);
       color: white 50%;
-      cursor: none;
-      outline: none;
-      font-size: 16px;
-      text-align: center;
-      display: flex;
-  	  justify-content: center;
-  	  align-items: center;
+      cursor: default;
     }
 
     #favourites-div {
