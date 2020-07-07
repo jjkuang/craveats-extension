@@ -203,6 +203,8 @@
 
     .details { 
       font-size: 14px;
+      margin-inline-start: 15px;
+      margin-inline-end: 15px;
       margin-top: 10px;
       margin-bottom: 10px;
       text-overflow: ellipsis;
