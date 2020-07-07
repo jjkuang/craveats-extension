@@ -12,7 +12,7 @@
   <div class="container left-container">
     <div class ="center">
       <div class="dropdown">
-        <button class="dropbtn">Sort By</button>
+        <button class="dropbtn" disabled="true">Sort By</button>
         <div class="dropdown-content">
           <span class="dropdown-item" id="distance-sort">Distance</span>
           <span class="dropdown-item" id="rating-sort">Rating</span>
@@ -62,12 +62,12 @@
   <div class="container main-container" id="main-container">
     <img class="logo" src = "logo.png">
 
-    <div id="topCardView">
-      <p> Feeling hungry? Check out these local eats. </p>
+    <div id="top-card-view">
+      <p class="top-card-intro"> Feeling hungry? Check out these local eats. </p>
        <button id="refresh" class="button refresh">Refresh</button>
     </div>
 
-    <div id="resultsRecyclerView"></div>
+    <div id="results-recycler-view"></div>
 
     <div id="map"></div>
 

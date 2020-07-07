@@ -52,14 +52,15 @@ let optionRestaurants;
 function nearbyCallback(results, status) {
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     console.log(results);
-    has_keyword = options_keyword==""?false:true;
+    has_keyword = options_keyword == "" ? false : true;
+
     if (options_keyword != "") {
       displayedRestaurants = [];
       optionRestaurants = results;
-    }
-    else {
+    } else {
       allRestaurants = results;
     }
+
     getRandomRestaurants(results,has_keyword);
     
   }
@@ -98,7 +99,7 @@ function getRandomRestaurants(results,has_keyword) {
 
 
 // TODO: need something async here/promise?
-let recyclerView = document.getElementById('resultsRecyclerView');
+let recyclerView = document.getElementById('results-recycler-view');
 let displayedRestaurants = [];
 function displayRestaurant(placeResult, status) {
   console.log(placeResult);
@@ -108,19 +109,21 @@ function displayRestaurant(placeResult, status) {
   recyclerItem.classList.add('restaurant-item');
 
   if (status == google.maps.places.PlacesServiceStatus.OK) {
-    // TODO: probably change the class list a bit depending on how we want to style each element
 
     // CREATE TOP CONTAINER
     let topDiv = document.createElement('div');
     topDiv.classList.add('flex-row-container');
+    topDiv.classList.add('top-details-container');
     topDiv.id = 'top-details-container';
 
     // CREATE LEFT SIDE CONTAINER
     let leftDiv = document.createElement('div');
+    leftDiv.classList.add('bottom-details-container');
     leftDiv.id = 'left-details-container';
 
     // CREATE RIGHT SIDE CONTAINER
     let rightDiv = document.createElement('div');
+    rightDiv.classList.add('bottom-details-container');
     rightDiv.id = 'right-details-container';
 
     // CREATE NAME ELEMENT
@@ -258,15 +261,18 @@ function modifyDetails(restaurant) {
 
   // modify the details
   frag.childNodes[0].childNodes[0].childNodes[0].textContent = name;
+
   if (frag.childNodes[0].childNodes[0].childNodes[1].classList.contains('bookmark-icon-active')) {
     frag.childNodes[0].childNodes[0].childNodes[1].classList.remove('bookmark-icon-active');
     frag.childNodes[0].childNodes[0].childNodes[1].classList.add('bookmark-icon-inactive');
   }
+
   frag.childNodes[0].childNodes[2].childNodes[0].textContent = rating;
   frag.childNodes[0].childNodes[2].childNodes[1].textContent = distance;  
   frag.childNodes[0].childNodes[2].childNodes[2].textContent = num;
   frag.childNodes[0].childNodes[3].childNodes[0].childNodes[0].childNodes[0].textContent = address;
   frag.childNodes[0].childNodes[3].childNodes[0].childNodes[0].href = addressUrl;
+
   // if currently displayed frag has website content, replace textContent and links or remove links
   if (frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].hasChildNodes()) {
     if (website) {
@@ -279,28 +285,28 @@ function modifyDetails(restaurant) {
       frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].removeAttribute('title');
     }
   } else {
-      if (website) {
-        //create elements to display website if they don't already exist
-        let websiteLink = document.createElement('a');
-        // let websiteLink = frag.childNodes[0].childNodes[3].childNodes[1];
-        let websiteUrl = document.createTextNode(website);
-        websiteLink.appendChild(websiteUrl);
-        websiteLink.title = website;
-        websiteLink.href = website;
-        websiteLink.target = '_blank';
-        websiteLink.classList.add('link-details');
-        websiteLink.removeAttribute('textContent')
-        //remove the original textcontent that would currently be displaying 'No website available'
-        frag.childNodes[0].childNodes[3].childNodes[1].textContent = '';
-        frag.childNodes[0].childNodes[3].childNodes[1].appendChild(websiteLink);  
-      }      
+    if (website) {
+      //create elements to display website if they don't already exist
+      let websiteLink = document.createElement('a');
+      let websiteUrl = document.createTextNode(website);
+      websiteLink.appendChild(websiteUrl);
+      websiteLink.title = website;
+      websiteLink.href = website;
+      websiteLink.target = '_blank';
+      websiteLink.classList.add('link-details');
+      websiteLink.removeAttribute('textContent')
+      //remove the original textcontent that would currently be displaying 'No website available'
+      frag.childNodes[0].childNodes[3].childNodes[1].textContent = '';
+      frag.childNodes[0].childNodes[3].childNodes[1].appendChild(websiteLink);  
+    }      
   }
+
   let date = new Date();
   today = date.getDay();
   hoursIdx = (today == 0 ? 6 : today-1);
   frag.childNodes[0].childNodes[3].childNodes[2].textContent = hours[hoursIdx];
 
-  document.getElementById('resultsRecyclerView').appendChild(frag);
+  recyclerView.appendChild(frag);
 }
 
 

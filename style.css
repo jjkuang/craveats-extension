@@ -9,19 +9,13 @@
       src: url(fonts/Antonio-Regular.ttf);
     }
 
-    img.logo {
-      margin-top: 15px;
-      position: relative;
-      margin-left: auto;
-      margin-right: auto;
-      width: 50%;
-      object-fit: cover;
-      z-index: 1;
-    }
-
     body {
       background: #366775;
       background-size: 100% 100%;
+    }
+
+    div {
+      font-family: 'Manjari', sans-serif;
     }
 
     h1 {
@@ -50,40 +44,24 @@
       color: #366775;
     }
 
-     p {
-      margin-top: 20px;
-      position: relative;
-      text-align: center;
-      font-size: 18px;
-      font-family: 'Satisfy', cursive;
-      color: #366775;
-    }
-
     button {
       margin: auto;
-      margin-top: 10px;
-      padding: 12px 28px;
-      width: 120px;
-      border: 1px solid #f7d0cb; 
-      border-radius: 10px;
-      background: #D66D50;
-      color: white;
-      cursor: pointer;
-      outline: none;
       font-size: 16px;
       text-align: center;
       font-family: 'Manjari', sans-serif;
       font-weight: normal;
       justify-content: center;
-	  align-items: center;
+	    align-items: center;
     }
     
-    /*fix this so we have a click button and a drop down button*/
-    button:active {
-      background-color: #e7e7e7;
-    }
-    button.noDisp {
-    	display: none;
+    img.logo {
+      margin-top: 15px;
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+      object-fit: cover;
+      z-index: 1;
     }
 
     .container {
@@ -109,15 +87,14 @@
     }
 
     .dropbtn {
+      margin-top: 10px;
+      padding: 12px 28px;
       background-color: #F4AC94;
-      font-family: 'Manjari', sans-serif;
-      font-weight: normal;
       color: #366775;
       width: 120px;
+      border: 1px solid #f7d0cb; 
       border-radius: 0px;
       font-size: 18px;
-      justify-content: center;
-	    align-items: center;
     }
 
     .dropdown {
@@ -129,7 +106,6 @@
       display: none;
       position: absolute;
       background-color: #f7d0cb;
-      font-family: 'Manjari', sans-serif;
       font-weight: thin;
       color: #366775;
       width: 120px;
@@ -155,18 +131,48 @@
       flex-direction: column;
     }
 
-    .dropdown:hover .dropbtn {
-      /*background-color: #f7d0cb;*/
-    }
-
-    #topCardView {
+    #top-card-view {
       margin-top: 10px;
       margin-bottom: 10px; 
       background: #f7d0cb;
       font-size: 18px;
     }
 
-    #resultsRecyclerView {
+    p.top-card-intro {
+      margin-top: 20px;
+      position: relative;
+      text-align: center;
+      font-size: 18px;
+      font-family: 'Satisfy', cursive;
+      color: #366775;
+    }
+
+    #refresh {
+      position: relative;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      padding: 12px 28px;
+      border: 1px solid #a2b4c0; 
+      border-radius: 10px;
+      outline: none;
+      font-size: 16px;
+      text-align: center;
+      display: flex;
+    }
+
+    button.refresh {     
+      background: #D66D50;
+      color: white;
+      cursor: pointer;
+    }
+
+    button.refreshClicked {
+      background-color: rgba(214,109,80,0.6);
+      color: white 50%;
+      cursor: default;
+    }
+
+    #results-recycler-view {
       height: 100%;
       background: #f7d0cb;
       display: flex;
@@ -180,18 +186,17 @@
       flex: 1;
       max-height: 180px;
       font-size: 15px;
-      font-family: 'Manjari', sans-serif;
+      
       color: #366775;
     }
 
-    .restaurant-item div {
-      display: inline-flex;
-      flex-direction: column;
+    div.top-details-container {
+      margin-bottom: 0;
     }
 
-    #top-details-container {
-      display: flex;
-      flex-direction: row;
+    div.bottom-details-container {
+      display: inline-flex;
+      flex-direction: column;
     }
 
     #left-details-container {
@@ -225,28 +230,23 @@
       border: 0.3px solid #D66D50;
     }
 
-    .bookmark-icon-inactive {
-      background-image: url('icons/bookmark-icon.png');
+    .bookmark {
       background-repeat: no-repeat;
       background-size: contain;
-      height: 28px;
-      width: 28px;
+      height: 24px;
+      width: 24px;
       margin-inline-end: 15px;
       margin-top: 10px;
       margin-bottom: 10px;
       cursor: pointer;
     }
 
+    .bookmark-icon-inactive {
+      background-image: url('icons/bookmark-icon.png');
+    }
+
      .bookmark-icon-active {
       background-image: url('icons/bookmark-icon-hover.png');
-      background-repeat: no-repeat;
-      background-size: contain;
-      height: 28px;
-      width: 28px;
-      margin-inline-end: 15px;
-      margin-top: 10px;
-      margin-bottom: 10px;
-      cursor: pointer;
     }
 
     #name-detail {
@@ -312,8 +312,7 @@
       color: #366775;
       cursor: pointer;
       outline: none;
-      /* width: 40%; */
-      /* height: 7%; */
+      width: 120px;
       font-size: 14px;
       text-align: center;
     }
@@ -321,34 +320,6 @@
     img.optionicon {
       position: relative;
       float: left;
-    }
-
-    #refresh {
-      position: relative;
-      margin-top: 30px;
-      margin-bottom: 10px;
-      padding: 12px 28px;
-      border: 1px solid #a2b4c0; 
-      border-radius: 10px;
-      outline: none;
-      font-size: 16px;
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    button.refresh {     
-      background: #D66D50;
-      color: white;
-      cursor: pointer;
-
-    }
-
-    button.refreshClicked {
-      background-color: rgba(214,109,80, 0.6);
-      color: white 50%;
-      cursor: default;
     }
 
     #favourites-div {
@@ -385,10 +356,6 @@
       font-weight: normal;
       font-size: 12px;
       color: #366775;
-    }
-
-    .faves-title-container {
-      margin-bottom: 5px;
     }
 
     .faves-hr {
