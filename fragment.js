@@ -52,7 +52,7 @@ let optionRestaurants;
 function nearbyCallback(results, status) {
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     console.log(results);
-    has_keyword = options_keyword==""?false:true;
+    modify_required = options_keyword==""?false:true;
     if (options_keyword != "") {
       displayedRestaurants = [];
       optionRestaurants = results;
@@ -60,7 +60,7 @@ function nearbyCallback(results, status) {
     else {
       allRestaurants = results;
     }
-    getRandomRestaurants(results,has_keyword);
+    getRandomRestaurants(results,modify_required);
     
   }
 }
@@ -80,7 +80,7 @@ function makeDetailsRequest(restaurant, funcName) {
 // pick 3 random restaurants from the results list
 const NUM_RESTAURANTS_DISPLAYED = 3;
 var rand_restaurants = [];
-function getRandomRestaurants(results,has_keyword) { 
+function getRandomRestaurants(results,modify) { 
   rand_restaurants = [];
   for (var i = 0; i < NUM_RESTAURANTS_DISPLAYED; i++) {
     get_rand(results);
@@ -88,7 +88,7 @@ function getRandomRestaurants(results,has_keyword) {
 
   for (var i = 0; i< NUM_RESTAURANTS_DISPLAYED; i++) {
     if (i < 0) break;
-    if (has_keyword) {
+    if (modify) {
       makeDetailsRequest(rand_restaurants[i], modifyDetails);
     } else {
       makeDetailsRequest(rand_restaurants[i], displayRestaurant);
@@ -565,6 +565,26 @@ function haversine_distance(lat1, lng1, lat2, lng2) {
   return haversine_distance.toFixed(2); // 2 * R; R = 6371 km
 }
 
+function configure_other_option(option_btn, keyword) {
+  if (options_keyword == keyword) {
+    option_btn.classList.remove('optionbtn-clicked');
+    option_btn.classList.add('optionbtn')
+    options_keyword=""
+    getRandomRestaurants(allRestaurants,true);
+  } else {
+    current_btn = document.getElementsByClassName('optionbtn-clicked');
+    console.log(current_btn);
+    if (current_btn.length != 0) {
+      current_btn = current_btn[0].closest('button');
+      current_btn.classList.remove('optionbtn-clicked');
+      current_btn.classList.add('optionbtn');
+    }
+    console.log(current_btn);
+    option_btn.classList.remove('optionbtn');
+    option_btn.classList.add('optionbtn-clicked');
+    getNearbyPlaces(pos,keyword);
+  }
+}
 
 document.getElementById('refresh').addEventListener("click", () => {
 	// as soon as you click it, it's greyed out
@@ -588,13 +608,11 @@ document.getElementById('rating-sort')
 
 var option_btns = document.getElementsByClassName('optionbtn');
 
-
 for (var i = 0; i < option_btns.length; i++) {
   option_btns[i].addEventListener('click', event => {
-    // console.log(this.getElementsByTagName('span')[0].innerText);
-    // console.log("clicked on " + event.target.innerText);
-    console.log(event.target.closest("button").innerText);
-    keyword = event.target.closest("button").innerText;
-    getNearbyPlaces(pos,keyword)
+    option_btn = event.target.closest("button");
+    console.log(option_btn.innerText);
+    keyword = option_btn.innerText;
+    configure_other_option(option_btn,keyword);
   });
 };
