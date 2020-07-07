@@ -63,7 +63,6 @@
       margin: auto;
       margin-top: 10px;
       padding: 12px 28px;
-      width: 120px;
       border: 1px solid #f7d0cb; 
       border-radius: 10px;
       background: #D66D50;
@@ -75,7 +74,7 @@
       font-family: 'Manjari', sans-serif;
       font-weight: normal;
       justify-content: center;
-	  align-items: center;
+	    align-items: center;
     }
     
     /*fix this so we have a click button and a drop down button*/
@@ -204,8 +203,6 @@
 
     .details { 
       font-size: 14px;
-      margin-inline-start: 15px;
-      margin-inline-end: 15px;
       margin-top: 10px;
       margin-bottom: 10px;
       text-overflow: ellipsis;
@@ -305,7 +302,7 @@
 
     .optionbtn {
       margin: 0px 5px 15px;
-      padding: 10px 10px;
+      padding: 10px 5px 10px 5px;
       border-radius: 10px;
       background: #F7D0CB;
       color: #366775;
@@ -317,7 +314,7 @@
 
     .optionbtn-clicked {
       margin: 0px 5px 15px;
-      padding: 10px 10px;
+      padding: 10px 5px 10px 5px;
       border: 1px solid #F4AC94; 
       border-radius: 10px;
       background: #F4AC94;
@@ -329,8 +326,8 @@
     }
 
     img.optionicon {
-      position: relative;
       float: left;
+      padding-right: 8px;
     }
 
 
