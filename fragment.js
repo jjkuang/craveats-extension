@@ -13,7 +13,12 @@ loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuW4NSq2HJ9WpB7gm
           main);
 
 let pos;
+let DIETARY_RESTRICTIONS;
 function main() {
+  chrome.storage.sync.get(['diet'], function(result) {
+    DIETARY_RESTRICTIONS = result.diet;
+    console.log('diet is' + result.diet);
+  })  
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       pos = {
@@ -30,7 +35,6 @@ function main() {
 }
 
 let service;
-
 let options_keyword;
 function getNearbyPlaces(position,keyword="") {
   let request = {
@@ -38,7 +42,7 @@ function getNearbyPlaces(position,keyword="") {
     rankBy: google.maps.places.RankBy.DISTANCE,
     openNow: true,
     type: 'restaurant',
-    keyword: keyword
+    keyword: keyword+DIETARY_RESTRICTIONS
   };
   
   options_keyword = keyword;
@@ -630,3 +634,11 @@ for (var i = 0; i < option_btns.length; i++) {
     configure_other_option(option_btn,keyword);
   });
 };
+
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+  for (var key in changes) {
+    var storageChange = changes[key];
+    DIETARY_RESTRICTIONS = storageChange.newValue;
+    location.reload();
+  }
+})

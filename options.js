@@ -6,9 +6,10 @@ const kButtonColors = ['#3aa757', '#e85453c', '#f9bb2d', '#4688f1'];
 function constructOptions(kButtonColors) {
 	for (let item of kButtonColors) {
 		let button = document.createElement('button');
+		button.textContent = `Diet is ${item}`;
 		button.style.backgroundColor = item;
 		button.addEventListener('click', function() {
-			chrome.storage.sync.set({color: item}, function() {
+			chrome.storage.sync.set({diet: item}, function() {
 				console.log('color is' + item);
 			})
 		});
