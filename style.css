@@ -305,21 +305,33 @@
 
     .optionbtn {
       margin: 0px 5px 15px;
-      padding: 10px 10px 5px;
-      border: 1px solid #D66D50; 
+      padding: 10px 5px 10px 5px;
+      border: 1px solid #f7d0cb; 
       border-radius: 10px;
       background: #F7D0CB;
       color: #366775;
       cursor: pointer;
+      outline: none;  
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .optionbtn-clicked {
+      margin: 0px 5px 15px;
+      padding: 10px 5px 10px 5px;
+      border: 1px solid #F4AC94; 
+      border-radius: 10px;
+      background: #F4AC94;
+      color: #366775;
+      cursor: pointer;
       outline: none;
-      width: 120px;
       font-size: 14px;
       text-align: center;
     }
 
     img.optionicon {
-      position: relative;
       float: left;
+      padding-right: 8px;
     }
 
     #favourites-div {
