@@ -26,4 +26,3 @@ function restore_options() {
 document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById('option-save').addEventListener('click',
     save_options);
-//result.diet
