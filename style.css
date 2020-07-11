@@ -14,7 +14,7 @@
       position: relative;
       margin-left: auto;
       margin-right: auto;
-      width: 40%;
+      width: 35%;
       object-fit: cover;
       z-index: 1;
     }
@@ -269,6 +269,10 @@
       max-height: 180px;
       font-size: 15px;      
       color: #366775;
+<<<<<<< HEAD
+      /*min-width: 450px;*/
+=======
+>>>>>>> 8bfa5a0699c164744b8fd62c781b5be3af032d7c
     }
 
     div.top-details-container {
