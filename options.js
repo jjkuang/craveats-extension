@@ -1,19 +1,29 @@
-let page = document.getElementById('buttonDiv');
-const kButtonColors = ['#3aa757', '#e85453c', '#f9bb2d', '#4688f1'];
-
-// rather than repeat the html for buttons, use a for loop in the js
-// create each button, then append the elements to the button div container
-function constructOptions(kButtonColors) {
-	for (let item of kButtonColors) {
-		let button = document.createElement('button');
-		button.style.backgroundColor = item;
-		button.addEventListener('click', function() {
-			chrome.storage.sync.set({color: item}, function() {
-				console.log('color is' + item);
-			})
-		});
-		page.appendChild(button);
-	}
+// Saves options to chrome.storage
+function save_options() {
+  var diet = document.getElementById('diet').value;
+  chrome.storage.sync.set({
+    diet: diet,
+  }, function() {
+    // Update status to let user know options were saved.
+    var status = document.getElementById('status');
+    status.textContent = 'Options saved.';
+    setTimeout(function() {
+      status.textContent = '';
+    }, 750);
+  });
 }
 
-constructOptions(kButtonColors);
+// Restores select box using the preferences
+// stored in chrome.storage.
+function restore_options() {
+  // Use default value color = 'red' and likesColor = true.
+  chrome.storage.sync.get({
+    dietaryRestrictions:'none'
+  }, function(result) {
+    document.getElementById('diet').value = result.diet;
+  });
+}
+document.addEventListener('DOMContentLoaded', restore_options);
+document.getElementById('option-save').addEventListener('click',
+    save_options);
+//result.diet

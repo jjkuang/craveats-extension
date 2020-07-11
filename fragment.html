@@ -12,7 +12,10 @@
   <div class="container left-container">
     <div class ="center">
       <div class="dropdown">
-        <button class="dropbtn">Sort By</button>
+        <button class="dropbtn">
+          <img class="dropicon" src= "icons/dropdown.png" width="20" height="20"/>
+          <span>Sort By</span>
+        </button>
         <div class="dropdown-content">
           <span class="dropdown-item" id="distance-sort">Distance</span>
           <span class="dropdown-item" id="rating-sort">Rating</span>
@@ -25,15 +28,7 @@
     		<h2> Craving something else? </h2>
     		<button class="optionbtn">
     			<img class="optionicon" src = "icons/sushi.png" width="20" height="20"/>
-    			<span>Sushi</span>
-    		</button>
-    		<button class="optionbtn">
-    			<img class="optionicon" src = "icons/fast-food.png" width="20" height="20"/>
-    			<span>Fast Food</span>
-    		</button>
-    		<button class="optionbtn">
-    			<img class="optionicon" src = "icons/breakfast.png" width="20" height="20"/>
-    			<span>Breakfast</span>
+    			<span>Japanese</span>
     		</button>
     		<button class="optionbtn">
     			<img class="optionicon" src = "icons/pizza.png" width="20" height="20"/>
@@ -55,15 +50,27 @@
     			<img class="optionicon" src = "icons/taco.png" width="20" height="20"/>
     			<span>Mexican</span>
     		</button>
+        <button class="optionbtn">
+          <img class="optionicon" src = "icons/falafel.png" width="20" height="20"/>
+          <span>Middle Eastern</span>
+        </button>
+        <button class="optionbtn">
+          <img class="optionicon" src = "icons/padthai.png" width="20" height="20"/>
+          <span>Thai</span>
+        </button>
+        <button class="optionbtn">
+          <img class="optionicon" src = "icons/pho.png" width="20" height="20"/>
+          <span>Vietnamese</span>
+        </button>
     	</div>
     </div>
   </div>
 
-  <div class="container main-container" id="main-container">
+  <div class="container main-container" id="main-container" style="height:100%">
     <img class="logo" src = "logo.png">
 
     <div id="topCardView">
-      <p> Feeling hungry? Check out these local eats. </p>
+      <h4> Feeling hungry? Check out these local eats. </h4>
        <button id="refresh">Refresh</button>
     </div>
 

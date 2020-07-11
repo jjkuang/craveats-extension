@@ -1,4 +1,5 @@
 // a substitute for the inline script that loads Google Maps API
+
 function loadScript(scriptSrc, loadedCallback) {
   var oHead = document.getElementsByTagName("HEAD")[0];
   var oScript = document.createElement('script');
@@ -14,6 +15,11 @@ loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuW4NSq2HJ9WpB7gm
 
 let pos;
 function main() {
+  //get it to log in the console
+  chrome.storage.sync.get(['diet'], function(result)
+    {
+      console.log('diet is' + result.diet);
+    })
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       pos = {
@@ -616,3 +622,15 @@ for (var i = 0; i < option_btns.length; i++) {
     configure_other_option(option_btn,keyword);
   });
 };
+
+
+var center=document.getElementById('main-container').style.height;
+var options=document.getElementById('otherOptionsView').style.height;
+if(options>center)
+{
+    document.getElementById('main-container').style.height=options;
+}
+// else
+// {
+//     document.getElementById('main-container').style.height=;
+// }
