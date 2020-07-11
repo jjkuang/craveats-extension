@@ -24,6 +24,10 @@
       background-size: 100% 100%;
     }
 
+    div {
+      font-family: 'Manjari', sans-serif;
+    }
+
     h1 {
       font-size: 20px;
       font-family: Antonio;
@@ -51,8 +55,6 @@
     }
 
     h4 {
-      line-height: 1px;
-      margin-top: 15px;
       text-align: center;
       font-size: 18px;
       font-family: 'Satisfy', cursive;
@@ -69,7 +71,7 @@
       color: #366775;
     }
 
-     p {
+    p {
       margin-top: 10px;
       position: relative;
       text-align: center;
@@ -80,36 +82,18 @@
 
     button {
       margin: auto;
-      margin-top: 10px;
-      padding: 12px 28px;
-      width: 120px;
-      border: 1px solid #f7d0cb; 
-      border-radius: 10px;
-      background: #D66D50;
-      color: white;
-      cursor: pointer;
-      outline: none;
       font-size: 16px;
       text-align: center;
       font-family: 'Manjari', sans-serif;
       font-weight: normal;
       justify-content: center;
-    align-items: center;
-    }
-    
-    /*fix this so we have a click button and a drop down button*/
-    button:active {
-      background-color: #e7e7e7;
-    }
-    button.noDisp {
-    	display: none;
+      align-items: center;
     }
 
     .container {
       display: inline-block;
       float: left;
       width: 26%;
-      /*height: 100%;*/
       min-height: height(cravingSomethingElse);
     }
 
@@ -120,7 +104,6 @@
       bottom: 0;
       width: 48%;
       background: #f7d0cb;
-      min-width: 300px;
       height: 100%;
     }
 
@@ -142,7 +125,7 @@
     }
 
     #option-save {
-       position: relative;
+      position: relative;
       margin-top: 0px;
       padding: 12px 5px;
       border: 1px solid #a2b4c0; 
@@ -165,28 +148,36 @@
       align-items: center;
     }
 
+    .clickable-span {
+      pointer-events: auto;
+    }
+
+    .unclickable-span {
+      pointer-events: none;
+    }
+
+    .clickable-button {
+      cursor: pointer;
+    }
+
+    .unclickable-button {
+      cursor: default;
+    }
+
     .dropbtn {
-      border: 1px solid #f7d0cb; 
+      margin-top: 10px;
+      padding: 12px 18px;
       background-color: #F4AC94;
-      font-family: 'Manjari', sans-serif;
-      font-weight: normal;
       color: #366775;
+      width: 120px;
+      border: 1px solid #f7d0cb; 
       border-radius: 0px;
       font-size: 18px;
-      justify-content: center;
-      align-items: center;
-      padding: 12px 12px;
-      width: 120px;
     }
 
     .dropdown {
       position: relative;
       display: inline-block;
-
-      margin-top: 30px;
-      cursor: pointer;
-      text-align: center;
-      align-items: center;
     }
 
     img.dropicon {
@@ -198,7 +189,6 @@
       display: none;
       position: absolute;
       background-color: #f7d0cb;
-      font-family: 'Manjari', sans-serif;
       font-weight: thin;
       color: #366775;
       width: 120px;
@@ -224,19 +214,48 @@
       flex-direction: column;
     }
 
-    .dropdown:hover .dropbtn {
-      /*background-color: #f7d0cb;*/
-    }
-
-    #topCardView {
+    #top-card-view {
       margin-top: 10px;
       margin-bottom: 10px; 
       background: #f7d0cb;
       font-size: 18px;
     }
 
-    #resultsRecyclerView {
-      /*height: 100%;*/
+    h4.top-card-intro {
+      margin-top: 20px;
+      position: relative;
+      text-align: center;
+      font-size: 18px;
+      font-family: 'Satisfy', cursive;
+      color: #366775;
+    }
+
+    #refresh {
+      position: relative;
+      margin-bottom: 10px;
+      padding: 12px 24px;
+      border: 1px solid #a2b4c0; 
+      border-radius: 10px;
+      outline: none;
+      font-size: 16px;
+      text-align: center;
+      display: flex;
+    }
+
+    button.refresh {     
+      background: #D66D50;
+      color: white;
+      cursor: pointer;
+    }
+
+    button.refreshClicked {
+      background-color: rgba(214,109,80,0.6);
+      color: white 50%;
+      cursor: default;
+    }
+
+    #results-recycler-view {
+      height: 100%;
       background: #f7d0cb;
       display: flex;
       flex-direction: column;
@@ -246,26 +265,27 @@
       background: #F4AC94;
       margin-bottom: 10px;
       margin-top: 10px;
-      /*flex: 1;*/
-      font-size: 15px;
-      font-family: 'Manjari', sans-serif;
+      flex: 1;
+      max-height: 180px;
+      font-size: 15px;      
       color: #366775;
+<<<<<<< HEAD
       /*min-width: 450px;*/
+=======
+>>>>>>> 8bfa5a0699c164744b8fd62c781b5be3af032d7c
     }
 
-    .restaurant-item div {
+    div.top-details-container {
+      margin-bottom: 0;
+    }
+
+    div.bottom-details-container {
       display: inline-flex;
       flex-direction: column;
     }
 
-    #top-details-container {
-      display: flex;
-      flex-direction: row;
-    }
-
     #left-details-container {
       width: 35%;
-      /*min-width: 150px;*/
     }
 
     #right-details-container {
@@ -295,28 +315,23 @@
       border: 0.3px solid #D66D50;
     }
 
-    .bookmark-icon-inactive {
-      background-image: url('icons/bookmark-icon.png');
+    .bookmark {
       background-repeat: no-repeat;
       background-size: contain;
-      height: 28px;
-      width: 28px;
+      height: 24px;
+      width: 24px;
       margin-inline-end: 15px;
       margin-top: 10px;
       margin-bottom: 10px;
       cursor: pointer;
     }
 
-     .bookmark-icon-active {
+    .bookmark-icon-inactive {
+      background-image: url('icons/bookmark-icon.png');
+    }
+
+    .bookmark-icon-active {
       background-image: url('icons/bookmark-icon-hover.png');
-      background-repeat: no-repeat;
-      background-size: contain;
-      height: 28px;
-      width: 28px;
-      margin-inline-end: 15px;
-      margin-top: 10px;
-      margin-bottom: 10px;
-      cursor: pointer;
     }
 
     #name-detail {
@@ -363,9 +378,8 @@
     }
 
     #otherOptionsView {
-      margin-top: 20px;
+      margin-top: 10px;
       width: 80%;
-      /*min-width: 150px;*/
       margin-left: auto;
       margin-right: auto;
       position: relative;
@@ -377,6 +391,7 @@
     .optionbtn {
       margin: 0px 5px 15px;
       padding: 10px 5px 10px 5px;
+      border: 1px solid #f7d0cb; 
       border-radius: 10px;
       background: #F7D0CB;
       color: #366775;
@@ -402,40 +417,6 @@
     img.optionicon {
       float: left;
       padding-right: 8px;
-    }
-
-     #refresh {
-      position: relative;
-      margin-top: 30px;
-      padding: 12px 5px;
-      border: 1px solid #a2b4c0; 
-      border-radius: 10px;
-      background: #D66D50;
-      color: white;
-      cursor: pointer;
-      outline: none;
-      font-size: 16px;
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #refreshClicked {
-      position: relative;
-      margin-top: 30px;
-      padding: 12px 5px;
-      border: 1px solid #a2b4c0; 
-      border-radius: 10px;
-      background-color: rgba(214,109,80, 0.6);
-      color: white 50%;
-      cursor: none;
-      outline: none;
-      font-size: 16px;
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
 
     #favourites-div {
@@ -472,10 +453,6 @@
       font-weight: normal;
       font-size: 12px;
       color: #366775;
-    }
-
-    .faves-title-container {
-      margin-bottom: 5px;
     }
 
     .faves-hr {

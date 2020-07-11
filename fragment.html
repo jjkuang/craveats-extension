@@ -10,15 +10,15 @@
 </head>
 <body>
   <div class="container left-container">
-    <div class ="center">
+    <div class ="center top">
       <div class="dropdown">
-        <button class="dropbtn">
+        <button class="dropbtn" disabled="true">
           <img class="dropicon" src= "icons/dropdown.png" width="20" height="20"/>
           <span>Sort By</span>
         </button>
         <div class="dropdown-content">
-          <span class="dropdown-item" id="distance-sort">Distance</span>
-          <span class="dropdown-item" id="rating-sort">Rating</span>
+          <span class="dropdown-item clickable-span" id="distance-sort">Distance</span>
+          <span class="dropdown-item clickable-span" id="rating-sort">Rating</span>
         </div>
       </div>
     </div>
@@ -26,39 +26,39 @@
     <div class ="center">
     	<div id="otherOptionsView">
     		<h2> Craving something else? </h2>
-    		<button class="optionbtn">
+    		<button class="optionbtn clickable-buttons">
     			<img class="optionicon" src = "icons/sushi.png" width="20" height="20"/>
     			<span>Japanese</span>
     		</button>
-    		<button class="optionbtn">
+    		<button class="optionbtn clickable-buttons">
     			<img class="optionicon" src = "icons/pizza.png" width="20" height="20"/>
     			<span>Pizza</span>
     		</button>
-    		<button class="optionbtn">
+    		<button class="optionbtn clickable-buttons">
     			<img class="optionicon" src = "icons/dumpling.png" width="20" height="20"/>
     			<span>Chinese</span>
     		</button>
-    		<button class="optionbtn">
+    		<button class="optionbtn clickable-buttons">
     			<img class="optionicon" src = "icons/spaghetti.png" width="20" height="20"/>
     			<span>Italian</span>
     		</button>
-    		<button class="optionbtn">
+    		<button class="optionbtn clickable-buttons">
     			<img class="optionicon" src = "icons/curry.png" width="20" height="20"/>
     			<span>Indian</span>
     		</button>
-    		<button class="optionbtn">
+    		<button class="optionbtn clickable-buttons">
     			<img class="optionicon" src = "icons/taco.png" width="20" height="20"/>
     			<span>Mexican</span>
     		</button>
-        <button class="optionbtn">
+        <button class="optionbtn clickable-buttons">
           <img class="optionicon" src = "icons/falafel.png" width="20" height="20"/>
           <span>Middle Eastern</span>
         </button>
-        <button class="optionbtn">
+        <button class="optionbtn clickable-buttons">
           <img class="optionicon" src = "icons/padthai.png" width="20" height="20"/>
           <span>Thai</span>
         </button>
-        <button class="optionbtn">
+        <button class="optionbtn clickable-buttons">
           <img class="optionicon" src = "icons/pho.png" width="20" height="20"/>
           <span>Vietnamese</span>
         </button>
@@ -70,11 +70,11 @@
     <img class="logo" src = "logo.png">
 
     <div id="topCardView">
-      <h4> Feeling hungry? Check out these local eats. </h4>
-       <button id="refresh">Refresh</button>
+      <h4 class="top-card-intro"> Feeling hungry? Check out these local eats. </h4>
+      <button id="refresh" class="button refresh clickable-buttons">Refresh</button>
     </div>
 
-    <div id="resultsRecyclerView"></div>
+    <div id="results-recycler-view"></div>
 
     <div id="map"></div>
 

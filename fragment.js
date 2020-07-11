@@ -14,12 +14,12 @@ loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuW4NSq2HJ9WpB7gm
           main);
 
 let pos;
+let DIETARY_RESTRICTIONS;
 function main() {
-  //get it to log in the console
-  chrome.storage.sync.get(['diet'], function(result)
-    {
-      console.log('diet is' + result.diet);
-    })
+  chrome.storage.sync.get(['diet'], function(result) {
+    DIETARY_RESTRICTIONS = result.diet;
+    console.log('diet is' + result.diet);
+  })  
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       pos = {
@@ -36,18 +36,18 @@ function main() {
 }
 
 let service;
-
 let options_keyword;
-function getNearbyPlaces(position,keyword="") {
+function getNearbyPlaces(position,option="") {
   let request = {
     location: position,
     rankBy: google.maps.places.RankBy.DISTANCE,
     openNow: true,
     type: 'restaurant',
-    keyword: keyword
+    keyword: DIETARY_RESTRICTIONS ? option + " " + DIETARY_RESTRICTIONS : option
   };
-  
-  options_keyword = keyword;
+  console.log(DIETARY_RESTRICTIONS ? option + " " + DIETARY_RESTRICTIONS : option)
+
+  options_keyword = option;
   map = new google.maps.Map(document.getElementById('map'));
   service = new google.maps.places.PlacesService(map);
   service.nearbySearch(request, nearbyCallback);
@@ -58,14 +58,15 @@ let optionRestaurants;
 function nearbyCallback(results, status) {
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     console.log(results);
-    modify_required = options_keyword==""?false:true;
+    modify_required = options_keyword == "" ? false : true;
+
     if (options_keyword != "") {
       displayedRestaurants = [];
       optionRestaurants = results;
-    }
-    else {
+    } else {
       allRestaurants = results;
     }
+
     getRandomRestaurants(results,modify_required);
     
   }
@@ -104,7 +105,7 @@ function getRandomRestaurants(results,modify) {
 
 
 // TODO: need something async here/promise?
-let recyclerView = document.getElementById('resultsRecyclerView');
+let recyclerView = document.getElementById('results-recycler-view');
 let displayedRestaurants = [];
 function displayRestaurant(placeResult, status) {
   console.log(placeResult);
@@ -114,19 +115,21 @@ function displayRestaurant(placeResult, status) {
   recyclerItem.classList.add('restaurant-item');
 
   if (status == google.maps.places.PlacesServiceStatus.OK) {
-    // TODO: probably change the class list a bit depending on how we want to style each element
 
     // CREATE TOP CONTAINER
     let topDiv = document.createElement('div');
     topDiv.classList.add('flex-row-container');
+    topDiv.classList.add('top-details-container');
     topDiv.id = 'top-details-container';
 
     // CREATE LEFT SIDE CONTAINER
     let leftDiv = document.createElement('div');
+    leftDiv.classList.add('bottom-details-container');
     leftDiv.id = 'left-details-container';
 
     // CREATE RIGHT SIDE CONTAINER
     let rightDiv = document.createElement('div');
+    rightDiv.classList.add('bottom-details-container');
     rightDiv.id = 'right-details-container';
 
     // CREATE NAME ELEMENT
@@ -157,7 +160,7 @@ function displayRestaurant(placeResult, status) {
     rating.classList.add('rating-icon');
     rating.classList.add('icon');
     rating.id = 'rating-detail';
-    rating.textContent = (placeResult.rating ? `Rating: ${placeResult.rating}` : 'Rating: N/A');
+    rating.textContent = (placeResult.rating ? `${placeResult.rating}` : 'N/A');
     leftDiv.appendChild(rating);
 
     // CREATE DISTANCE ELEMENT
@@ -264,15 +267,18 @@ function modifyDetails(restaurant) {
 
   // modify the details
   frag.childNodes[0].childNodes[0].childNodes[0].textContent = name;
+
   if (frag.childNodes[0].childNodes[0].childNodes[1].classList.contains('bookmark-icon-active')) {
     frag.childNodes[0].childNodes[0].childNodes[1].classList.remove('bookmark-icon-active');
     frag.childNodes[0].childNodes[0].childNodes[1].classList.add('bookmark-icon-inactive');
   }
+
   frag.childNodes[0].childNodes[2].childNodes[0].textContent = rating;
   frag.childNodes[0].childNodes[2].childNodes[1].textContent = distance;  
   frag.childNodes[0].childNodes[2].childNodes[2].textContent = num;
   frag.childNodes[0].childNodes[3].childNodes[0].childNodes[0].childNodes[0].textContent = address;
   frag.childNodes[0].childNodes[3].childNodes[0].childNodes[0].href = addressUrl;
+
   // if currently displayed frag has website content, replace textContent and links or remove links
   if (frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].hasChildNodes()) {
     if (website) {
@@ -285,28 +291,28 @@ function modifyDetails(restaurant) {
       frag.childNodes[0].childNodes[3].childNodes[1].childNodes[0].removeAttribute('title');
     }
   } else {
-      if (website) {
-        //create elements to display website if they don't already exist
-        let websiteLink = document.createElement('a');
-        // let websiteLink = frag.childNodes[0].childNodes[3].childNodes[1];
-        let websiteUrl = document.createTextNode(website);
-        websiteLink.appendChild(websiteUrl);
-        websiteLink.title = website;
-        websiteLink.href = website;
-        websiteLink.target = '_blank';
-        websiteLink.classList.add('link-details');
-        websiteLink.removeAttribute('textContent')
-        //remove the original textcontent that would currently be displaying 'No website available'
-        frag.childNodes[0].childNodes[3].childNodes[1].textContent = '';
-        frag.childNodes[0].childNodes[3].childNodes[1].appendChild(websiteLink);  
-      }      
+    if (website) {
+      //create elements to display website if they don't already exist
+      let websiteLink = document.createElement('a');
+      let websiteUrl = document.createTextNode(website);
+      websiteLink.appendChild(websiteUrl);
+      websiteLink.title = website;
+      websiteLink.href = website;
+      websiteLink.target = '_blank';
+      websiteLink.classList.add('link-details');
+      websiteLink.removeAttribute('textContent')
+      //remove the original textcontent that would currently be displaying 'No website available'
+      frag.childNodes[0].childNodes[3].childNodes[1].textContent = '';
+      frag.childNodes[0].childNodes[3].childNodes[1].appendChild(websiteLink);  
+    }      
   }
+
   let date = new Date();
   today = date.getDay();
   hoursIdx = (today == 0 ? 6 : today-1);
   frag.childNodes[0].childNodes[3].childNodes[2].textContent = hours[hoursIdx];
 
-  document.getElementById('resultsRecyclerView').appendChild(frag);
+  recyclerView.appendChild(frag);
 }
 
 
@@ -571,11 +577,11 @@ function haversine_distance(lat1, lng1, lat2, lng2) {
   return haversine_distance.toFixed(2); // 2 * R; R = 6371 km
 }
 
-function configure_other_option(option_btn, keyword) {
-  if (options_keyword == keyword) {
+function configure_other_option(option_btn, option_name) {
+  if (options_keyword == option_name) {
     option_btn.classList.remove('optionbtn-clicked');
     option_btn.classList.add('optionbtn')
-    options_keyword=""
+    options_keyword = ""
     getRandomRestaurants(allRestaurants,true);
   } else {
     current_btn = document.getElementsByClassName('optionbtn-clicked');
@@ -588,28 +594,63 @@ function configure_other_option(option_btn, keyword) {
     console.log(current_btn);
     option_btn.classList.remove('optionbtn');
     option_btn.classList.add('optionbtn-clicked');
-    getNearbyPlaces(pos,keyword);
+    getNearbyPlaces(pos,option_name);
   }
 }
 
-document.getElementById('refresh').addEventListener("click", () => {
-	// as soon as you click it, it's greyed out
-	// document.getElementById('refresh').ClassList.add('button');
-	document.getElementById('refresh').id = 'refreshClicked';
+var refreshButton = document.getElementById('refresh');
+refreshButton.addEventListener("click", refresh);
 
-	setTimeout(() => {
-		document.getElementById('refreshClicked').id = 'refresh';
-	}, 2000);
-	refresh();
-});
-document.getElementById('distance-sort')
-        .addEventListener("click", () => {
+// function handleRefreshUI() {
+//   refresh();
+// }
+
+var clickableButtons = document.getElementsByClassName('clickable-buttons');
+for (var i = 0; i < clickableButtons.length; i++) {
+  clickableButtons[i].addEventListener('click', disableAllButtons);
+}
+
+function disableAllButtons() {
+  for (var i = 0; i < clickableButtons.length; i++) {
+    clickableButtons[i].disabled = true;
+    setTimeout(enableAllButtons, 1500);
+  }
+}
+
+function enableAllButtons() {
+  for (var i = 0; i < clickableButtons.length; i++) {
+    clickableButtons[i].disabled = false;
+  }
+}
+
+function enableSpanClick() {
+  var unclickableSpans = document.getElementsByClassName('unclickable-span');
+  while (unclickableSpans.length) {
+    unclickableSpans[0].classList.add('clickable-span');
+    unclickableSpans[0].classList.remove('unclickable-span');
+  }
+}
+
+var clickableSpans = document.getElementsByClassName('clickable-span');
+for (var i = 0; i < clickableSpans.length; i++) {
+  clickableSpans[i].addEventListener('click', event => {
+    while (clickableSpans.length) {
+      clickableSpans[0].classList.add('unclickable-span');
+      clickableSpans[0].classList.remove('clickable-span');
+    }
+    setTimeout(enableSpanClick, 1500);
+  });
+}
+
+var distanceSpan = document.getElementById('distance-sort');
+distanceSpan.addEventListener("click", () => {
           allRestaurants.slice(0,4).forEach(restaurant => {
             makeDetailsRequest(restaurant, modifyDetails);
-          });
+          });         
         });
-document.getElementById('rating-sort')
-        .addEventListener("click", rankByRating);
+
+var ratingSpan = document.getElementById('rating-sort');
+ratingSpan.addEventListener("click", rankByRating);
 
 
 var option_btns = document.getElementsByClassName('optionbtn');
@@ -618,19 +659,22 @@ for (var i = 0; i < option_btns.length; i++) {
   option_btns[i].addEventListener('click', event => {
     option_btn = event.target.closest("button");
     console.log(option_btn.innerText);
-    keyword = option_btn.innerText;
-    configure_other_option(option_btn,keyword);
+    option_name = option_btn.innerText;
+    configure_other_option(option_btn,option_name);
   });
 };
 
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+  for (var key in changes) {
+    var storageChange = changes[key];
+    DIETARY_RESTRICTIONS = storageChange.newValue;
+    location.reload();
+  }
+})
 
-var center=document.getElementById('main-container').style.height;
-var options=document.getElementById('otherOptionsView').style.height;
-if(options>center)
-{
-    document.getElementById('main-container').style.height=options;
+var center = document.getElementById('main-container').style.height;
+var options = document.getElementById('otherOptionsView').style.height;
+if (options > center) {
+    document.getElementById('main-container').style.height = options;
 }
-// else
-// {
-//     document.getElementById('main-container').style.height=;
-// }
+
