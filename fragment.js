@@ -42,7 +42,7 @@ function getNearbyPlaces(position,keyword="") {
     rankBy: google.maps.places.RankBy.DISTANCE,
     openNow: true,
     type: 'restaurant',
-    keyword: keyword+DIETARY_RESTRICTIONS
+    keyword: keyword
   };
   
   options_keyword = keyword;
@@ -597,31 +597,58 @@ function configure_other_option(option_btn, keyword) {
 }
 
 var refreshButton = document.getElementById('refresh');
-refreshButton.addEventListener("click", handleRefreshUI);
+refreshButton.addEventListener("click", refresh);
 
-function handleRefreshUI() {
-  refreshButton.classList.remove('refresh');
-  refreshButton.classList.add('refreshClicked');
-  refreshButton.disabled = true;
-  refresh();
-  setTimeout(enableRefresh, 2000);
+// function handleRefreshUI() {
+//   refresh();
+// }
+
+var clickableButtons = document.getElementsByClassName('clickable-buttons');
+for (var i = 0; i < clickableButtons.length; i++) {
+  clickableButtons[i].addEventListener('click', disableAllButtons);
 }
 
-function enableRefresh() {
-  refreshButton.classList.remove('refreshClicked');
-  refreshButton.classList.add('refresh');
-  refreshButton.disabled = false;
+function disableAllButtons() {
+  for (var i = 0; i < clickableButtons.length; i++) {
+    clickableButtons[i].disabled = true;
+    setTimeout(enableAllButtons, 1500);
+  }
 }
 
+function enableAllButtons() {
+  for (var i = 0; i < clickableButtons.length; i++) {
+    clickableButtons[i].disabled = false;
+  }
+}
 
-document.getElementById('distance-sort')
-        .addEventListener("click", () => {
+function enableSpanClick() {
+  var unclickableSpans = document.getElementsByClassName('unclickable-span');
+  while (unclickableSpans.length) {
+    unclickableSpans[0].classList.add('clickable-span');
+    unclickableSpans[0].classList.remove('unclickable-span');
+  }
+}
+
+var clickableSpans = document.getElementsByClassName('clickable-span');
+for (var i = 0; i < clickableSpans.length; i++) {
+  clickableSpans[i].addEventListener('click', event => {
+    while (clickableSpans.length) {
+      clickableSpans[0].classList.add('unclickable-span');
+      clickableSpans[0].classList.remove('clickable-span');
+    }
+    setTimeout(enableSpanClick, 1500);
+  });
+}
+
+var distanceSpan = document.getElementById('distance-sort');
+distanceSpan.addEventListener("click", () => {
           allRestaurants.slice(0,4).forEach(restaurant => {
             makeDetailsRequest(restaurant, modifyDetails);
-          });
+          });         
         });
-document.getElementById('rating-sort')
-        .addEventListener("click", rankByRating);
+
+var ratingSpan = document.getElementById('rating-sort');
+ratingSpan.addEventListener("click", rankByRating);
 
 
 var option_btns = document.getElementsByClassName('optionbtn');
