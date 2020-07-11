@@ -16,11 +16,10 @@ loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuW4NSq2HJ9WpB7gm
 let pos;
 let DIETARY_RESTRICTIONS;
 function main() {
-  //get it to log in the console
   chrome.storage.sync.get(['diet'], function(result) {
-      console.log('diet is' + result.diet);
-  })
-
+    DIETARY_RESTRICTIONS = result.diet;
+    console.log('diet is' + result.diet);
+  })  
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       pos = {
@@ -38,16 +37,17 @@ function main() {
 
 let service;
 let options_keyword;
-function getNearbyPlaces(position,keyword="") {
+function getNearbyPlaces(position,option="") {
   let request = {
     location: position,
     rankBy: google.maps.places.RankBy.DISTANCE,
     openNow: true,
     type: 'restaurant',
-    keyword: keyword
+    keyword: DIETARY_RESTRICTIONS ? option + " " + DIETARY_RESTRICTIONS : option
   };
-  
-  options_keyword = keyword;
+  console.log(DIETARY_RESTRICTIONS ? option + " " + DIETARY_RESTRICTIONS : option)
+
+  options_keyword = option;
   map = new google.maps.Map(document.getElementById('map'));
   service = new google.maps.places.PlacesService(map);
   service.nearbySearch(request, nearbyCallback);
@@ -577,8 +577,8 @@ function haversine_distance(lat1, lng1, lat2, lng2) {
   return haversine_distance.toFixed(2); // 2 * R; R = 6371 km
 }
 
-function configure_other_option(option_btn, keyword) {
-  if (options_keyword == keyword) {
+function configure_other_option(option_btn, option_name) {
+  if (options_keyword == option_name) {
     option_btn.classList.remove('optionbtn-clicked');
     option_btn.classList.add('optionbtn')
     options_keyword = ""
@@ -594,7 +594,7 @@ function configure_other_option(option_btn, keyword) {
     console.log(current_btn);
     option_btn.classList.remove('optionbtn');
     option_btn.classList.add('optionbtn-clicked');
-    getNearbyPlaces(pos,keyword);
+    getNearbyPlaces(pos,option_name);
   }
 }
 
@@ -659,8 +659,8 @@ for (var i = 0; i < option_btns.length; i++) {
   option_btns[i].addEventListener('click', event => {
     option_btn = event.target.closest("button");
     console.log(option_btn.innerText);
-    keyword = option_btn.innerText;
-    configure_other_option(option_btn,keyword);
+    option_name = option_btn.innerText;
+    configure_other_option(option_btn,option_name);
   });
 };
 
