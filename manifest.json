@@ -3,21 +3,16 @@
     "version": "1.0",
     "description": "Dev for our top secret super sweet Chrome extension",
 
-    "options_page": "options.html",
+    // "options_page": "options.html",
+    "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false,
+    "chrome_style": true
+  },
 
     "chrome_url_overrides": {
     	"newtab": "fragment.html"
     },
-
-    // "browser_action": {
-    // 	"default_icon": "flowers.jpg"
-    // },
-
-    // up to extension to tell the browser when user can interact w popup
-    // "page_action": {
-    // 	"default_popup": "fragment.html",
-    // 	"default_icon": "flowers.jpg"
-    // },
 
     "permissions": [
     	"activeTab",

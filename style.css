@@ -9,6 +9,16 @@
       src: url(fonts/Antonio-Regular.ttf);
     }
 
+    img.logo {
+      margin-top: 5px;
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+      width: 40%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
     body {
       background: #366775;
       background-size: 100% 100%;
@@ -44,6 +54,32 @@
       color: #366775;
     }
 
+    h4 {
+      text-align: center;
+      font-size: 18px;
+      font-family: 'Satisfy', cursive;
+      color: #366775;
+    }
+
+    h5 {
+      width: 150px;
+      font-family: 'Manjari', sans-serif;
+      font-style: normal;
+      font-weight: normal;
+      text-align: center;
+      font-size: 16px;
+      color: #366775;
+    }
+
+    p {
+      margin-top: 10px;
+      position: relative;
+      text-align: center;
+      font-size: 25px;
+      font-family: 'Satisfy', cursive;
+      color: #366775;
+    }
+
     button {
       margin: auto;
       font-size: 16px;
@@ -51,24 +87,14 @@
       font-family: 'Manjari', sans-serif;
       font-weight: normal;
       justify-content: center;
-	    align-items: center;
-    }
-    
-    img.logo {
-      margin-top: 15px;
-      position: relative;
-      margin-left: auto;
-      margin-right: auto;
-      width: 50%;
-      object-fit: cover;
-      z-index: 1;
+      align-items: center;
     }
 
     .container {
       display: inline-block;
       float: left;
       width: 26%;
-      height: 100%;
+      min-height: height(cravingSomethingElse);
     }
 
     .main-container {
@@ -78,12 +104,48 @@
       bottom: 0;
       width: 48%;
       background: #f7d0cb;
+      height: 100%;
+    }
+
+    .options-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+      background: #f7d0cb;
+    }
+
+    .options-content {
+      display: flex;
+      background: #f7d0cb;
+      max-width: 50px;
+      justify-content: center;
+      align-items: center;
+      text-align:center;
+    }
+
+    #option-save {
+      position: relative;
+      margin-top: 0px;
+      padding: 12px 5px;
+      border: 1px solid #a2b4c0; 
+      border-radius: 10px;
+      background: #D66D50;
+      color: white;
+      cursor: pointer;
+      outline: none;
+      font-size: 16px;
+      text-align: center;
+      display: flex;
+      font-family: 'Manjari', sans-serif;
+      font-size: 16px;
+      margin-bottom:5px;
     }
 
     .center {
       display: flex;
-  		justify-content: center;
-  		align-items: center;
+  	  justify-content: center;
+      align-items: center;
     }
 
     .clickable-span {
@@ -104,7 +166,7 @@
 
     .dropbtn {
       margin-top: 10px;
-      padding: 12px 28px;
+      padding: 12px 18px;
       background-color: #F4AC94;
       color: #366775;
       width: 120px;
@@ -116,6 +178,11 @@
     .dropdown {
       position: relative;
       display: inline-block;
+    }
+
+    img.dropicon {
+      position: relative;
+      float: right;
     }
 
     .dropdown-content {
@@ -154,7 +221,7 @@
       font-size: 18px;
     }
 
-    p.top-card-intro {
+    h4.top-card-intro {
       margin-top: 20px;
       position: relative;
       text-align: center;
@@ -165,9 +232,8 @@
 
     #refresh {
       position: relative;
-      margin-top: 30px;
       margin-bottom: 10px;
-      padding: 12px 28px;
+      padding: 12px 24px;
       border: 1px solid #a2b4c0; 
       border-radius: 10px;
       outline: none;
@@ -260,7 +326,7 @@
       background-image: url('icons/bookmark-icon.png');
     }
 
-     .bookmark-icon-active {
+    .bookmark-icon-active {
       background-image: url('icons/bookmark-icon-hover.png');
     }
 

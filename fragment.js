@@ -1,4 +1,5 @@
 // a substitute for the inline script that loads Google Maps API
+
 function loadScript(scriptSrc, loadedCallback) {
   var oHead = document.getElementsByTagName("HEAD")[0];
   var oScript = document.createElement('script');
@@ -15,10 +16,11 @@ loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuW4NSq2HJ9WpB7gm
 let pos;
 let DIETARY_RESTRICTIONS;
 function main() {
+  //get it to log in the console
   chrome.storage.sync.get(['diet'], function(result) {
-    DIETARY_RESTRICTIONS = result.diet;
-    console.log('diet is' + result.diet);
-  })  
+      console.log('diet is' + result.diet);
+  })
+
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       pos = {
@@ -158,7 +160,7 @@ function displayRestaurant(placeResult, status) {
     rating.classList.add('rating-icon');
     rating.classList.add('icon');
     rating.id = 'rating-detail';
-    rating.textContent = (placeResult.rating ? `Rating: ${placeResult.rating}` : 'Rating: N/A');
+    rating.textContent = (placeResult.rating ? `${placeResult.rating}` : 'N/A');
     leftDiv.appendChild(rating);
 
     // CREATE DISTANCE ELEMENT
@@ -669,3 +671,10 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
     location.reload();
   }
 })
+
+var center = document.getElementById('main-container').style.height;
+var options = document.getElementById('otherOptionsView').style.height;
+if (options > center) {
+    document.getElementById('main-container').style.height = options;
+}
+
