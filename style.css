@@ -14,7 +14,7 @@
       position: relative;
       margin-left: auto;
       margin-right: auto;
-      width: 35%;
+      width: 30%;
       object-fit: cover;
       z-index: 1;
     }
@@ -166,13 +166,12 @@
 
     .dropbtn {
       margin-top: 10px;
-      padding: 12px 18px;
+      padding: 12px 10px;
       background-color: #F4AC94;
       color: #366775;
       width: 120px;
-      border: 1px solid #f7d0cb; 
-      border-radius: 0px;
-      font-size: 18px;
+      border: 1px solid #F4AC94;
+      border-radius: 5px;
     }
 
     .dropdown {
@@ -222,7 +221,8 @@
     }
 
     h4.top-card-intro {
-      margin-top: 20px;
+      margin-top: 15px;
+      margin-bottom: 15px;
       position: relative;
       text-align: center;
       font-size: 18px;
@@ -239,6 +239,18 @@
       outline: none;
       font-size: 16px;
       text-align: center;
+      display: flex;
+    }
+
+    #go-to-options {
+      position: relative;
+      margin-top: 15px;
+      margin-bottom: 10px;
+      padding: 12px 12px;
+      border: 1px solid #F4AC94;
+      border-radius: 10px;
+      background-color: #F4AC94;
+      color: #366775;
       display: flex;
     }
 
@@ -269,10 +281,6 @@
       max-height: 180px;
       font-size: 15px;      
       color: #366775;
-<<<<<<< HEAD
-      /*min-width: 450px;*/
-=======
->>>>>>> 8bfa5a0699c164744b8fd62c781b5be3af032d7c
     }
 
     div.top-details-container {
@@ -395,7 +403,6 @@
       border-radius: 10px;
       background: #F7D0CB;
       color: #366775;
-      cursor: pointer;
       outline: none;  
       font-size: 14px;
       text-align: center;

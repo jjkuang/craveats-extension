@@ -26,7 +26,6 @@ function main() {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
-
       getNearbyPlaces(pos);
     });
   } else {
@@ -664,6 +663,15 @@ for (var i = 0; i < option_btns.length; i++) {
   });
 };
 
+var goToOptions = document.getElementById('go-to-options');
+goToOptions.addEventListener('click', () => {
+  if (chrome.runtime.openOptionsPage) {
+    chrome.runtime.openOptionsPage();
+  } else {
+    window.open(chrome.runtime.getURL('options.html'));
+  }
+});
+
 chrome.storage.onChanged.addListener(function(changes, namespace) {
   for (var key in changes) {
     var storageChange = changes[key];
@@ -677,4 +685,3 @@ var options = document.getElementById('otherOptionsView').style.height;
 if (options > center) {
     document.getElementById('main-container').style.height = options;
 }
-
