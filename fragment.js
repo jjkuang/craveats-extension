@@ -73,6 +73,7 @@ function initListeners() {
   var ratingSpan = document.getElementById('rating-sort');
   var option_btns = document.getElementsByClassName('optionbtn');
   var refreshButton = document.getElementById('refresh');
+  var goToOptions = document.getElementById('go-to-options');
 
   /* Disables all clickable buttons after one is clicked to avoid overlap */ 
   for (var i = 0; i < clickableButtons.length; i++) {
@@ -108,10 +109,19 @@ function initListeners() {
       configure_other_option(option_btn,option_name);
     });
   };
-
+ 
   /* Refresh listener */
   refreshButton.addEventListener("click", refresh);
-
+  
+  /* Add listener to open options page */
+  goToOptions.addEventListener('click', () => {
+    if (chrome.runtime.openOptionsPage) {
+      chrome.runtime.openOptionsPage();
+    } else {
+      window.open(chrome.runtime.getURL('options.html'));
+    }
+  });
+  
   /* (API) Refresh on diet restrictions save in settings */
   chrome.storage.onChanged.addListener(function(changes, namespace) {
     for (var key in changes) {
@@ -138,7 +148,6 @@ function initAPICall() {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
-
       getNearbyPlaces(userLocation);
     });
   }
