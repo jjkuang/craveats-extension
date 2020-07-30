@@ -14,7 +14,7 @@ img.logo {
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  width: 35%;
+  width: 30%;
   object-fit: cover;
   z-index: 1;
 }
@@ -48,13 +48,12 @@ body {
 
 .dropbtn {
   margin-top: 10px;
-  padding: 12px 18px;
+  padding: 12px 10px;
   background-color: #F4AC94;
   color: #366775;
   width: 120px;
-  border: 1px solid #f7d0cb; 
-  border-radius: 0px;
-  font-size: 18px;
+  border: 1px solid #F4AC94; 
+  border-radius: 5px;
 }
 
 .dropdown {
@@ -106,7 +105,7 @@ img.dropicon {
 }
 
 h4.top-card-intro {
-  margin-top: 20px;
+  margin-top: 15px;
   position: relative;
 }
 
@@ -313,6 +312,19 @@ img.optionicon {
 
 .faves-bottom-container {
   line-height: 1.5;
+}
+
+/** Go to options styling **/
+
+#go-to-options {
+  position: relative;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  padding: 12px 12px;
+  border: 1px solid #F4AC94;
+  border-radius: 10px;
+  background-color: #F4AC94;
+  display: flex;
 }
 
 /** Need this for map services **/
