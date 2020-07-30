@@ -1,0 +1,31 @@
+/* OPTIONS.HTML STYLING */
+body {
+  background: #f7d0cb;
+  height: fit-content;
+}
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+#option-save {
+  padding: 12px 5px;
+  border: 1px solid #a2b4c0; 
+  border-radius: 10px;
+  background: #D66D50;
+  color: white;
+  font-size: 16px;
+}
+
+.options-status-center {
+  flex-direction: column;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+#status {
+  line-height: 0;
+  text-align: center;
+}

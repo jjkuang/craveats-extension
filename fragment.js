@@ -1,6 +1,161 @@
-// a substitute for the inline script that loads Google Maps API
+/*
+ * ======================================================
+ * Initialize constants and arrays used throughout script
+ * ======================================================
+ */
 
-function loadScript(scriptSrc, loadedCallback) {
+/* Link connected that calls for Google Maps API */
+const API_LINK = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuW4NSq2HJ9WpB7gmYimPBXSBRuNGkPI&libraries=places";
+
+/* ORDERS HAVE TO MATCH FOR THESE TWO ARRAYS */
+const CUISINE_TYPES = ['Japanese','Pizza','Chinese','Italian','Indian','Mexican','Middle Eastern','Thai','Vietnamese'];
+const CUISINE_IMGSRC = ['sushi','pizza','dumpling','spaghetti','curry','taco','falafel','padthai','pho'];
+
+const NUM_RESTAURANTS_DISPLAYED = 3;
+let DIETARY_RESTRICTIONS; // Not a const, but uppercased bc taken from options page
+let userLocation;
+let service;
+let optionsKeyword;
+let allRestaurants = [];
+let selectedRestaurants = [];
+let displayedRestaurants = [];
+let optionRestaurants = [];
+let bookmarkedRestaurants = [];
+let recyclerView = document.getElementById('results-recycler-view');
+let clickableButtons = document.getElementsByClassName('clickable-buttons');
+
+
+// let's load the Google API js and run function main once it is done.
+initMapsAPI(API_LINK, main);
+
+/*
+ * ==============
+ * INIT FUNCTIONS
+ * ==============
+ */
+
+/* Setting height of options page */
+var center = document.getElementById('main-container').style.height;
+var options = document.getElementById('otherOptionsView').style.height;
+if (options > center) {
+    document.getElementById('main-container').style.height = options;
+}
+
+
+function initOptions() {
+  var optionsView = document.getElementById('otherOptionsView');
+
+  for (var i = 0; i < CUISINE_TYPES.length; i++) {
+    var option = document.createElement('button');
+    option.classList.add('optionbtn');
+    option.classList.add('optionbtn-const');
+    option.classList.add('clickable-buttons');
+
+    var optionImg = document.createElement('img');
+    optionImg.classList.add('optionicon');
+    optionImg.src = `icons/${CUISINE_IMGSRC[i]}.png`;
+    optionImg.height = 20;
+    optionImg.width = 20;
+
+    var optionSpan = document.createElement('span');
+    optionSpan.textContent = CUISINE_TYPES[i];
+
+    option.append(optionImg);
+    option.append(optionSpan);
+    optionsView.append(option);
+  }
+}
+
+
+function initListeners() {
+  var clickableSpans = document.getElementsByClassName('clickable-span');
+  var distanceSpan = document.getElementById('distance-sort');
+  var ratingSpan = document.getElementById('rating-sort');
+  var option_btns = document.getElementsByClassName('optionbtn');
+  var refreshButton = document.getElementById('refresh');
+  var goToOptions = document.getElementById('go-to-options');
+
+  /* Disables all clickable buttons after one is clicked to avoid overlap */ 
+  for (var i = 0; i < clickableButtons.length; i++) {
+    clickableButtons[i].addEventListener('click', disableAllButtons);
+  }
+
+  /* Disables all clickable spans after one is clicked to avoid overlap */
+  for (var i = 0; i < clickableSpans.length; i++) {
+    clickableSpans[i].addEventListener('click', event => {
+      while (clickableSpans.length) {
+        clickableSpans[0].classList.add('unclickable-span');
+        clickableSpans[0].classList.remove('clickable-span');
+      }
+      setTimeout(enableSpanClick, 1500);
+    });
+  }
+
+  /* Restaurants get ranked according to these listeners */
+  distanceSpan.addEventListener("click", () => {
+            allRestaurants.slice(0,4).forEach(restaurant => {
+              makeDetailsRequest(restaurant, modifyDetails);
+            });         
+          });
+
+  ratingSpan.addEventListener("click", rankByRating);
+
+  /* Add event listeners to each option buttons */
+  for (var i = 0; i < option_btns.length; i++) {
+    option_btns[i].addEventListener('click', event => {
+      option_btn = event.target.closest("button");
+      console.log(option_btn.innerText);
+      option_name = option_btn.innerText;
+      configure_other_option(option_btn,option_name);
+    });
+  };
+ 
+  /* Refresh listener */
+  refreshButton.addEventListener("click", refresh);
+  
+  /* Add listener to open options page */
+  goToOptions.addEventListener('click', () => {
+    if (chrome.runtime.openOptionsPage) {
+      chrome.runtime.openOptionsPage();
+    } else {
+      window.open(chrome.runtime.getURL('options.html'));
+    }
+  });
+  
+  /* (API) Refresh on diet restrictions save in settings */
+  chrome.storage.onChanged.addListener(function(changes, namespace) {
+    for (var key in changes) {
+      var storageChange = changes[key];
+      DIETARY_RESTRICTIONS = storageChange.newValue;
+      location.reload();
+    }
+  });      
+}
+
+
+function initDiet() {
+  chrome.storage.sync.get(['diet'], function(result) {
+    DIETARY_RESTRICTIONS = result.diet;
+    console.log('diet is' + result.diet);
+  });
+}
+
+
+function initAPICall() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      userLocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      getNearbyPlaces(userLocation);
+    });
+  }
+}
+
+
+// a substitute for the inline script that loads Google Maps API
+function initMapsAPI(scriptSrc, loadedCallback) {
   var oHead = document.getElementsByTagName("HEAD")[0];
   var oScript = document.createElement('script');
   oScript.type = 'text/javascript';
@@ -9,33 +164,23 @@ function loadScript(scriptSrc, loadedCallback) {
   oScript.onload = loadedCallback; 
 }
 
-// let's load the Google API js and run function main once it is done.
-loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuW4NSq2HJ9WpB7gmYimPBXSBRuNGkPI&libraries=places", 
-          main);
-
-let pos;
-let DIETARY_RESTRICTIONS;
 function main() {
-  chrome.storage.sync.get(['diet'], function(result) {
-    DIETARY_RESTRICTIONS = result.diet;
-    console.log('diet is' + result.diet);
-  })  
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
-      getNearbyPlaces(pos);
-    });
-  } else {
 
-  } // add else case, if browser supports geolocation and user has denied permission or not
-  //see https://codelabs.developers.google.com/codelabs/google-maps-nearby-search-js/#2
+  initDiet();
+  initAPICall();
+  initOptions();
+  initListeners();
+
 }
 
-let service;
-let options_keyword;
+
+/*
+ * ======================================================
+ * GOOGLE MAPS API FUNCTION CALLS
+ * ======================================================
+ */
+
+
 function getNearbyPlaces(position,option="") {
   let request = {
     location: position,
@@ -44,22 +189,20 @@ function getNearbyPlaces(position,option="") {
     type: 'restaurant',
     keyword: DIETARY_RESTRICTIONS ? option + " " + DIETARY_RESTRICTIONS : option
   };
-  console.log(DIETARY_RESTRICTIONS ? option + " " + DIETARY_RESTRICTIONS : option)
 
-  options_keyword = option;
+  optionsKeyword = option;
   map = new google.maps.Map(document.getElementById('map'));
   service = new google.maps.places.PlacesService(map);
   service.nearbySearch(request, nearbyCallback);
 }
 
-let allRestaurants;
-let optionRestaurants;
+
 function nearbyCallback(results, status) {
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     console.log(results);
-    modify_required = options_keyword == "" ? false : true;
+    modify_required = optionsKeyword == "" ? false : true;
 
-    if (options_keyword != "") {
+    if (optionsKeyword != "") {
       displayedRestaurants = [];
       optionRestaurants = results;
     } else {
@@ -83,29 +226,31 @@ function makeDetailsRequest(restaurant, funcName) {
 }
 
 
-// pick 3 random restaurants from the results list
-const NUM_RESTAURANTS_DISPLAYED = 3;
-var rand_restaurants = [];
+/*
+ * =========
+ * FRONT END
+ * =========
+ */
+
+/* Pick 3 random restaurants from the results list */
 function getRandomRestaurants(results,modify) { 
-  rand_restaurants = [];
+  selectedRestaurants = [];
   for (var i = 0; i < NUM_RESTAURANTS_DISPLAYED; i++) {
     get_rand(results);
   }
 
-  for (var i = 0; i< NUM_RESTAURANTS_DISPLAYED; i++) {
+  for (var i = 0; i < NUM_RESTAURANTS_DISPLAYED; i++) {
     if (i < 0) break;
     if (modify) {
-      makeDetailsRequest(rand_restaurants[i], modifyDetails);
+      makeDetailsRequest(selectedRestaurants[i], modifyDetails);
     } else {
-      makeDetailsRequest(rand_restaurants[i], displayRestaurant);
+      makeDetailsRequest(selectedRestaurants[i], displayRestaurant);
     }
   }
 }
 
 
-// TODO: need something async here/promise?
-let recyclerView = document.getElementById('results-recycler-view');
-let displayedRestaurants = [];
+/* Create restaurant item to be displayed for each result */
 function displayRestaurant(placeResult, status) {
   console.log(placeResult);
   displayedRestaurants.push(placeResult);
@@ -119,21 +264,25 @@ function displayRestaurant(placeResult, status) {
     let topDiv = document.createElement('div');
     topDiv.classList.add('flex-row-container');
     topDiv.classList.add('top-details-container');
+    topDiv.classList.add('manjari-normal');
     topDiv.id = 'top-details-container';
 
     // CREATE LEFT SIDE CONTAINER
     let leftDiv = document.createElement('div');
     leftDiv.classList.add('bottom-details-container');
+    leftDiv.classList.add('manjari-normal');
     leftDiv.id = 'left-details-container';
 
     // CREATE RIGHT SIDE CONTAINER
     let rightDiv = document.createElement('div');
     rightDiv.classList.add('bottom-details-container');
+    rightDiv.classList.add('manjari-normal');
     rightDiv.id = 'right-details-container';
 
     // CREATE NAME ELEMENT
-    let name = document.createElement('h3');
+    let name = document.createElement('h4');
     name.classList.add('details');
+    name.classList.add('teal-colour');
     name.id = 'name-detail';
     name.textContent = placeResult.name;
     topDiv.appendChild(name);
@@ -187,7 +336,7 @@ function displayRestaurant(placeResult, status) {
     addressLink.appendChild(addressURL);
     addressLink.href = placeResult.url;
     addressLink.target = '_blank';
-    addressLink.classList.add('link-details');
+    addressLink.classList.add('teal-colour');
     address.classList.add('details');
     address.classList.add('address-icon');
     address.classList.add('icon');
@@ -204,7 +353,7 @@ function displayRestaurant(placeResult, status) {
       websiteLink.title = placeResult.website;
       websiteLink.href = placeResult.website;
       websiteLink.target = '_blank';
-      websiteLink.classList.add('link-details');
+      websiteLink.classList.add('teal-colour');
       website.appendChild(websiteLink);        
     } else {
       website.textContent = 'No website available';
@@ -237,24 +386,14 @@ function displayRestaurant(placeResult, status) {
 }
 
 
-function refresh() {
-  rand_restaurants = [];
-  displayedRestaurants = [];
-  for (var i = 0; i < NUM_RESTAURANTS_DISPLAYED; i++) {
-    options_keyword == "" ? get_rand(allRestaurants) : get_rand(optionRestaurants);
-  }
-  console.log(rand_restaurants);
-  rand_restaurants.forEach(restaurant => {makeDetailsRequest(restaurant, modifyDetails)});
-}
-
-
+/* Modify item contents with new restaurant details */
 function modifyDetails(restaurant) {
   displayedRestaurants.push(restaurant);
-  let frag = document.createDocumentFragment();
 
   // extract the recycler item div by class into frag
+  let frag = document.createDocumentFragment();
   frag.appendChild(document.getElementsByClassName('restaurant-item')[0]);
-  console.log(document.getElementsByClassName('restaurant-item')[0]);
+
   let name = restaurant.name;
   let rating = (restaurant.rating ? `Rating: ${restaurant.rating}` : 'Rating: N/A');
   let distance = `${get_distance(restaurant)} km`;
@@ -298,7 +437,7 @@ function modifyDetails(restaurant) {
       websiteLink.title = website;
       websiteLink.href = website;
       websiteLink.target = '_blank';
-      websiteLink.classList.add('link-details');
+      websiteLink.classList.add('teal-colour');
       websiteLink.removeAttribute('textContent')
       //remove the original textcontent that would currently be displaying 'No website available'
       frag.childNodes[0].childNodes[3].childNodes[1].textContent = '';
@@ -315,17 +454,6 @@ function modifyDetails(restaurant) {
 }
 
 
-function rankByRating() {
-  ratedRestaurants = allRestaurants.filter(restaurant => restaurant.rating)
-                                   .sort((a, b) => a.rating > b.rating ? -1 : 1);
-  ratedRestaurants.slice(0,4)
-        .forEach(restaurant => {
-          makeDetailsRequest(restaurant, modifyDetails);
-        });
-}
-
-
-let bookmarkedRestaurants = [];
 function checkBookOrUnbook(event) {
   // 1. check target - class is 'bookmark' or 'delete'
   //    a. if 'delete', see 2.a.i
@@ -374,6 +502,7 @@ function checkBookOrUnbook(event) {
 }
 
 
+/* Pipeline for bookmarking a restaurant -> leads to creating a bookmark item */
 function bookmark(restaurant, idx) {
   // need element that it was clicked on
   // need element's PARENT's inner HTML stuff/upper level containers
@@ -388,10 +517,11 @@ function bookmark(restaurant, idx) {
 }
 
 
-// there are at least two ways to reach this function:
-// 1. click the bookmark again
-// 2. click the 'x' on the bookmarked item in the list
+/* Removing the 'bookmarked' state */
 function unbookmark(restaurant, idx, currentlyDisplayed) {
+  // there are at least two ways to reach this function:
+  // 1. click the bookmark again
+  // 2. click the 'x' on the bookmarked item in the list
   // remove from list
   // if the item is still in recycler view then change the bookmark icon state back to 'unclicked'
 
@@ -410,12 +540,14 @@ function unbookmark(restaurant, idx, currentlyDisplayed) {
 }
 
 
-// creating the nodes for the bookmark items
+/* Following bookmark pipeline, this creates the nodes for the bookmark items */
 function createBookmarkNode(restaurant) {
   let bookmarks = document.getElementById('favourites-div');
 
   let bmItem = document.createElement('div');
   bmItem.classList.add('bookmark-item');
+  bmItem.classList.add('manjari-normal');
+  bmItem.classList.add('teal-colour');
 
   // includes title, delete button
   let titleDiv = document.createElement('div');
@@ -427,7 +559,7 @@ function createBookmarkNode(restaurant) {
   topDiv.classList.add('flex-row-container');
   topDiv.classList.add('faves-top-container');
 
-  // include the address (TODO: needs truncate), phone number, website, hours
+  // include the address, phone number, website, hours
   let bottomDiv = document.createElement('div');
   bottomDiv.classList.add('faves-bottom-container');
 
@@ -483,7 +615,7 @@ function createBookmarkNode(restaurant) {
     websiteLink.title = restaurant.website;
     websiteLink.href = restaurant.website;
     websiteLink.target = '_blank';
-    websiteLink.classList.add('link-details');
+    websiteLink.classList.add('teal-colour');
     website.appendChild(websiteLink);        
   } else {
     website.textContent = 'No website available';
@@ -500,7 +632,7 @@ function createBookmarkNode(restaurant) {
   addressLink.appendChild(addressURL);
   addressLink.href = restaurant.url;
   addressLink.target = '_blank';
-  addressLink.classList.add('link-details');
+  addressLink.classList.add('teal-colour');
   address.classList.add('details');
   address.classList.add('faves-details');
   address.id = 'faves-address-detail';
@@ -533,7 +665,63 @@ function createBookmarkNode(restaurant) {
 }
 
 
-// checks if the chosen restaurant is already in the array
+/* Handles refresh click */
+function refresh() {
+  selectedRestaurants = [];
+  displayedRestaurants = [];
+  for (var i = 0; i < NUM_RESTAURANTS_DISPLAYED; i++) {
+    optionsKeyword == "" ? get_rand(allRestaurants) : get_rand(optionRestaurants);
+  }
+  console.log(selectedRestaurants);
+  selectedRestaurants.forEach(restaurant => {makeDetailsRequest(restaurant, modifyDetails)});
+}
+
+
+/* Rank all restaurants and take the first three restaurants */
+function rankByRating() {
+  ratedRestaurants = allRestaurants.filter(restaurant => restaurant.rating)
+                                   .sort((a, b) => a.rating > b.rating ? -1 : 1);
+  ratedRestaurants.slice(0,4)
+                  .forEach(restaurant => {
+                    makeDetailsRequest(restaurant, modifyDetails);
+                  });
+}
+
+
+/* Disable all buttons for brief period after one is pressed */
+function disableAllButtons() {
+  for (var i = 0; i < clickableButtons.length; i++) {
+    clickableButtons[i].disabled = true;
+    setTimeout(enableAllButtons, 1500);
+  }
+}
+
+
+/* Re-enable buttons after the timeout */
+function enableAllButtons() {
+  for (var i = 0; i < clickableButtons.length; i++) {
+    clickableButtons[i].disabled = false;
+  }
+}
+
+
+/* Re-enable span clicks after the timeout */
+function enableSpanClick() {
+  var unclickableSpans = document.getElementsByClassName('unclickable-span');
+  while (unclickableSpans.length) {
+    unclickableSpans[0].classList.add('clickable-span');
+    unclickableSpans[0].classList.remove('unclickable-span');
+  }
+}
+
+
+/*
+ * ================
+ * HELPER FUNCTIONS
+ * ================
+ */
+
+/* (Helper) Checks if the chosen restaurant is already in the array */
 function in_array(array, el) {
    for(var i = 0 ; i < array.length; i++) 
        if(array[i].place_id == el.place_id) return true;
@@ -541,29 +729,29 @@ function in_array(array, el) {
 }
 
 
-// pick a random restaurant from results w/o duplicating
-// TODO: different types of restaurant objects in these arrays!!!
+/* (Helper) Pick a random restaurant from results w/o duplicating */ 
 function get_rand(array) {
     var rand = array[Math.floor(Math.random()*array.length)];
-    if(!in_array(rand_restaurants, rand) && !in_array(bookmarkedRestaurants, rand)) {
-       rand_restaurants.push(rand); 
+    if(!in_array(selectedRestaurants, rand) && !in_array(bookmarkedRestaurants, rand)) {
+       selectedRestaurants.push(rand); 
        return rand;
     }
     return get_rand(array);
 }
 
 
+/* (Helper) Returns Haversine distance between given restaurant and user location */
 function get_distance(restaurant) {
   let coords = {
     lat: restaurant.geometry.location.lat(), 
     lng: restaurant.geometry.location.lng()
   };
 
-  return haversine_distance(pos.lat,pos.lng,coords.lat,coords.lng);
+  return haversine_distance(userLocation.lat,userLocation.lng,coords.lat,coords.lng);
 }
 
-// straight line distance in km between two points on a spheroid 
-// approximating earth as a sphere  
+
+/* (Helper) Calculates Haversine distance between two coordinates  */
 function haversine_distance(lat1, lng1, lat2, lng2) {
   var p = 0.017453292519943295;    // Math.PI / 180
   var c = Math.cos;
@@ -576,11 +764,12 @@ function haversine_distance(lat1, lng1, lat2, lng2) {
   return haversine_distance.toFixed(2); // 2 * R; R = 6371 km
 }
 
+
 function configure_other_option(option_btn, option_name) {
-  if (options_keyword == option_name) {
+  if (optionsKeyword == option_name) {
     option_btn.classList.remove('optionbtn-clicked');
     option_btn.classList.add('optionbtn')
-    options_keyword = ""
+    optionsKeyword = ""
     getRandomRestaurants(allRestaurants,true);
   } else {
     current_btn = document.getElementsByClassName('optionbtn-clicked');
@@ -593,95 +782,6 @@ function configure_other_option(option_btn, option_name) {
     console.log(current_btn);
     option_btn.classList.remove('optionbtn');
     option_btn.classList.add('optionbtn-clicked');
-    getNearbyPlaces(pos,option_name);
+    getNearbyPlaces(userLocation,option_name);
   }
-}
-
-var refreshButton = document.getElementById('refresh');
-refreshButton.addEventListener("click", refresh);
-
-// function handleRefreshUI() {
-//   refresh();
-// }
-
-var clickableButtons = document.getElementsByClassName('clickable-buttons');
-for (var i = 0; i < clickableButtons.length; i++) {
-  clickableButtons[i].addEventListener('click', disableAllButtons);
-}
-
-function disableAllButtons() {
-  for (var i = 0; i < clickableButtons.length; i++) {
-    clickableButtons[i].disabled = true;
-    setTimeout(enableAllButtons, 1500);
-  }
-}
-
-function enableAllButtons() {
-  for (var i = 0; i < clickableButtons.length; i++) {
-    clickableButtons[i].disabled = false;
-  }
-}
-
-function enableSpanClick() {
-  var unclickableSpans = document.getElementsByClassName('unclickable-span');
-  while (unclickableSpans.length) {
-    unclickableSpans[0].classList.add('clickable-span');
-    unclickableSpans[0].classList.remove('unclickable-span');
-  }
-}
-
-var clickableSpans = document.getElementsByClassName('clickable-span');
-for (var i = 0; i < clickableSpans.length; i++) {
-  clickableSpans[i].addEventListener('click', event => {
-    while (clickableSpans.length) {
-      clickableSpans[0].classList.add('unclickable-span');
-      clickableSpans[0].classList.remove('clickable-span');
-    }
-    setTimeout(enableSpanClick, 1500);
-  });
-}
-
-var distanceSpan = document.getElementById('distance-sort');
-distanceSpan.addEventListener("click", () => {
-          allRestaurants.slice(0,4).forEach(restaurant => {
-            makeDetailsRequest(restaurant, modifyDetails);
-          });         
-        });
-
-var ratingSpan = document.getElementById('rating-sort');
-ratingSpan.addEventListener("click", rankByRating);
-
-
-var option_btns = document.getElementsByClassName('optionbtn');
-
-for (var i = 0; i < option_btns.length; i++) {
-  option_btns[i].addEventListener('click', event => {
-    option_btn = event.target.closest("button");
-    console.log(option_btn.innerText);
-    option_name = option_btn.innerText;
-    configure_other_option(option_btn,option_name);
-  });
-};
-
-var goToOptions = document.getElementById('go-to-options');
-goToOptions.addEventListener('click', () => {
-  if (chrome.runtime.openOptionsPage) {
-    chrome.runtime.openOptionsPage();
-  } else {
-    window.open(chrome.runtime.getURL('options.html'));
-  }
-});
-
-chrome.storage.onChanged.addListener(function(changes, namespace) {
-  for (var key in changes) {
-    var storageChange = changes[key];
-    DIETARY_RESTRICTIONS = storageChange.newValue;
-    location.reload();
-  }
-})
-
-var center = document.getElementById('main-container').style.height;
-var options = document.getElementById('otherOptionsView').style.height;
-if (options > center) {
-    document.getElementById('main-container').style.height = options;
 }

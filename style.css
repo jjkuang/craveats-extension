@@ -1,481 +1,322 @@
-    html, body {
-      height: 100%;
-      padding: 0;
-      margin: 0;
-    }
-
-    @font-face {
-      font-family: Antonio;
-      src: url(fonts/Antonio-Regular.ttf);
-    }
-
-    img.logo {
-      margin-top: 5px;
-      position: relative;
-      margin-left: auto;
-      margin-right: auto;
-      width: 30%;
-      object-fit: cover;
-      z-index: 1;
-    }
-
-    body {
-      background: #366775;
-      background-size: 100% 100%;
-    }
-
-    div {
-      font-family: 'Manjari', sans-serif;
-    }
-
-    h1 {
-      font-size: 20px;
-      font-family: Antonio;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 36px;
-      text-align: center;
-      display: inline;
-      color: #366775;
-    }
-
-    h2 {
-      text-align: center;
-      font-size: 28px;
-      font-family: 'Satisfy', cursive;
-      color: #366775;
-    }
-
-    h3 {
-      font-family: 'Manjari', sans-serif;
-      font-style: normal;
-      font-weight: thin;
-      font-size: 30px;
-      color: #366775;
-    }
-
-    h4 {
-      text-align: center;
-      font-size: 18px;
-      font-family: 'Satisfy', cursive;
-      color: #366775;
-    }
-
-    h5 {
-      width: 150px;
-      font-family: 'Manjari', sans-serif;
-      font-style: normal;
-      font-weight: normal;
-      text-align: center;
-      font-size: 16px;
-      color: #366775;
-    }
-
-    p {
-      margin-top: 10px;
-      position: relative;
-      text-align: center;
-      font-size: 25px;
-      font-family: 'Satisfy', cursive;
-      color: #366775;
-    }
-
-    button {
-      margin: auto;
-      font-size: 16px;
-      text-align: center;
-      font-family: 'Manjari', sans-serif;
-      font-weight: normal;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .container {
-      display: inline-block;
-      float: left;
-      width: 26%;
-      min-height: height(cravingSomethingElse);
-    }
-
-    .main-container {
-      display: flex;
-      flex-direction: column;
-      top: 0;
-      bottom: 0;
-      width: 48%;
-      background: #f7d0cb;
-      height: 100%;
-    }
-
-    .options-container {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      width: 100%;
-      background: #f7d0cb;
-    }
-
-    .options-content {
-      display: flex;
-      background: #f7d0cb;
-      max-width: 50px;
-      justify-content: center;
-      align-items: center;
-      text-align:center;
-    }
-
-    #option-save {
-      position: relative;
-      margin-top: 0px;
-      padding: 12px 5px;
-      border: 1px solid #a2b4c0; 
-      border-radius: 10px;
-      background: #D66D50;
-      color: white;
-      cursor: pointer;
-      outline: none;
-      font-size: 16px;
-      text-align: center;
-      display: flex;
-      font-family: 'Manjari', sans-serif;
-      font-size: 16px;
-      margin-bottom:5px;
-    }
-
-    .center {
-      display: flex;
-  	  justify-content: center;
-      align-items: center;
-    }
-
-    .clickable-span {
-      pointer-events: auto;
-    }
-
-    .unclickable-span {
-      pointer-events: none;
-    }
-
-    .clickable-button {
-      cursor: pointer;
-    }
-
-    .unclickable-button {
-      cursor: default;
-    }
-
-    .dropbtn {
-      margin-top: 10px;
-      padding: 12px 10px;
-      background-color: #F4AC94;
-      color: #366775;
-      width: 120px;
-      border: 1px solid #F4AC94;
-      border-radius: 5px;
-    }
-
-    .dropdown {
-      position: relative;
-      display: inline-block;
-    }
-
-    img.dropicon {
-      position: relative;
-      float: right;
-    }
-
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: #f7d0cb;
-      font-weight: thin;
-      color: #366775;
-      width: 120px;
-      z-index: 1;
-    }
-
-    .dropdown-item {
-      text-align: center;
-      border-radius: 1px;
-      padding: 10px 5px;
-      font-size: 16px;
-      border: 1px solid white; 
-    }
-
-    .dropdown-item:hover {
-      border: 1px solid white; 
-      background-color: #f1f1f1;
-      cursor: pointer;
-    }
-
-    .dropdown:hover .dropdown-content {
-      display: flex;
-      flex-direction: column;
-    }
-
-    #top-card-view {
-      margin-top: 10px;
-      margin-bottom: 10px; 
-      background: #f7d0cb;
-      font-size: 18px;
-    }
-
-    h4.top-card-intro {
-      margin-top: 15px;
-      margin-bottom: 15px;
-      position: relative;
-      text-align: center;
-      font-size: 18px;
-      font-family: 'Satisfy', cursive;
-      color: #366775;
-    }
-
-    #refresh {
-      position: relative;
-      margin-bottom: 10px;
-      padding: 12px 24px;
-      border: 1px solid#D66D50;
-      border-radius: 10px;
-      outline: none;
-      font-size: 16px;
-      text-align: center;
-      display: flex;
-    }
-
-    #go-to-options {
-      position: relative;
-      margin-top: 15px;
-      margin-bottom: 10px;
-      padding: 12px 12px;
-      border: 1px solid #F4AC94;
-      border-radius: 10px;
-      background-color: #F4AC94;
-      color: #366775;
-      display: flex;
-    }
-
-    button.refresh {     
-      background: #D66D50;
-      color: white;
-      cursor: pointer;
-    }
-
-    button.refreshClicked {
-      background-color: rgba(214,109,80,0.6);
-      color: white 50%;
-      cursor: default;
-    }
-
-    #results-recycler-view {
-      height: 100%;
-      background: #f7d0cb;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .restaurant-item {
-      background: #F4AC94;
-      margin-bottom: 10px;
-      margin-top: 10px;
-      flex: 1;
-      max-height: 180px;
-      font-size: 15px;      
-      color: #366775;
-    }
-
-    div.top-details-container {
-      margin-bottom: 0;
-    }
-
-    div.bottom-details-container {
-      display: inline-flex;
-      flex-direction: column;
-    }
-
-    #left-details-container {
-      width: 35%;
-    }
-
-    #right-details-container {
-      width: 65%;
-    }
-
-    .details { 
-      font-size: 14px;
-      margin-inline-start: 15px;
-      margin-inline-end: 15px;
-      margin-top: 10px;
-      margin-bottom: 10px;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-
-    .faves-details {
-      font-size: 12px;
-      margin: auto;
-    }
-
-    .title-hr {
-      margin-inline-start: 15px;
-      margin-inline-end: 15px;
-      margin-top: 0;
-      border: 0.3px solid #D66D50;
-    }
-
-    .bookmark {
-      background-repeat: no-repeat;
-      background-size: contain;
-      height: 24px;
-      width: 24px;
-      margin-inline-end: 15px;
-      margin-top: 10px;
-      margin-bottom: 10px;
-      cursor: pointer;
-    }
-
-    .bookmark-icon-inactive {
-      background-image: url('icons/bookmark-icon.png');
-    }
-
-    .bookmark-icon-active {
-      background-image: url('icons/bookmark-icon-hover.png');
-    }
-
-    #name-detail {
-      margin-inline-start: 15px;
-      width: 100%;
-      font-size: 18px;
-      font-weight: 800px;
-      color: #366775;
-    }
-
-    .link-details {
-      color: #366775;
-    }
-
-    .icon {
-      background-repeat: no-repeat;
-      background-position: left;
-      background-size: contain;
-      text-indent: 25px;
-    }
-
-    .distance-icon {
-      background-image: url('icons/distance-icon.png');
-    }
-
-    .rating-icon {
-      background-image: url('icons/rating-icon.png');
-    }
-
-    .phone-icon {
-      background-image: url('icons/phone-icon.png');
-    }
-
-    .address-icon {
-      background-image: url('icons/address-icon.png');
-    }
-
-    .website-icon {
-      background-image: url('icons/website-icon.png');
-    }
-
-    .hours-icon {
-      background-image: url('icons/hours-icon.png');
-    }
-
-    #otherOptionsView {
-      margin-top: 10px;
-      width: 80%;
-      margin-left: auto;
-      margin-right: auto;
-      position: relative;
-      background: #A2B4C0;
-      border-radius: 5px;
-      text-align: center;
-    }
-
-    .optionbtn {
-      margin: 0px 5px 15px;
-      padding: 10px 5px 10px 5px;
-      border: 1px solid #f7d0cb; 
-      border-radius: 10px;
-      background: #F7D0CB;
-      color: #366775;
-      outline: none;  
-      font-size: 14px;
-      text-align: center;
-    }
-
-    .optionbtn-clicked {
-      margin: 0px 5px 15px;
-      padding: 10px 5px 10px 5px;
-      border: 1px solid #F4AC94; 
-      border-radius: 10px;
-      background: #F4AC94;
-      color: #366775;
-      cursor: pointer;
-      outline: none;
-      font-size: 14px;
-      text-align: center;
-    }
-
-    img.optionicon {
-      float: left;
-      padding-right: 8px;
-    }
-
-    #favourites-div {
-      display: flex;
-      flex-direction: column;
-    }
-
-    #favourites {
-      color: #F7D0CB;
-    }
-
-    .delete {
-      background-image: url('icons/delete-sign-span.png');
-      height: 16px;
-      width: 16px;
-      margin-bottom: 3px;
-    }
-
-    .delete:hover {
-      cursor: pointer;
-    }
-
-    .bookmark-item {
-      text-align: center;
-      margin: 10px 10px 10px 10px;
-      padding: 10px 10px 10px 10px;
-      border-radius: 5px;
-      background: #a2b4c0;
-    }
-
-    .bookmark-item p {
-      font-family: 'Manjari', sans-serif;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 12px;
-      color: #366775;
-    }
-
-    .faves-hr {
-      border-color: #366775;
-    }
-
-    .faves-bottom-container {
-      line-height: 1.5;
-    }
-
-    .flex-row-container {
-      display: flex;
-      flex-direction: row;
-      margin-bottom: 5px;
-    }
-
-    #map {
-      display: none;
-    }
+html, body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+@font-face {
+  font-family: Antonio;
+  src: url(fonts/Antonio-Regular.ttf);
+}
+
+img.logo {
+  margin-top: 5px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  width: 35%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+body {
+  background-size: 100% 100%;
+  background: #366775;
+  overflow: hidden;
+}
+
+/** OVERALL CONTAINER STYLING **/
+
+.container {
+  display: inline-block;
+  float: left;
+  width: 26%;
+  min-height: height(cravingSomethingElse);
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  bottom: 0;
+  width: 48%;
+  background: #f7d0cb;
+  height: 100%;
+}
+
+/** DROPDOWN STYLING **/
+
+.dropbtn {
+  margin-top: 10px;
+  padding: 12px 18px;
+  background-color: #F4AC94;
+  color: #366775;
+  width: 120px;
+  border: 1px solid #f7d0cb; 
+  border-radius: 0px;
+  font-size: 18px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+img.dropicon {
+  position: relative;
+  float: right;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f7d0cb;
+  font-weight: thin;
+  color: #366775;
+  width: 120px;
+  z-index: 1;
+}
+
+.dropdown-item {
+  text-align: center;
+  border-radius: 1px;
+  padding: 10px 5px;
+  font-size: 16px;
+  border: 1px solid white; 
+}
+
+.dropdown-item:hover {
+  border: 1px solid white; 
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+.dropdown:hover .dropdown-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/** TOP CARD STYLING **/
+
+#top-card-view {
+  margin-top: 10px;
+  margin-bottom: 10px; 
+  background: #f7d0cb;
+  font-size: 18px;
+}
+
+h4.top-card-intro {
+  margin-top: 20px;
+  position: relative;
+}
+
+.refresh {
+  position: relative;
+  margin-bottom: 10px;
+  padding: 12px 24px;
+  border: 1px solid #a2b4c0; 
+  border-radius: 10px;
+  outline: none;
+  font-size: 16px;
+  text-align: center;
+  display: flex;
+  background: #D66D50;
+  color: white;
+}
+
+/** RESTAURANT ITEMS STYLING **/
+
+#results-recycler-view {
+  height: 100%;
+  background: #f7d0cb;
+  display: flex;
+  flex-direction: column;
+}
+
+.restaurant-item {
+  background: #F4AC94;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  flex: 1;
+  max-height: 180px;
+  font-size: 15px;      
+  color: #366775;
+}
+
+div.top-details-container {
+  margin-bottom: 0;
+}
+
+#name-detail {
+  text-align: initial;
+  width: 100%;
+}
+
+div.bottom-details-container {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+#left-details-container {
+  width: 35%;
+}
+
+#right-details-container {
+  width: 65%;
+}
+
+.details { 
+  margin-inline-start: 15px;
+  margin-inline-end: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.title-hr {
+  margin-inline-start: 15px;
+  margin-inline-end: 15px;
+  margin-top: 0;
+  border: 0.3px solid #D66D50;
+}
+
+.bookmark {
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 24px;
+  width: 24px;
+  margin-inline-end: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.bookmark-icon-inactive {
+  background-image: url('icons/bookmark-icon.png');
+}
+
+.bookmark-icon-active {
+  background-image: url('icons/bookmark-icon-hover.png');
+}
+
+/** ICON STYLING **/
+
+.icon {
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: contain;
+  text-indent: 25px;
+}
+
+.distance-icon {
+  background-image: url('icons/distance-icon.png');
+}
+
+.rating-icon {
+  background-image: url('icons/rating-icon.png');
+}
+
+.phone-icon {
+  background-image: url('icons/phone-icon.png');
+}
+
+.address-icon {
+  background-image: url('icons/address-icon.png');
+}
+
+.website-icon {
+  background-image: url('icons/website-icon.png');
+}
+
+.hours-icon {
+  background-image: url('icons/hours-icon.png');
+}
+
+/** OTHER CUISINE OPTIONS STYLING **/
+
+#otherOptionsView {
+  margin-top: 10px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  background: #A2B4C0;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.optionbtn-const {
+  margin: 0px 5px 15px;
+  padding: 10px 5px 10px 5px;
+  border: 1px solid; 
+  border-radius: 10px;
+  color: #366775;
+  font-size: 14px;
+  text-align: center;
+}
+
+.optionbtn {
+  border-color: #F7D0CB; 
+  background: #F7D0CB;
+}
+
+.optionbtn-clicked {
+  border-color: #F4AC94; 
+  background: #F4AC94;
+}
+
+img.optionicon {
+  float: left;
+  padding-right: 8px;
+}
+
+/** BOOKMARKING STYLING **/
+
+#favourites-div {
+  display: flex;
+  flex-direction: column;
+}
+
+#favourites {
+  color: #F7D0CB;
+}
+
+.delete {
+  background-image: url('icons/delete-sign-span.png');
+  height: 16px;
+  width: 16px;
+  margin-bottom: 3px;
+}
+
+.delete:hover {
+  cursor: pointer;
+}
+
+.bookmark-item {
+  text-align: center;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  background: #a2b4c0;
+}
+
+.faves-details {
+  font-size: 12px;
+  margin: auto;
+}
+
+.faves-hr {
+  border-color: #366775;
+}
+
+.faves-bottom-container {
+  line-height: 1.5;
+}
+
+/** Need this for map services **/
+
+#map {
+  display: none;
+}
