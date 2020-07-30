@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@100;400;700&family=Satisfy&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <title>Crave Eats Extension Options</title>
+    <link rel="stylesheet" href="options.css">
+    <link rel="stylesheet" href="common.css">
+    <title>CravEats Extension Options</title>
   </head>
   <body>
     <div class="options-container">
       <img class="logo" src="logo.png">
-      <p> Options Page </p>
-      <div class ="center">
-        <h5>Choose your diet:</h5>
-        <h5> 
+      <h2 class="satisfy-cursive thin teal-colour"> Options Page </h2>
+      <div class="center">
+        <h5 class="inline-margins manjari-normal teal-colour">Choose your diet:</h5>
+        <h5 class="inline-margins manjari-normal teal-colour"> 
           <select id="diet">
             <option value="">No restrictions</option>
             <option value="vegetarian">Vegetarian</option>
@@ -21,14 +22,13 @@
           </select>
         </h5>
       </div>
-
-      <h4> <div id="status"></div></h4>
-      <div class="center">
-         <button id="option-save">Save</button>
+      
+      <div class="center options-status-center">
+        <h4 id="status" class="manjari-normal teal-colour"></h4>
+        <button id="option-save" class="manjari-normal">Save</button>
       </div>
     </div>
 
   </body>
   <script src="options.js"></script>
 </html>
-

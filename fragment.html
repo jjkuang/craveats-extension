@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@100;400;700&family=Satisfy&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="common.css">
 
   <title>New Tab</title>
 </head>
@@ -17,51 +18,16 @@
           <span>Sort By</span>
         </button>
         <div class="dropdown-content">
-          <span class="dropdown-item clickable-span" id="distance-sort">Distance</span>
-          <span class="dropdown-item clickable-span" id="rating-sort">Rating</span>
+          <span class="dropdown-item clickable-span manjari-normal" id="distance-sort">Distance</span>
+          <span class="dropdown-item clickable-span manjari-normal" id="rating-sort">Rating</span>
         </div>
       </div>
     </div>
 
     <div class ="center">
     	<div id="otherOptionsView">
-    		<h2> Craving something else? </h2>
-    		<button class="optionbtn clickable-buttons">
-    			<img class="optionicon" src = "icons/sushi.png" width="20" height="20"/>
-    			<span>Japanese</span>
-    		</button>
-    		<button class="optionbtn clickable-buttons">
-    			<img class="optionicon" src = "icons/pizza.png" width="20" height="20"/>
-    			<span>Pizza</span>
-    		</button>
-    		<button class="optionbtn clickable-buttons">
-    			<img class="optionicon" src = "icons/dumpling.png" width="20" height="20"/>
-    			<span>Chinese</span>
-    		</button>
-    		<button class="optionbtn clickable-buttons">
-    			<img class="optionicon" src = "icons/spaghetti.png" width="20" height="20"/>
-    			<span>Italian</span>
-    		</button>
-    		<button class="optionbtn clickable-buttons">
-    			<img class="optionicon" src = "icons/curry.png" width="20" height="20"/>
-    			<span>Indian</span>
-    		</button>
-    		<button class="optionbtn clickable-buttons">
-    			<img class="optionicon" src = "icons/taco.png" width="20" height="20"/>
-    			<span>Mexican</span>
-    		</button>
-        <button class="optionbtn clickable-buttons">
-          <img class="optionicon" src = "icons/falafel.png" width="20" height="20"/>
-          <span>Middle Eastern</span>
-        </button>
-        <button class="optionbtn clickable-buttons">
-          <img class="optionicon" src = "icons/padthai.png" width="20" height="20"/>
-          <span>Thai</span>
-        </button>
-        <button class="optionbtn clickable-buttons">
-          <img class="optionicon" src = "icons/pho.png" width="20" height="20"/>
-          <span>Vietnamese</span>
-        </button>
+    		<h2 class="satisfy-cursive teal-colour"> Craving something else? </h2>
+        <!-- fragment.js instantiates the options buttons -->
     	</div>
     </div>
   </div>
@@ -70,7 +36,7 @@
     <img class="logo" src = "logo.png">
 
     <div id="topCardView">
-      <h4 class="top-card-intro"> Feeling hungry? Check out these local eats. </h4>
+      <h4 id="top-card-intro" class="satisfy-cursive teal-colour"> Feeling hungry? Check out these local eats. </h4>
       <button id="refresh" class="button refresh clickable-buttons">Refresh</button>
     </div>
 
@@ -81,7 +47,7 @@
   </div>
 
   <div class="container right-container">
-    <h2 id="favourites"> Favourites </h2>
+    <h2 id="favourites" class="satisfy-cursive"> Favourites </h2>
     <div id="favourites-div"></div>
   </div>
   <script src='fragment.js'></script>

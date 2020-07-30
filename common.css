@@ -1,0 +1,120 @@
+/** COMMON STYLINGS BETWEEN ALL FILES **/
+
+@font-face {
+  font-family: Antonio;
+  src: url(fonts/Antonio-Regular.ttf);
+}
+
+img.logo {
+  margin-top: 5px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  width: 32%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+h2 {
+  text-align: center;
+  font-size: 28px;
+}
+
+h3 {
+  font-weight: thin;
+  font-size: 30px;
+}
+
+h4 {
+  text-align: center;
+  font-size: 18px;
+}
+
+h5 {
+  font-weight: normal;
+  text-align: center;
+  font-size: 16px;
+}
+
+p {
+  margin-top: 10px;
+  position: relative;
+  text-align: center;
+}
+
+button {
+  margin: auto;
+  font-size: 16px;
+  text-align: center;
+  font-family: 'Manjari', sans-serif;
+  font-weight: normal;
+  cursor: pointer;
+  outline: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.teal-colour {
+  color: #366775;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.inline-flex-column {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.flex-row-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5px;
+}
+
+.inline-margins {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.manjari-normal {
+  font-family: 'Manjari', sans-serif;
+  font-style: normal;
+}
+
+.manjari-thin {
+  font-family: 'Manjari', sans-serif;
+  font-style: thin;
+}
+
+.satisfy-cursive {
+  font-family: 'Satisfy', cursive;
+}
+
+.thin {
+  font-style: thin;
+}
+
+.clickable-span {
+  pointer-events: auto;
+}
+
+.unclickable-span {
+  pointer-events: none;
+}
+
+.clickable-button {
+  cursor: pointer;
+}
+
+.unclickable-button {
+  cursor: default;
+}
