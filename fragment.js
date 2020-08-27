@@ -12,6 +12,7 @@ const CUISINE_TYPES = ['Japanese','Pizza','Chinese','Italian','Indian','Mexican'
 const CUISINE_IMGSRC = ['sushi','pizza','dumpling','spaghetti','curry','taco','falafel','padthai','pho'];
 
 const NUM_RESTAURANTS_DISPLAYED = 3;
+const LIM_BOOKMARKS = 3;
 let DIETARY_RESTRICTIONS; // Not a const, but uppercased bc taken from options page
 let userLocation;
 let service;
@@ -125,9 +126,11 @@ function initListeners() {
   /* (API) Refresh on diet restrictions save in settings */
   chrome.storage.onChanged.addListener(function(changes, namespace) {
     for (var key in changes) {
-      var storageChange = changes[key];
-      DIETARY_RESTRICTIONS = storageChange.newValue;
-      location.reload();
+      if (key === 'diet') {
+        var storageChange = changes[key];
+        DIETARY_RESTRICTIONS = storageChange.newValue;
+        location.reload();
+      }
     }
   });      
 }
@@ -142,15 +145,17 @@ function initDiet() {
 
 
 function initAPICall() {
+
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       userLocation = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
-      };
+      }; 
       getNearbyPlaces(userLocation);
     });
   }
+  
 }
 
 
@@ -411,6 +416,10 @@ function modifyDetails(restaurant) {
     frag.childNodes[0].childNodes[0].childNodes[1].classList.add('bookmark-icon-inactive');
   }
 
+  if (bookmarkedRestaurants.length >= LIM_BOOKMARKS) {
+    frag.childNodes[0].childNodes[0].childNodes[1].classList.add('unclickable-span');
+  }
+
   frag.childNodes[0].childNodes[2].childNodes[0].textContent = rating;
   frag.childNodes[0].childNodes[2].childNodes[1].textContent = distance;  
   frag.childNodes[0].childNodes[2].childNodes[2].textContent = num;
@@ -514,6 +523,16 @@ function bookmark(restaurant, idx) {
   bel.id = 'bookmark-icon-active';
   bookmarkedRestaurants.push(restaurant);
   createBookmarkNode(restaurant);
+
+  if (bookmarkedRestaurants.length >= LIM_BOOKMARKS) {
+    // Disable bookmarks once we have more than 3 favourites
+    let inactiveList = document.getElementsByClassName('bookmark-icon-inactive');
+    console.log(inactiveList);
+    for (var uel of inactiveList) {
+      uel.classList.add('unclickable-span');
+    }
+  }
+
 }
 
 
@@ -537,6 +556,16 @@ function unbookmark(restaurant, idx, currentlyDisplayed) {
   bookmarksDOM.removeChild(bookmarksDOM.children[idxToBeRemoved]);
 
   bookmarkedRestaurants.splice(idxToBeRemoved, 1);
+
+  if (bookmarkedRestaurants.length < LIM_BOOKMARKS) {
+    // Enable bookmarks if there are fewer than 3 favourites
+    console.log('less than 3');
+    let inactiveList = document.getElementsByClassName('bookmark-icon-inactive');
+    for (var uel of inactiveList) {
+      uel.classList.remove('unclickable-span');
+    } 
+  }
+
 }
 
 
